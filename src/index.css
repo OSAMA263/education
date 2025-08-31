@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@theme {
+  --color-secondary: #18181b;
+  --color-bg-secondary: #18181b;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  transition: 0.3s background-color !important;
+  &.light {
+    --color-bg-secondary: white !important;
+  }
+}
