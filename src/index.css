@@ -1,25 +1,17 @@
 @import "tailwindcss";
 @theme {
-  --color-secondary: #939090;
-  --color-bg-secondary: white;
-  --color-bg-gray: #d7d7d7;
+  --color-secondary: #18181b;
+  --color-bg-secondary: #18181b;
 }
 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  a {
-    transition: all 0.3s;
-    &.active {
-      color: var(--color-secondary);
-    }
-  }
 }
 html {
   transition: 0.3s background-color !important;
-  &.dark {
-    --color-bg-secondary: #202023 ;
-    --color-bg-gray: #202020;
+  &.light {
+    --color-bg-secondary: white !important;
   }
 }

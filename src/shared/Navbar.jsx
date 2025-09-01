@@ -1,16 +1,15 @@
-import { IconButton, Menu, Portal } from "@chakra-ui/react";
+import { Container, IconButton, Menu, Portal } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { FaMoon, FaSun, FaUser } from "react-icons/fa";
 import { useColorMode } from "../components/ui/color-mode";
 import { AnimatePresence, motion } from "framer-motion";
-import CustomContainer from "../components/CustomContainer";
 
 export default function Navbar() {
   return (
-    <header className="border-b z-50 border-bg-gray py-7 bg-bg-secondary !transition-all absolute w-full !duration-300">
-      <CustomContainer
-        py={0}
+    <header className="!border-b-2 !py-5 bg-bg-secondary !transition-all !duration-300">
+      <Container
         as="nav"
+        maxW="90vw"
         className="flex items-center justify-between"
       >
         <NavLink to="/">logo</NavLink>
@@ -18,15 +17,13 @@ export default function Navbar() {
         <ul className="flex items-center gap-6">
           {nav_links.map(({ label, link }) => (
             <li key={label}>
-              <NavLink className="hover:text-gray-400" to={link}>
-                {label}
-              </NavLink>
+              <NavLink to={link}>{label}</NavLink>
             </li>
           ))}
         </ul>
         {/* theme toggler & profile options */}
         <ThemToggler_ProfileOptions />
-      </CustomContainer>
+      </Container>
     </header>
   );
 }
@@ -76,9 +73,9 @@ const ThemToggler_ProfileOptions = () => {
         </Menu.Trigger>
         <Portal>
           <Menu.Positioner>
-            <Menu.Content className="border border-bg-gray">
+            <Menu.Content className="!border ">
               <Menu.Item asChild>
-                <NavLink to="/sd" className="hover:bg-bg-gray !cursor-pointer">
+                <NavLink to="/sd" className="hover:bg-gray-400 !cursor-pointer">
                   ypo
                 </NavLink>
               </Menu.Item>
