@@ -1,5 +1,9 @@
-export default function ProtectedRoute() {
+import { Outlet } from "react-router-dom";
 
-  
-  return <div>ProtectedRoute</div>;
+export default function ProtectedRoute() {
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
 }
