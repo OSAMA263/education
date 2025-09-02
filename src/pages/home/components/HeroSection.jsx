@@ -1,7 +1,7 @@
 import heroImg from "../../../assets/home-hero.png";
 import BlueDots from "../../../assets/blue-dots.svg";
 import { Button, Float } from "@chakra-ui/react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -21,10 +21,10 @@ export default function HeroSection() {
           of global learners and transform the way you learn today.
         </p>
         <div className="space-x-6">
-          <Button size={"lg"}>
+          <Button asChild size={"lg"}>
             <NavLink to="/lessons">Get Started</NavLink>
           </Button>
-          <Button size={"lg"} className="!bg-secondary !text-gray-200">
+          <Button asChild size={"lg"} className="!bg-secondary !text-gray-200">
             <NavLink to="/about">Learn More</NavLink>
           </Button>
         </div>
