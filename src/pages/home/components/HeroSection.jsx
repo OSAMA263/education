@@ -1,5 +1,5 @@
-import heroImg from "../../../assets/home-hero.png";
-import BlueDots from "../../../assets/blue-dots.svg";
+import heroImg from "@/assets/home-hero.png";
+import BlueDots from "@/assets/blue-dots.svg";
 import { Button, Float } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 

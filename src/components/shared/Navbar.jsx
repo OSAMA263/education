@@ -3,14 +3,14 @@ import { NavLink } from "react-router-dom";
 import { FaMoon, FaSun, FaUser } from "react-icons/fa";
 import { useColorMode } from "../ui/color-mode";
 import { AnimatePresence, motion } from "framer-motion";
-import LayoutMain from "./LayoutMain";
+import CustomContainer from "../layout/CustomContainer";
 import Logo from "../Logo";
 import NavLinks from "../NavLinks";
 
 export default function Navbar() {
   return (
     <header className="border-b z-50 border-bg-gray py-7 bg-bg-secondary !transition-all absolute w-full !duration-300">
-      <LayoutMain className="!py-0 !space-y-0 min-h-fit">
+      <CustomContainer className="!py-0 !space-y-0 min-h-fit">
         <nav className="flex items-center justify-between">
           <Logo />
           {/* navigation links */}
@@ -18,7 +18,7 @@ export default function Navbar() {
           {/* theme toggler & profile options */}
           <ThemToggler_ProfileOptions />
         </nav>
-      </LayoutMain>
+      </CustomContainer>
     </header>
   );
 }

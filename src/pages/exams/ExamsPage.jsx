@@ -1,10 +1,10 @@
-import LayoutMain from "../../components/shared/LayoutMain";
+import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
 import ExamsCard from "./ExamsCard";
 
 export default function ExamsPage() {
   return (
-    <LayoutMain>
+    <CustomContainer>
       <SectionHeader
         title="Exams"
         par="Take your available exams and test your knowledge."
@@ -14,6 +14,6 @@ export default function ExamsPage() {
           <ExamsCard key={i} />
         ))}
       </div>
-    </LayoutMain>
+    </CustomContainer>
   );
 }

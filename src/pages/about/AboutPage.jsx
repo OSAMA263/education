@@ -1,14 +1,14 @@
-import LayoutMain from "../../components/shared/LayoutMain";
+import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
 import ContactInfo from "./ContactInfo";
 
 export default function AboutPage() {
   return (
-    <LayoutMain>
+    <CustomContainer>
       <SectionHeader {...headerProps} />
       {/* contact information */}
       <ContactInfo />
-    </LayoutMain>
+    </CustomContainer>
   );
 }
 

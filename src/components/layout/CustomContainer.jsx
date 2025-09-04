@@ -1,6 +1,6 @@
 import { Container } from "@chakra-ui/react";
 
-export default function LayoutMain(props) {
+export default function CustomContainer(props) {
   const { maxW = "80vw", children, className, ...rest } = props;
 
   return (
