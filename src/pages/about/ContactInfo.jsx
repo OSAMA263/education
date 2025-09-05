@@ -1,0 +1,47 @@
+import { IconButton } from "@chakra-ui/react";
+import { contact_info, media_links } from "./data";
+import ContactForm from "./ContactForm";
+import { NavLink } from "react-router-dom";
+
+export default function ContactInfo() {
+  return (
+    <section id="contact-informations" className="grid grid-cols-2 gap-10">
+      {/* contact links */}
+      <div className="space-y-10">
+        <h1 className="text-2xl font-bold">Additional Info</h1>
+        <div className="space-y-3">
+          {contact_info.map(({ label, value, icon: Icon }) => (
+            <div key={label} className="flex gap-3">
+              <Icon className="text-5xl bg-bg-gray p-2 rounded-full" />
+              <div>
+                <h1 className="font-bold">{label}</h1>
+                <p className="text-secondary">{value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <h1 className="text-2xl font-bold">Social Media Links</h1>
+        <div className="flex space-x-4">
+          {media_links.map(({ icon: Icon, url, platform }) => (
+            <IconButton
+              className="rounded-2xl border border-bg-gray"
+              key={url}
+              asChild
+            >
+              <NavLink
+                target="_blank"
+                aria-label={platform}
+                className={"text-4xl"}
+                to={url}
+              >
+                <Icon />
+              </NavLink>
+            </IconButton>
+          ))}
+        </div>
+      </div>
+      {/* form inputs message */}
+      <ContactForm />
+    </section>
+  );
+}

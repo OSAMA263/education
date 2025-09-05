@@ -1,5 +1,5 @@
-import Navbar from "./shared/Navbar";
-import Footer from "./shared/Footer";
+import Footer from "./components/shared/Footer";
+import Navbar from "./components/shared/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";

@@ -1,29 +1,24 @@
-import { Container, IconButton, Menu, Portal } from "@chakra-ui/react";
+import { IconButton, Menu, Portal } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { FaMoon, FaSun, FaUser } from "react-icons/fa";
-import { useColorMode } from "../components/ui/color-mode";
+import { useColorMode } from "../ui/color-mode";
 import { AnimatePresence, motion } from "framer-motion";
+import LayoutMain from "./LayoutMain";
+import Logo from "../Logo";
+import NavLinks from "../NavLinks";
 
 export default function Navbar() {
   return (
-    <header className="!border-b-2 !py-5 bg-bg-secondary !transition-all !duration-300">
-      <Container
-        as="nav"
-        maxW="90vw"
-        className="flex items-center justify-between"
-      >
-        <NavLink to="/">logo</NavLink>
-        {/* navigation links */}
-        <ul className="flex items-center gap-6">
-          {nav_links.map(({ label, link }) => (
-            <li key={label}>
-              <NavLink to={link}>{label}</NavLink>
-            </li>
-          ))}
-        </ul>
-        {/* theme toggler & profile options */}
-        <ThemToggler_ProfileOptions />
-      </Container>
+    <header className="border-b z-50 border-bg-gray py-7 bg-bg-secondary !transition-all absolute w-full !duration-300">
+      <LayoutMain className="!py-0 !space-y-0 min-h-fit">
+        <nav className="flex items-center justify-between">
+          <Logo />
+          {/* navigation links */}
+          <NavLinks />
+          {/* theme toggler & profile options */}
+          <ThemToggler_ProfileOptions />
+        </nav>
+      </LayoutMain>
     </header>
   );
 }
@@ -73,9 +68,9 @@ const ThemToggler_ProfileOptions = () => {
         </Menu.Trigger>
         <Portal>
           <Menu.Positioner>
-            <Menu.Content className="!border ">
+            <Menu.Content className="border border-bg-gray">
               <Menu.Item asChild>
-                <NavLink to="/sd" className="hover:bg-gray-400 !cursor-pointer">
+                <NavLink to="/sd" className="hover:bg-bg-gray !cursor-pointer">
                   ypo
                 </NavLink>
               </Menu.Item>
@@ -91,11 +86,4 @@ const profile_links = [
   { label: "", link: "" },
   { label: "", link: "" },
   { label: "", link: "" },
-];
-
-export const nav_links = [
-  { label: "Home", link: "/" },
-  { label: "About", link: "/about" },
-  { label: "Lessons", link: "/lessons" },
-  { label: "Exams", link: "/exams" },
 ];
