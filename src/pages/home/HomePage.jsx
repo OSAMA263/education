@@ -1,4 +1,4 @@
-import LayoutMain from "../../components/shared/LayoutMain"
+import CustomContainer from "../../components/layout/CustomContainer";
 import AchievmentSection from "./components/AchievmentSection";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
@@ -6,7 +6,7 @@ import ReviewsSection from "./components/ReviewsSection";
 
 export default function HomePage() {
   return (
-    <LayoutMain>
+    <CustomContainer>
       {/* the frist section */}
       <HeroSection />
       {/* our services */}
@@ -15,6 +15,6 @@ export default function HomePage() {
       <AchievmentSection />
       {/* reiews */}
       <ReviewsSection />
-    </LayoutMain>
+    </CustomContainer>
   );
 }

@@ -1,10 +1,10 @@
-import LayoutMain from "../../components/shared/LayoutMain";
+import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
 import LessonsCard from "./LessonsCard";
 
 export default function LessonsPage() {
   return (
-    <LayoutMain>
+    <CustomContainer>
       <SectionHeader
         title="Lessons"
         par="Explore our wide range of courses designed to help you learn and grow."
@@ -14,6 +14,6 @@ export default function LessonsPage() {
           <LessonsCard key={i} />
         ))}
       </div>
-    </LayoutMain>
+    </CustomContainer>
   );
 }

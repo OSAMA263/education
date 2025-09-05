@@ -1,0 +1,20 @@
+import { Navigate, Outlet } from "react-router-dom";
+import loginImg from "@/assets/login.jpg";
+
+export default function AuthLayout() {
+  const user = undefined;
+
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <main className="grid grid-cols-2 items-center min-h-dvh gap-10">
+      <img src={loginImg} alt="lgoin" className="h-dvh w-full" />
+      {/* form inputs */}
+      <div className="flex flex-col gap-8 items-center w-[70%] mx-auto">
+        <Outlet />
+      </div>
+    </main>
+  );
+}
