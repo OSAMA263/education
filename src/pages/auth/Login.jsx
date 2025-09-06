@@ -51,13 +51,13 @@ export default function Login() {
 
       <div className="text-center space-y-2">
         <h1>
-          Forgot your password?
-          <Link to="/user/forgot-password" className="underline">
+          Forgot your password?{" "}
+          <Link to="/auth/forgot-password" className="underline">
             Reset password
           </Link>
         </h1>
         <h1>
-          Don't have an account?
+          Don't have an account?{" "}
           <Link to="/auth/signup" className="underline">
             Register a new account
           </Link>
