@@ -9,10 +9,10 @@ export default function AuthLayout() {
   }
 
   return (
-    <main className="grid grid-cols-2 items-center min-h-dvh gap-10">
-      <img src={loginImg} alt="lgoin" className="h-dvh w-full" />
+    <main className="relative grid grid-cols-2 items-center min-h-dvh gap-10">
+      <img src={loginImg} alt="lgoin" className="h-dvh object-cover sticky top-0 self-baseline" />
       {/* form inputs */}
-      <div className="flex flex-col gap-8 items-center w-[70%] mx-auto">
+      <div className="flex flex-col gap-8 items-center w-[70%] mx-auto [&_a]:font-semibold [&_a:hover]:text-secondary">
         <Outlet />
       </div>
     </main>
