@@ -2,6 +2,7 @@ import AuthForm from "@/components/forms/AuthForm";
 import { registration_inputs } from "./inputs_data";
 import { registerSchema } from "@/validations/RegisterSchema";
 import { useSignUp } from "@/hooks/useAuth";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const { isPending, mutate } = useSignUp();
@@ -20,6 +21,9 @@ export default function Register() {
         onSubmit={onSubmit}
         loading={isPending}
       />
+      <h1>
+        Already have an account? <Link to="/auth/login">login</Link>
+      </h1>
     </>
   );
 }

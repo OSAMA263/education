@@ -1,12 +1,16 @@
-// /* eslint-disable react-refresh/only-export-components */
+import { useGetUser } from "@/hooks/useUser";
 import { createContext, useContext } from "react";
 
-const AuthContext = createContext();
+const UserContext = createContext();
 
-export default function AuthProvider({ children }) {
-  // const {role,name}=useLogin()
+export default function UserProvider({ children }) {
+  const { data, isLoading, isError, error } = useGetUser();
 
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+  return (
+    <UserContext.Provider value={{ data, isLoading, error, isError }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useProfile = () => useContext(UserContext);

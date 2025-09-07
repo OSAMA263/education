@@ -19,24 +19,29 @@ export default function ForgotPassword() {
       )}
 
       {/* form switch toggler */}
-      <Link onClick={() => setResetPassword((prev) => !prev)}>
-        {resetpassword ? "Already got the OTP code?" : "Get a new OTP code"}
-      </Link>
+      <div className="flex flex-col items-center gap-2">
+        <Link onClick={() => setResetPassword((prev) => !prev)}>
+          {resetpassword ? "Already got the OTP code?" : "Get a new OTP code"}
+        </Link>
+        <h1>
+          Already have an account? <Link to="/auth/login">login</Link>
+        </h1>
+      </div>
     </>
   );
 }
 
 // forgot password email input
 const ForgotPasswordForm = ({ setResetPassword }) => {
-  const { isPending, mutate, } = useForgotPassword();
+  const { isPending, mutate } = useForgotPassword();
 
   const onSubmit = (data) => {
-  mutate(data, {
-    onSuccess: () => {
-      setResetPassword(true);
-    },
-  });
-};
+    mutate(data, {
+      onSuccess: () => {
+        setResetPassword(true);
+      },
+    });
+  };
 
   const emailValidation = z.object({
     email: emailSchema,

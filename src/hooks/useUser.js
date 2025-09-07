@@ -1,8 +1,12 @@
-import { forgotPasswordRequest, resetPasswordRequest } from "@/api/UserAPI";
+import {
+  forgotPasswordRequest,
+  getUserRequest,
+  resetPasswordRequest,
+} from "@/api/UserAPI";
 import { toaster } from "@/components/ui/toaster";
-import { errorHandler } from "@/utils/utils";
+import { errorHandler, getToken } from "@/utils/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // send opt code to email
 const useForgotPassword = () => {
@@ -49,12 +53,19 @@ const useResetPassword = () => {
 };
 
 // get user profile
-
 const useGetUser = () => {
+  const token = getToken();
+
   return useQuery({
-    queryKey: ["profile"],
-    queryFn: "",
+    queryKey: ["profile", token],
+    queryFn: getUserRequest,
+    retry: 1,
+    enabled: !!token,
   });
 };
 
-export { useForgotPassword, useResetPassword };
+// delete user
+// update user user
+
+
+export { useForgotPassword, useResetPassword, useGetUser };

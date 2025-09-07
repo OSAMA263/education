@@ -2,7 +2,7 @@ import { loginRequest, registerRequest } from "@/api/AuthAPI";
 import { toaster } from "@/components/ui/toaster";
 import { errorHandler } from "@/utils/utils";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // login
 const useLogin = () => {

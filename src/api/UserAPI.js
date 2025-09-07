@@ -11,4 +11,9 @@ const resetPasswordRequest = async (newData) => {
   return data;
 };
 
-export { forgotPasswordRequest, resetPasswordRequest };
+const getUserRequest = async () => {
+  const { data } = await api.get(ENDPOINT.USER);
+  return data;
+};
+
+export { forgotPasswordRequest, resetPasswordRequest, getUserRequest };

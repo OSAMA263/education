@@ -16,4 +16,10 @@ function errorHandler(err, message) {
   return msg;
 }
 
-export { getToken, errorHandler };
+// logout handler
+function logout() {
+  localStorage.removeItem("token");
+  window.location.reload();
+}
+
+export { getToken, errorHandler, logout };
