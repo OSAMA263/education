@@ -1,18 +1,12 @@
 const getToken = () => localStorage.getItem("token");
 
-// specific validaiton messages
-const validationMessages = {
-  passwordMesg:
-    "Password must be at least 8 characters and include a number and a special character.",
-  phoneMesg:
-    "Phone number must start with 010, 011, 012, or 015 and be 11 digits long.",
-};
-
 // error message handler
 function errorHandler(err, message) {
-  if (message) return message;
   const msg =
     err?.response?.data?.message || err?.message || "something fucked";
+
+  // return custom message in anyerror
+  if (msg && message) return message;
 
   // specific user error case
   if (msg.includes("user already exist")) {
@@ -21,7 +15,5 @@ function errorHandler(err, message) {
 
   return msg;
 }
-
-export const { passwordMesg, phoneMesg } = validationMessages;
 
 export { getToken, errorHandler };

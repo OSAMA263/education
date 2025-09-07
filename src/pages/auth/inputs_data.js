@@ -94,7 +94,7 @@ const reset_password_inputs = [
   },
 
   {
-    label: "Password",
+    label: "New Password",
     placeholder: "Example@123",
     type: "password",
     name: "newPassword",

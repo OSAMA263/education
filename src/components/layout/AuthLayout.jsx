@@ -1,18 +1,21 @@
 import { Navigate, Outlet } from "react-router-dom";
 import loginImg from "@/assets/login.jpg";
+import { getToken } from "@/utils/utils";
 
 export default function AuthLayout() {
-  const user = undefined;
+  const token = getToken();
 
-  if (user) {
-    return <Navigate to="/" replace />;
-  }
+  if (token) return <Navigate to="/" replace />;
 
   return (
     <main className="relative grid grid-cols-2 items-center min-h-dvh gap-10">
-      <img src={loginImg} alt="lgoin" className="h-dvh object-cover sticky top-0 self-baseline" />
+      <img
+        src={loginImg}
+        alt="lgoin"
+        className="h-dvh object-cover sticky top-0 self-baseline"
+      />
       {/* form inputs */}
-      <div className="flex flex-col gap-8 items-center w-[70%] mx-auto [&_a]:font-semibold [&_a:hover]:text-secondary">
+      <div className="flex flex-col gap-8 items-center w-[70%] mx-auto [&_a]:font-semibold [&_a:hover]:text-secondary [&_a]:underline">
         <Outlet />
       </div>
     </main>
