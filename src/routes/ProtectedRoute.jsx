@@ -6,12 +6,21 @@ import { useProfile } from "./AuthProvider";
 import ErrorPage from "@/pages/ErrorPage";
 
 export default function ProtectedRoute() {
-  const { data, isLoading, isError, error } = useProfile();
+  const { profile, isLoading, isError, error } = useProfile();
 
   // display content depending on the fetch response
   if (isLoading) return <LoaderPage />;
   if (isError) return <ErrorPage fetchErr={error} />;
-  if (!data) return <Navigate to="/auth/login/" replace />;
+  if (!profile) return <Navigate to="/auth/login/" replace />;
+
+
+  // profile page
+  // display the profile + update data+ update password + delete user
+
+
+
+
+  // get exams + lessons
 
   return (
     <>

@@ -1,6 +1,10 @@
-import { loginRequest, registerRequest } from "@/api/AuthAPI";
-import { toaster } from "@/components/ui/toaster";
-import { errorHandler } from "@/utils/utils";
+import {
+  forgotPasswordRequest,
+  loginRequest,
+  registerRequest,
+  resetPasswordRequest,
+} from "@/api/AuthAPI";
+import { toast } from "@/utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -14,11 +18,8 @@ const useLogin = () => {
       localStorage.setItem("token", data?.token);
       navigate("/", { replace: true });
     },
-    onError: (error) => {
-      toaster.create({
-        description: errorHandler(error),
-        type: "error",
-      });
+    onError: (err) => {
+      toast("error", err);
     },
   });
 };
@@ -30,21 +31,47 @@ const useSignUp = () => {
   return useMutation({
     mutationFn: (formData) => registerRequest(formData),
     onSuccess: () => {
-      toaster.create({
-        type: "success",
-        duration: 5000,
-        description:
-          "We’ve sent a verification email to your address — please check your inbox to verify it.",
-      });
+      toast(
+        "success",
+        "We’ve sent a verification email to your address — please check your inbox to verify it."
+      );
       navigate("/auth/login", { replace: true });
     },
     onError: (error) => {
-      toaster.create({
-        description: errorHandler(error),
-        type: "error",
-      });
+      toast("error", error);
     },
   });
 };
 
-export { useLogin, useSignUp };
+// send opt code to email
+const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: (email) => forgotPasswordRequest(email),
+    onSuccess: () => {
+      toast(
+        "success",
+        "We’ve sent a OTP code email to your address — please check your inbox."
+      );
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
+
+// reset the password
+const useResetPassword = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (email) => resetPasswordRequest(email),
+    onSuccess: () => {
+      navigate("/auth/login", { replace: true });
+      toast("success", "Your password has been successfully reset.");
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
+export { useLogin, useSignUp, useForgotPassword, useResetPassword };

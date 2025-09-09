@@ -1,56 +1,12 @@
 import {
-  forgotPasswordRequest,
+  deleteUser,
   getUserRequest,
-  resetPasswordRequest,
+  updatePassword,
+  updateUser,
 } from "@/api/UserAPI";
-import { toaster } from "@/components/ui/toaster";
-import { errorHandler, getToken } from "@/utils/utils";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { getToken, logout, toast } from "@/utils/utils";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-
-// send opt code to email
-const useForgotPassword = () => {
-  return useMutation({
-    mutationFn: (email) => forgotPasswordRequest(email),
-    onSuccess: () => {
-      toaster.create({
-        description:
-          "We’ve sent a OTP code email to your address — please check your inbox.",
-        type: "success",
-        duration: 5000,
-      });
-    },
-    onError: (err) => {
-      toaster.create({
-        description: errorHandler(err, "No user was found by this email"),
-        type: "error",
-      });
-    },
-  });
-};
-
-// reset the password
-const useResetPassword = () => {
-  const navigate = useNavigate();
-
-  return useMutation({
-    mutationFn: (email) => resetPasswordRequest(email),
-    onSuccess: () => {
-      navigate("/auth/login", { replace: true });
-      toaster.create({
-        description: "Your password has been successfully reset.",
-        type: "success",
-        duration: 5000,
-      });
-    },
-    onError: (err) => {
-      toaster.create({
-        description: errorHandler(err),
-        type: "error",
-      });
-    },
-  });
-};
 
 // get user profile
 const useGetUser = () => {
@@ -64,8 +20,55 @@ const useGetUser = () => {
   });
 };
 
-// delete user
-// update user user
+// update user data
+const useUpdateUser = () => {
+  const queryClient = useQueryClient();
 
+  return useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      toast("success", "Your profile has been updated!");
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
 
-export { useForgotPassword, useResetPassword, useGetUser };
+// deletet the user
+const useDeleteUser = () => {
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      logout();
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
+
+// update the user password
+const useUpdatePassword = () => {
+  const nav = useNavigate();
+
+  return useMutation({
+    mutationFn: updatePassword,
+    onSuccess: () => {
+      toast("success", "Your password has been updated!");
+      nav("/user/profile", { replace: true });
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
+
+// const updatePassword = async (newPassword) => {
+//   const { data } = api.patch(ENDPOINT.USER + "update-password", newPassword);
+//   console.log(data);
+//   return data;
+// };
+
+export { useGetUser, useUpdateUser, useDeleteUser, useUpdatePassword };

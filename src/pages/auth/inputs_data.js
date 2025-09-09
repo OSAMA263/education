@@ -19,7 +19,7 @@ const login_inputs = [
     type: "password",
     name: "password",
     values: {
-      student: "Osama@123",
+      student: "Osama@12345",
       admin: "Admin@123",
     },
   },

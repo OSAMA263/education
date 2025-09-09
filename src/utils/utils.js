@@ -1,3 +1,5 @@
+import { toaster } from "@/components/ui/toaster";
+
 const getToken = () => localStorage.getItem("token");
 
 // error message handler
@@ -22,4 +24,13 @@ function logout() {
   window.location.reload();
 }
 
-export { getToken, errorHandler, logout };
+const toast = (type, des, rest={}) => {
+  toaster.create({
+    type,
+    description: type === "error" ? errorHandler(des) : des,
+    duration:5000,
+    ...rest,
+  });
+};
+
+export { getToken, errorHandler, logout, toast };

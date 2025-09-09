@@ -2,7 +2,6 @@ import { ENDPOINT } from "./endpoints";
 import { api } from "./api";
 
 // axios calls for the auth
-// login, sigin-up
 
 const loginRequest = async (formData) => {
   const { data } = await api.post(ENDPOINT.LOG_IN, formData);
@@ -14,4 +13,19 @@ const registerRequest = async (formData) => {
   return data;
 };
 
-export { loginRequest, registerRequest };
+const forgotPasswordRequest = async (email) => {
+  const { data } = await api.post(ENDPOINT.FORGOT_PASSWORD, email);
+  return data;
+};
+
+const resetPasswordRequest = async (newData) => {
+  const { data } = await api.post(ENDPOINT.RESET_PASSWORD, newData);
+  return data;
+};
+
+export {
+  loginRequest,
+  registerRequest,
+  forgotPasswordRequest,
+  resetPasswordRequest,
+};

@@ -5,7 +5,7 @@ import { forgot_password_inputs, reset_password_inputs } from "./inputs_data";
 import { emailSchema } from "@/utils/validations";
 import { z } from "zod";
 import { resetPasswordSchema } from "@/validations/ResetPasswordSchema";
-import { useForgotPassword, useResetPassword } from "@/hooks/useUser";
+import { useForgotPassword, useResetPassword } from "@/hooks/useAuth";
 
 export default function ForgotPassword() {
   const [resetpassword, setResetPassword] = useState(false);
