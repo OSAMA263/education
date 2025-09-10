@@ -1,13 +1,16 @@
 import AuthForm from "@/components/forms/AuthForm";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { forgot_password_inputs, reset_password_inputs } from "./inputs_data";
+import {
+  forgot_password_inputs,
+  reset_password_inputs,
+} from "./inputs_data_type";
 import { emailSchema } from "@/utils/validations";
 import { z } from "zod";
 import { resetPasswordSchema } from "@/validations/ResetPasswordSchema";
 import { useForgotPassword, useResetPassword } from "@/hooks/useAuth";
 
-export default function ForgotPassword() {
+export default function ForgotPassword({ loggedIn }) {
   const [resetpassword, setResetPassword] = useState(false);
 
   return (
@@ -21,11 +24,14 @@ export default function ForgotPassword() {
       {/* form switch toggler */}
       <div className="flex flex-col items-center gap-2">
         <Link onClick={() => setResetPassword((prev) => !prev)}>
-          {resetpassword ? "Already got the OTP code?" : "Get a new OTP code"}
+          {resetpassword ? "Get a new OTP code" : "Already got the OTP code?"}
         </Link>
-        <h1>
-          Already have an account? <Link to="/auth/login">login</Link>
-        </h1>
+        {/* hide it if we trying to render the comp when the user is loggedIn */}
+        {!loggedIn && (
+          <h1>
+            Already have an account? <Link to="/auth/login">login</Link>
+          </h1>
+        )}
       </div>
     </>
   );

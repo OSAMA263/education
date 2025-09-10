@@ -1,4 +1,4 @@
-import { Button, Tabs } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import SectionHeader from "../shared/SectionHeader";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,15 +12,13 @@ export default function AuthForm({
   submitText = "submit",
   validationSchema,
   loading = false,
-  role,
 }) {
-  // pre registered accounts
+  // add default values if the input have the prop values
   const defaultValues = Object.fromEntries(
     formFields.map((field) =>
-      role ? [field.name, field.values[role]] : [field.name, ""]
+      field.values ? [field.name, field.values] : [field.name, ""]
     )
   );
-
 
   // form hook props
   const {
@@ -39,7 +37,7 @@ export default function AuthForm({
       {/* ----------the form inputs -------- */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full space-y-6 mt-10"
+        className="w-full space-y-6"
       >
         {formFields?.map((inpProps, i) =>
           inpProps.type === "select" ? (
@@ -61,4 +59,3 @@ export default function AuthForm({
     </>
   );
 }
-

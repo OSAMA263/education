@@ -1,5 +1,4 @@
 import AuthForm from "@/components/forms/AuthForm";
-import { login_inputs } from "./inputs_data";
 import { Link } from "react-router-dom";
 import { LoginSchema } from "@/validations/LoginSchema";
 import { useLogin } from "@/hooks/useAuth";
@@ -7,6 +6,7 @@ import { useState } from "react";
 import SectionHeader from "@/components/shared/SectionHeader";
 import { Tabs } from "@chakra-ui/react";
 import CustomAlert from "@/components/CustomAlert";
+import { login_inputs } from "./inputs_data_type";
 
 export default function Login() {
   const { isPending, mutate } = useLogin();
@@ -15,6 +15,11 @@ export default function Login() {
   const onSubmit = (formData) => {
     mutate(formData);
   };
+
+  const formFields = login_inputs.map((input) => ({
+    ...input,
+    values: input.values[role],
+  }));
 
   return (
     <>
@@ -42,11 +47,11 @@ export default function Login() {
       {/* the form */}
       <AuthForm
         key={role}
-        formFields={login_inputs}
+        formFields={formFields}
         validationSchema={LoginSchema}
         submitText="Login"
         loading={isPending}
-        {...{ role, onSubmit }}
+        onSubmit={onSubmit}
       />
 
       <div className="text-center space-y-2">

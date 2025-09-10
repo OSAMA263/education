@@ -1,13 +1,17 @@
 import CustomContainer from "@/components/layout/CustomContainer";
 import { useProfile } from "@/routes/AuthProvider";
-import {IconButton } from "@chakra-ui/react";
 import { ImUser, ImUserTie } from "react-icons/im";
-import { FiEdit3 } from "react-icons/fi";
-import Modal from "@/components/Modal";
+import MenuWrapper from "@/components/MenuWrapper";
+import { TbDotsVertical } from "react-icons/tb";
+import { Menu } from "@chakra-ui/react";
+import UpdateDataModal from "./modals/UpdateDataModal";
+import UpdatePasswordModal from "./modals/UpdatePasswordModal";
+import DeleteAccountModal from "./modals/DeleteAccountModal";
 
 export default function UserPage() {
-  const { profile } = useProfile();
-  const { fullName, email, role, phoneNumber, createdAt, classLevel } = profile;
+  const { userData } = useProfile();
+  const { fullName, email, role, phoneNumber, createdAt, classLevel } =
+    userData;
 
   const userDetails = [
     { label: "Email", value: email },
@@ -30,6 +34,7 @@ export default function UserPage() {
           <h1 className="text-xl font-bold">{fullName}</h1>
           <p className="text-secondary">{role}</p>
         </div>
+
         {/* more details */}
         <div className="w-full grid grid-cols-2 gap-y-4">
           {userDetails.map(
@@ -44,15 +49,21 @@ export default function UserPage() {
               )
           )}
         </div>
-        {/* edit user btn */}
-        <IconButton
-          className="top-0 right-0 !absolute"
-          variant={"outline"}
-          rounded={"xl"}
-        >
-          <FiEdit3 />
-        </IconButton>
-        <Modal/>
+
+        {/* user options*/}
+        <div className="top-2 right-2 !absolute">
+          <MenuWrapper openBtnIcon={<TbDotsVertical />} btnVariant="outline">
+            <Menu.Item asChild>
+              <UpdateDataModal />
+            </Menu.Item>
+            <Menu.Item asChild>
+              <UpdatePasswordModal />
+            </Menu.Item>
+            <Menu.Item asChild>
+              <DeleteAccountModal {...{createdAt}} />
+            </Menu.Item>
+          </MenuWrapper>
+        </div>
       </div>
     </CustomContainer>
   );

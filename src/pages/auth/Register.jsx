@@ -1,5 +1,5 @@
 import AuthForm from "@/components/forms/AuthForm";
-import { registration_inputs } from "./inputs_data";
+import { registration_inputs } from "./inputs_data_type";
 import { registerSchema } from "@/validations/RegisterSchema";
 import { useSignUp } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";

@@ -7,20 +7,20 @@ const getUserRequest = async () => {
 };
 
 const updateUser = async (newData, userId) => {
-  const { data } = api.put(`${ENDPOINT.USER}${userId}`, newData);
-  console.log(data);
+  const { data } = await api.put(`${ENDPOINT.USER}${userId}`, newData);
   return data;
 };
 
 const deleteUser = async () => {
-  const { data } = api.delete(ENDPOINT.USER);
-  console.log(data);
+  const { data } = await api.delete(ENDPOINT.USER);
   return data;
 };
 
 const updatePassword = async (newPassword) => {
-  const { data } = api.patch(ENDPOINT.USER + "update-password", newPassword);
-  console.log(data);
+  const { data } = await api.patch(
+    ENDPOINT.USER + ENDPOINT.UPDATE_PASSWORD,
+    newPassword
+  );
   return data;
 };
 export { getUserRequest, updateUser, updatePassword, deleteUser };

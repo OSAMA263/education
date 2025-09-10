@@ -5,7 +5,7 @@ export const ENDPOINT = {
   // user
   FORGOT_PASSWORD: "/user/forgot-password",
   RESET_PASSWORD: "/user/reset-password",
-  UPDATE_PASSWORD:"/user/update-password",
+  UPDATE_PASSWORD:"update-password",
   USER: "/user/",
   // admin
   // super admin

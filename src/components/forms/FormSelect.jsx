@@ -14,7 +14,6 @@ export default function FormSelect({ inpProps, register, errors }) {
             <Select.Indicator />
           </Select.IndicatorGroup>
         </Select.Control>
-        <Portal>
           <Select.Positioner>
             <Select.Content>
               {inpProps.options.items.map((item) => (
@@ -25,7 +24,6 @@ export default function FormSelect({ inpProps, register, errors }) {
               ))}
             </Select.Content>
           </Select.Positioner>
-        </Portal>
       </Select.Root>
       <Field.ErrorText>{errors[inpProps.name]?.message}</Field.ErrorText>
     </Field.Root>

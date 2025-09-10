@@ -33,7 +33,7 @@ const useSignUp = () => {
     onSuccess: () => {
       toast(
         "success",
-        "We’ve sent a verification email to your address — please check your inbox to verify it."
+        "We’ve sent a verification email to your address — please check your inbox in a minute to verify it."
       );
       navigate("/auth/login", { replace: true });
     },
@@ -74,4 +74,5 @@ const useResetPassword = () => {
     },
   });
 };
+
 export { useLogin, useSignUp, useForgotPassword, useResetPassword };

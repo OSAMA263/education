@@ -19,7 +19,7 @@ export const registerSchema = passwordConfirmation(
 
 // create admin without classlevel input
 export const registerSchemaNoClassLevel = passwordConfirmation(
-  registerSchema.safeExtend({
-    classLevel: z.optional(),
+  registerSchema.omit({
+    classLevel: true,
   })
 );

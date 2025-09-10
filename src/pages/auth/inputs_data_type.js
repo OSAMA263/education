@@ -9,7 +9,7 @@ const login_inputs = [
     autoComplete: "email",
     values: {
       student: "osamaelseify11@gmail.com",
-      admin: "admin@gmail.com",
+      admin: "adminosama@gmail.com",
     },
   },
 
@@ -20,7 +20,7 @@ const login_inputs = [
     name: "password",
     values: {
       student: "Osama@12345",
-      admin: "Admin@123",
+      admin: "Admin#123",
     },
   },
 ];
@@ -55,7 +55,7 @@ const registration_inputs = [
   },
   {
     label: "Phone Nummber",
-    placeholder: "0123456789",
+    placeholder: "01234567891",
     type: "tel",
     name: "phoneNumber",
   },
