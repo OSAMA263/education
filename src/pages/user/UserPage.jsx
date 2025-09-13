@@ -25,7 +25,7 @@ export default function UserPage() {
 
   return (
     <CustomContainer>
-      <div className="min-w-3xl w-fit mx-auto p-20 bg-bg-gray rounded-xl flex flex-col items-center gap-20 relative">
+      <div className="min-w-3xl w-fit mx-auto p-20 bg-bg-gray rounded-xl flex flex-col items-center gap-20 relative border border-secondary/50">
         {/* name & role */}
         <div className="flex flex-col items-center">
           <div className="mb-6 text-4xl">

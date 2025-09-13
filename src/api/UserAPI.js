@@ -1,5 +1,5 @@
-import { ENDPOINT } from "./endpoints";
-import { api } from "./api";
+import { api } from "@/utils/api";
+import { ENDPOINT } from "@/utils/endpoints";
 
 const getUserRequest = async () => {
   const { data } = await api.get(ENDPOINT.USER);

@@ -25,7 +25,7 @@ export default function DeleteAccountModal({ createdAt }) {
     <div>
       <Modal
         {...{ open, setOpen }}
-        openBtnColor="red.500"
+        openBtnClasses="!text-red-500"
         openModalContent="Delete account"
         title="Delete account"
       >

@@ -1,5 +1,5 @@
-import { ENDPOINT } from "./endpoints";
-import { api } from "./api";
+import { api } from "@/utils/api";
+import { ENDPOINT } from "@/utils/endpoints";
 
 // axios calls for the auth
 

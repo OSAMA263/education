@@ -16,6 +16,7 @@ const useGetUser = () => {
     queryFn: getUserRequest,
     retry: 1,
     enabled: !!token,
+    staleTime: 10 * 60 * 1000,
   });
 };
 
@@ -61,4 +62,4 @@ const useUpdateUser = (userId) => {
   });
 };
 
-export {useUpdatePassword,useUpdateUser,useDeleteUser,useGetUser}
+export { useUpdatePassword, useUpdateUser, useDeleteUser, useGetUser };

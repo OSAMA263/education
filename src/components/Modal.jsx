@@ -4,11 +4,13 @@ import React from "react";
 export default function Modal(props) {
   const {
     openModalContent,
-    openBtnColor = "",
+    openBtnClasses = "",
+    openBtnIcon,
     title,
     children,
     open,
     setOpen,
+    btnVariant = "outline",
     ...rest
   } = props;
 
@@ -26,12 +28,11 @@ export default function Modal(props) {
         <Dialog.Trigger asChild>
           <Button
             p={0}
-            color={openBtnColor}
             outline={0}
-            aria-label="open-modal"
-            variant="outline"
-            className="w-full"
+            variant={btnVariant}
+            className={`w-full ${openBtnClasses}`}
           >
+            {openBtnIcon}
             {openModalContent}
           </Button>
         </Dialog.Trigger>
@@ -45,15 +46,12 @@ export default function Modal(props) {
                 </Dialog.Title>
               </Dialog.Header>
               <Dialog.Body className="!space-y-2">{children}</Dialog.Body>
-              {/* <Dialog.Footer>
-              <Dialog.ActionTrigger asChild>
-                <Button variant="outline">Cancel</Button>
-              </Dialog.ActionTrigger>
-              <Button>Save</Button>
-            </Dialog.Footer> */}
-              <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" />
-              </Dialog.CloseTrigger>
+
+             
+                <Dialog.CloseTrigger asChild>
+                  <CloseButton size="sm" />
+                </Dialog.CloseTrigger>
+              
             </Dialog.Content>
           </Dialog.Positioner>
         </Portal>

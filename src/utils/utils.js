@@ -40,10 +40,19 @@ const toast = (type, des, mes, rest = {}) => {
   });
 };
 
-// add the default value o an input prop
+// add a default value o an input form prop
 const dataDefaultVals = (data, defaultVal) =>
   data.map((obj) =>
     defaultVal[obj.name] ? { ...obj, values: defaultVal[obj.name] } : obj
   );
 
-export { getToken, errorHandler, logout, toast, dataDefaultVals };
+// is lessons or exams date is accsseable NOW
+const isAvailable = (itemDate) => {
+  const nowData = new Date();
+  const scheduledDate = new Date(itemDate);
+
+  const isAvailable = nowData >= scheduledDate;
+  return isAvailable;
+};
+
+export { getToken, errorHandler, logout, toast, dataDefaultVals, isAvailable };

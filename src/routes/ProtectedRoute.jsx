@@ -13,13 +13,6 @@ export default function ProtectedRoute() {
   if (isError) return <ErrorPage fetchErr={error} />;
   if (!userData?._id) return <Navigate to="/auth/login/" replace />;
 
-
-  // get exams + lessons
-
-  // buy lesons? with cart?
-  
-  // exam api and shit man omg
-
   return (
     <>
       <Navbar />

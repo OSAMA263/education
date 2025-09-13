@@ -4,28 +4,36 @@ import { TbMoodSadDizzy } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { logout } from "@/utils/utils";
 
-export default function ErrorPage({ fetchErr }) {
+export default function ErrorPage({ fetchErr, badReq }) {
+
   return (
     <div>
       <CustomContainer className="items-center !space-y-3">
         <TbMoodSadDizzy className="text-5xl" />
-        {fetchErr ? <FetchError /> : <NotFoundPage />}
+        {fetchErr ? <FetchError err={badReq} /> : <NotFoundPage />}
       </CustomContainer>
     </div>
   );
 }
 
-const FetchError = () => {
+const FetchError = ({ err }) => {
+  const badRequest = err?.response.data.message;
+
   return (
     <>
-      <h1 className="text-2xl font-bold">ERROR - COLLECTING THE DATA</h1>
-      <p className="text-secondary">
-        Looks like we didnt find a user with these data
-      </p>
-      <Button className="!font-semibold" rounded={"full"}
-      onClick={logout}>
-        TRY LOGIN AGAIN
-      </Button>
+      <h1 className="text-2xl font-bold mb-2">ERROR - COLLECTING THE DATA</h1>
+      {err ? (
+        badRequest
+      ) : (
+        <>
+          <p className="text-secondary">
+            Looks like we didnt find a user with these data
+          </p>
+          <Button className="!font-semibold" rounded={"full"} onClick={logout}>
+            TRY LOGIN AGAIN
+          </Button>
+        </>
+      )}
     </>
   );
 };
