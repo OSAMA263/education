@@ -25,4 +25,4 @@ export default function UserProvider({ children }) {
   );
 }
 
-export const useProfile = () => useContext(UserContext);
+export const useAuthData = () => useContext(UserContext);

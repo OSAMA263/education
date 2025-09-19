@@ -8,11 +8,11 @@ import {
 import { Link } from "react-router";
 import { IoExitOutline } from "react-icons/io5";
 import { logout } from "@/utils/utils";
-import { useProfile } from "@/routes/AuthProvider";
+import { useAuthData } from "@/routes/AuthProvider";
 import MenuWrapper from "./MenuWrapper";
 
 export default function UserNavbarMenu() {
-  const { userData } = useProfile();
+  const { userData } = useAuthData();
 
   const userOptions = () => {
     const links = userData.role === "user" ? student_options : admin_options;

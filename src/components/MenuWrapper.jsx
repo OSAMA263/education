@@ -12,7 +12,6 @@ export default function MenuWrapper({
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button
-          size="sm"
           p={0}
           outline={0}
           rounded={"xl"}

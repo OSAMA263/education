@@ -1,37 +1,67 @@
 import { Button } from "@chakra-ui/react";
 import Card from "../../components/Card";
+import { isAvailable } from "@/utils/utils";
+import { FaRegQuestionCircle, FaRegClock } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-export default function ExamsCard() {
+export default function ExamsCard({ exam }) {
+  const {
+    classLevel,
+    description,
+    title,
+    questions,
+    startDate,
+    endDate,
+    duration,
+    _id,
+  } = exam;
+
+  const availableDate = new Date(startDate).toLocaleDateString("en-GB");
+  const expriedDate = new Date(endDate).toLocaleDateString("en-GB");
+
   return (
-    <Card>
-      <div className="flex gap-4 items-center text-secondary">
-        icon
-        <p>Scheduled 7/7/ and shit idk</p>
-      </div>
-
-      <div>
-        <h1 className="text-lg font-semibold">title</h1>
-        <p className="text-sm text-secondary">icon Grade 4</p>
-      </div>
-
-      <p className="text-sm text-secondary">
-        Final exam covering algebra, geometry, and calculus 1!!.
-      </p>
+    <Card {...{ description, classLevel, title, availableDate, expriedDate }}>
       {/* exam details */}
-      <div className="space-x-4 flex gap-2 [&>h1]:space-x-1 text-sm">
+      <div className="space-x-4 flex gap-2 [&>h1]:flex [&>h1]:items-center [&>h1]:gap-2">
         <h1>
-          <span>icon</span>
-          <span>16 min</span>
+          <span>
+            <FaRegClock />
+          </span>
+          <span>{duration} minutes</span>
         </h1>
         <h1>
-          <span>icon</span>
-          <span>5 questions</span>
+          <span>
+            <FaRegQuestionCircle />
+          </span>
+          <span>{questions.length} question</span>
         </h1>
       </div>
 
       <div className="flex justify-end">
-        <Button>start the exam</Button>
+        <ExamsActionBtn {...{ endDate, startDate, _id }} />
       </div>
     </Card>
   );
 }
+
+const ExamsActionBtn = ({ endDate, startDate, _id }) => {
+  const expired = isAvailable(endDate);
+  const available = isAvailable(startDate) && !expired;
+
+  return (
+    <Button
+      asChild={available}
+      rounded={"xl"}
+      variant={"surface"}
+      disabled={expired || !available}
+    >
+      {expired ? (
+        "Expired"
+      ) : available ? (
+        <Link to={`/exams/${_id}`}>Take Exam</Link>
+      ) : (
+        "Not available yet"
+      )}
+    </Button>
+  );
+};

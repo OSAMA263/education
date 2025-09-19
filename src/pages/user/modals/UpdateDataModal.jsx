@@ -1,4 +1,4 @@
-import { useProfile } from "@/routes/AuthProvider";
+import { useAuthData } from "@/routes/AuthProvider";
 import { updateUserInputs } from "../inputs_data_types";
 import { dataDefaultVals } from "@/utils/utils";
 import {
@@ -9,7 +9,7 @@ import { useUpdateUser } from "@/hooks/useUser";
 import UserFormModal from "@/components/forms/UserFormModal";
 
 export default function UpdateDataModal() {
-  const { userData } = useProfile();
+  const { userData } = useAuthData();
   const { mutate, isPending } = useUpdateUser(userData._id);
 
   // filter out classLevel if user is admin

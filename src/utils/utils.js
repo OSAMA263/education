@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { toaster } from "@/components/ui/toaster";
+import { useGetRemainTime } from "@/hooks/useExams";
 
 const getToken = () => localStorage.getItem("token");
 
@@ -40,10 +41,50 @@ const toast = (type, des, mes, rest = {}) => {
   });
 };
 
-// add the default value o an input prop
+// add a default value o an input form prop
 const dataDefaultVals = (data, defaultVal) =>
   data.map((obj) =>
     defaultVal[obj.name] ? { ...obj, values: defaultVal[obj.name] } : obj
   );
 
-export { getToken, errorHandler, logout, toast, dataDefaultVals };
+// is lessons or exams date is accsseable NOW
+const isAvailable = (itemDate) => {
+  const nowData = new Date();
+  const scheduledDate = new Date(itemDate);
+
+  const isAvailable = nowData >= scheduledDate;
+  return isAvailable;
+};
+
+const useExamStatus = (examId) => {
+  const { data, isLoading, error } = useGetRemainTime(examId);
+  const remainTime = data?.data?.remainingTime;
+
+  
+  const isDisabled =
+    error?.response?.status === 400 ||
+    remainTime === 0 ||
+    remainTime?.seconds === 0;
+
+  let buttonText = "";
+
+  if (isDisabled) {
+    buttonText = "Exam already submitted";
+  } else if (remainTime?.seconds > 0) {
+    buttonText = "Continue exam";
+  } else {
+    buttonText = "Start exam";
+  }
+
+  return { isLoading, isDisabled, buttonText, remainTime };
+};
+
+export {
+  getToken,
+  errorHandler,
+  logout,
+  toast,
+  dataDefaultVals,
+  isAvailable,
+  useExamStatus,
+};

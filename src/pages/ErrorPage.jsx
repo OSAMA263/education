@@ -2,30 +2,34 @@ import { Button } from "@chakra-ui/react";
 import CustomContainer from "../components/layout/CustomContainer";
 import { TbMoodSadDizzy } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import { logout } from "@/utils/utils";
 
-export default function ErrorPage({ fetchErr }) {
+export default function ErrorPage({
+  fetchErr,
+  badReq,
+  children,
+  className = "",
+}) {
   return (
     <div>
-      <CustomContainer className="items-center !space-y-3">
+      <CustomContainer className={"items-center !space-y-3 " + className}>
         <TbMoodSadDizzy className="text-5xl" />
-        {fetchErr ? <FetchError /> : <NotFoundPage />}
+        {fetchErr ? (
+          <FetchError err={badReq || fetchErr} children={children} />
+        ) : (
+          <NotFoundPage />
+        )}
       </CustomContainer>
     </div>
   );
 }
 
-const FetchError = () => {
+const FetchError = ({ err, children }) => {
+  const badRequest = err?.response.data.message;
+
   return (
     <>
-      <h1 className="text-2xl font-bold">ERROR - COLLECTING THE DATA</h1>
-      <p className="text-secondary">
-        Looks like we didnt find a user with these data
-      </p>
-      <Button className="!font-semibold" rounded={"full"}
-      onClick={logout}>
-        TRY LOGIN AGAIN
-      </Button>
+      <h1 className="text-2xl font-bold mb-2">ERROR - COLLECTING THE DATA</h1>
+      {err ? badRequest : <>{children}</>}
     </>
   );
 };
