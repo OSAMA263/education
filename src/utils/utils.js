@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { toaster } from "@/components/ui/toaster";
+import { useGetRemainTime } from "@/hooks/useExams";
 
 const getToken = () => localStorage.getItem("token");
 
@@ -55,4 +56,35 @@ const isAvailable = (itemDate) => {
   return isAvailable;
 };
 
-export { getToken, errorHandler, logout, toast, dataDefaultVals, isAvailable };
+const useExamStatus = (examId) => {
+  const { data, isLoading, error } = useGetRemainTime(examId);
+  const remainTime = data?.data?.remainingTime;
+
+  
+  const isDisabled =
+    error?.response?.status === 400 ||
+    remainTime === 0 ||
+    remainTime?.seconds === 0;
+
+  let buttonText = "";
+
+  if (isDisabled) {
+    buttonText = "Exam already submitted";
+  } else if (remainTime?.seconds > 0) {
+    buttonText = "Continue exam";
+  } else {
+    buttonText = "Start exam";
+  }
+
+  return { isLoading, isDisabled, buttonText, remainTime };
+};
+
+export {
+  getToken,
+  errorHandler,
+  logout,
+  toast,
+  dataDefaultVals,
+  isAvailable,
+  useExamStatus,
+};

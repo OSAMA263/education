@@ -7,17 +7,12 @@ import {
   updateLessonRequest,
 } from "@/api/LessonsAPI";
 import { toast } from "@/utils/utils";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useGetAllLessons = () => {
   return useQuery({
     queryKey: ["all-lessons"],
     queryFn: getAllLessonsRequest,
-    retry: 1,
     staleTime: 15 * 60 * 1000,
   });
 };
@@ -28,6 +23,7 @@ const useGetLessonById = (id, options = {}) => {
     queryFn: () => getLessonByIdRequest(id),
     staleTime: 15 * 60 * 1000,
     retry: false,
+    enabled: !!id,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     onError: (err) => {
@@ -45,7 +41,7 @@ const usePayLesson = () => {
     onSuccess: () => {
       toast("success", "You fucking bought it, congrats");
       // refetch the lesson after buying it
-      query.invalidateQueries({ queryKey: ["lesson-id"] });
+      query.invalidateQueries({ queryKey: ["lesson-id",] });
     },
     onError: (err) => {
       toast("error", err, "the Lesson you trying to purchase does not exist");

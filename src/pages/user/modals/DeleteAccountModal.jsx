@@ -12,7 +12,7 @@ export default function DeleteAccountModal({ createdAt }) {
     // not allowed to deleted the main accounts
     if (
       createdAt === "2025-09-08T20:39:28.004Z" ||
-      createdAt === "2025-09-10T07:10:02.864Z"
+      createdAt === "2025-09-18T21:59:59.839Z"
     ) {
       return toast("error", "", "Not allowed to delete the main acc");
     }

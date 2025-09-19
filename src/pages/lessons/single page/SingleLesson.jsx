@@ -37,17 +37,16 @@ export default function SingleLesson() {
             >
               <VideoPlayer {...{ playerOptions, setPlayerOptions, ...data }} />
             </motion.div>
-            <motion.div
-              layout
-              key="lesson-list"
-              animate={{
-                display: playerOptions.expand ? "none" : "block",
-              }}
-              transition={{ duration: 0.3 }}
-              className={`col-span-1 overflow-hidden`}
-            >
-              <LessonsList />
-            </motion.div>
+            {!playerOptions.expand && (
+              <motion.div
+                layout
+                key="lesson-list"
+                transition={{ duration: 0.3 }}
+                className={`col-span-1 overflow-hidden`}
+              >
+                <LessonsList />
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </CustomContainer>

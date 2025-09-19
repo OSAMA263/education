@@ -8,7 +8,7 @@ export default function VideoPlayer(props) {
   const handlePlayerOptions = (opt) => {
     setPlayerOptions((prev) => ({ ...prev, [opt]: !prev[opt] }));
   };
-  const publishedData = new Date(data?.scheduledDate).toLocaleDateString();
+  const publishedData = new Date(data?.scheduledDate).toLocaleDateString("en-GB");
 
   return (
     <div className="bg-bg-gray/50 border border-secondary/40 rounded-xl overflow-hidden">

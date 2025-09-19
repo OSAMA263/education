@@ -3,6 +3,7 @@ import { Suspense, lazy, useEffect } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import LoaderPage from "@/pages/LoaderPage";
 import UserProvider from "./AuthProvider";
+import LessonsProvider from "./LessonsProvider";
 
 export default function AppRoutes() {
   const { pathname } = useLocation();
@@ -34,9 +35,17 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/lessons" element={<Lessons />} />
-          <Route path="/lessons/:lessonId" element={<SingleLesson />} />
+          <Route
+            path="/lessons/:lessonId"
+            element={
+              <LessonsProvider>
+                <SingleLesson />
+              </LessonsProvider>
+            }
+          />
           <Route path="/exams" element={<Exams />} />
-          {/* <Route path="/exams/:examId" element={<ExamStart />} /> */}
+          <Route path="/exams/:examId" element={<SingleExamPage />} />
+
           <Route path="/user" element={<User />} />
 
           {/* admin only */}
@@ -62,6 +71,7 @@ const SingleLesson = lazy(
   () => import("@/pages/lessons/single page/SingleLesson")
 );
 const Exams = lazy(() => import("@/pages/exams/ExamsPage"));
+const SingleExamPage = lazy(() => import("@/pages/exams/SingleExamPage"));
 
 const User = lazy(() => import("@/pages/user/UserPage"));
 

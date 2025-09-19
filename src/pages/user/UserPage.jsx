@@ -1,5 +1,4 @@
 import CustomContainer from "@/components/layout/CustomContainer";
-import { useProfile } from "@/routes/AuthProvider";
 import { ImUser, ImUserTie } from "react-icons/im";
 import MenuWrapper from "@/components/MenuWrapper";
 import { TbDotsVertical } from "react-icons/tb";
@@ -7,9 +6,10 @@ import { Menu } from "@chakra-ui/react";
 import UpdateDataModal from "./modals/UpdateDataModal";
 import UpdatePasswordModal from "./modals/UpdatePasswordModal";
 import DeleteAccountModal from "./modals/DeleteAccountModal";
+import { useAuthData } from "@/routes/AuthProvider";
 
 export default function UserPage() {
-  const { userData } = useProfile();
+  const { userData } = useAuthData();
   const { fullName, email, role, phoneNumber, createdAt, classLevel } =
     userData;
 
@@ -18,7 +18,7 @@ export default function UserPage() {
     { label: "Phone", value: phoneNumber },
     {
       label: "Member Since",
-      value: createdAt ? new Date(createdAt).toLocaleDateString() : null,
+      value: createdAt ? new Date(createdAt).toLocaleDateString("en-GB") : null,
     },
     { label: "Class Level", value: classLevel },
   ];
@@ -39,6 +39,7 @@ export default function UserPage() {
         <div className="w-full grid grid-cols-2 gap-y-4">
           {userDetails.map(
             ({ label, value }, i) =>
+              // filter the classLevel for the admin
               value && (
                 <div key={i}>
                   <h1 className="font-semibold text-secondary text-lg">
@@ -60,7 +61,7 @@ export default function UserPage() {
               <UpdatePasswordModal />
             </Menu.Item>
             <Menu.Item asChild>
-              <DeleteAccountModal {...{createdAt}} />
+              <DeleteAccountModal {...{ createdAt }} />
             </Menu.Item>
           </MenuWrapper>
         </div>
