@@ -1,0 +1,1 @@
+import{j as e}from"./index-BJ9f2vcr.js";function l(s){const{title:a="title",par:t="",className:x=""}=s;return e.jsxs("div",{className:`space-y-4 text-center ${x}`,children:[e.jsx("h1",{className:"font-semibold text-3xl max-sm:text-2xl",children:a}),t&&e.jsx("p",{className:"text-secondary md:text-lg",children:t})]})}export{l as S};

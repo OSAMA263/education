@@ -1,0 +1,1 @@
+import{a as t,c as r}from"./index-BJ9f2vcr.js";const[a,n]=r({name:"RenderStrategyContext",hookName:"useRenderStrategyContext",providerName:"<RenderStrategyPropsProvider />"}),s=e=>t()(e,["lazyMount","unmountOnExit"]);export{a as R,s,n as u};
