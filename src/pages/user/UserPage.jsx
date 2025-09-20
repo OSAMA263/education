@@ -62,7 +62,7 @@ export default function UserPage() {
               <UpdatePasswordModal />
             </Menu.Item>
             <Menu.Item asChild>
-              <DeleteAccountModal {...{ createdAt }} />
+              <DeleteAccountModal email={email} />
             </Menu.Item>
           </MenuWrapper>
         </div>
