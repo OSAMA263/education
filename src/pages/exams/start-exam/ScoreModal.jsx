@@ -1,6 +1,13 @@
 import Modal from "@/components/Modal";
+import { useGetExamScore } from "@/hooks/useExams";
 
-export default function ScoreModal({ open, setOpen, score, examData }) {
+export default function ScoreModal({ open, setOpen, examData }) {
+  const { data } = useGetExamScore(examData?._id);
+  const examPoints = examData?.questions.reduce(
+    (total, q) => total + (q.points || 0),
+    0
+  );
+
   return (
     <Modal
       title="Your score"
@@ -10,22 +17,21 @@ export default function ScoreModal({ open, setOpen, score, examData }) {
       openModalContent="Show score"
     >
       <p>
-        You have answered{" "}
+        You have scored{" "}
         <span className="font-bold">
           (
           <span
             className={
-              score?.data?.score >= examData.questions.length / 2
+              data?.data?.score >= examPoints / 2
                 ? "text-green-500"
                 : "text-red-500"
             }
           >
-            {score?.data?.score}
+            {data?.data?.score}
           </span>{" "}
-          out of{" "}
-          <span className="text-gray-400">{examData.questions.length}</span>)
-        </span>{" "}
-        questions correctly
+          out of <span className="text-gray-400">{examPoints} points</span>)
+        </span>
+        , in this exam.
       </p>
     </Modal>
   );

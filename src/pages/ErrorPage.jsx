@@ -27,10 +27,11 @@ const FetchError = ({ err, children }) => {
   const badRequest = err?.response.data.message;
 
   return (
-    <>
+    <div className="flex items-center flex-col">
       <h1 className="text-2xl font-bold mb-2">ERROR - COLLECTING THE DATA</h1>
-      {err ? badRequest : <>{children}</>}
-    </>
+      <span>{badRequest}</span>
+      {children}
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ export default function ThemeToggler() {
       onClick={toggleColorMode}
       rounded={"xl"}
       bg="gray.600"
+      aria-label="toggle-color-mode"
     >
       <AnimatePresence mode="wait">
         <motion.span

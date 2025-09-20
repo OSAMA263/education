@@ -22,7 +22,7 @@ export default function ExamDetails({examData}) {
         </h1>
         <p className="text-secondary">{description}</p>
         {/* exam details */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center flex-wrap gap-1 justify-between">
           {examInfo.map(({ label, value, icon: Icon }) => (
             <div key={label} className="flex items-center gap-2">
               <Icon className="text-2xl" />
@@ -36,7 +36,7 @@ export default function ExamDetails({examData}) {
       {/* instructions */}
       <PlainCard>
         <h1 className="mb-4 text-xl font-semibold">Exam instructions</h1>
-        <List.Root variant={"plain"}>
+        <List.Root variant={"plain"} className="space-y-1">
           {instructions.map((item, i) => (
             <List.Item key={i}>
               <List.Indicator asChild color={"yellow.600"}>

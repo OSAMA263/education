@@ -5,8 +5,8 @@ export default function CustomContainer(props) {
 
   const defaultMaxW = {
     base: "100%",
-    md: "80%",
-    lg: "75%",
+    md: "90%",
+    lg: "80%",
     xl: "75%",
   };
 

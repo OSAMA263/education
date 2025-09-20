@@ -8,11 +8,13 @@ export default function VideoPlayer(props) {
   const handlePlayerOptions = (opt) => {
     setPlayerOptions((prev) => ({ ...prev, [opt]: !prev[opt] }));
   };
-  const publishedData = new Date(data?.scheduledDate).toLocaleDateString("en-GB");
+  const publishedData = new Date(data?.scheduledDate).toLocaleDateString(
+    "en-GB"
+  );
 
   return (
-    <div className="bg-bg-gray/50 border border-secondary/40 rounded-xl overflow-hidden">
-      <div className="aspect-video w-full max-h-[70dvh]">
+    <div className="flex flex-col bg-bg-gray border border-secondary/40 rounded-xl overflow-hidden h-full">
+      <div className="aspect-video w-full min-h-[60dvh] max-h-[60dvh]">
         {data?.video ? (
           <iframe
             src={data.video.replace("watch?v=", "embed/")}
@@ -33,6 +35,7 @@ export default function VideoPlayer(props) {
         <ButtonGroup attached>
           {btnsControls.map(({ label, icon: Icon }) => (
             <Button
+              key={label}
               variant={"surface"}
               textTransform={"capitalize"}
               onClick={() => handlePlayerOptions(label)}

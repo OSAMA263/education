@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function NavLinks({ className }) {
   return (
-    <ul className={"flex items-center gap-6 " + className}>
+    <ul className={"flex items-center gap-6 font-semibold " + className}>
       {nav_links.map(({ label, link }) => (
         <li key={label}>
           <NavLink className="hover:text-gray-400" to={link}>

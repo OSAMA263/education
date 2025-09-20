@@ -5,8 +5,8 @@ import Logo from "../Logo";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-bg-gray py-10 bg-bg-secondary ">
-      <CustomContainer className="!py-0 !space-y-0 min-h-fit [&>div]:space-y-4 grid grid-cols-3">
+    <footer className="border-t border-gray-400/30 py-10 bg-bg-gray">
+      <CustomContainer className="!py-0 !space-y-0 min-h-fit [&>div]:space-y-4 grid sm:grid-cols-3 gap-10">
         {/* intro */}
         <div>
           <Logo />
@@ -16,9 +16,9 @@ export default function Footer() {
           </p>
         </div>
         {/* links */}
-        <div className="justify-self-center">
+        <div className="sm:justify-self-center">
           <h1 className="text-2xl font-semibold">Links</h1>
-          <NavLinks className="flex-col text-sm text-secondary items-start !gap-2" />
+          <NavLinks className="flex-col text-sm items-start !gap-2" />
         </div>
         {/* contact */}
         <div>
@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
       </CustomContainer>
       {/* copayrights */}
-      <div className="mt-8 pt-4 border-t border-bg-gray text-center">
+      <div className="mt-8 pt-4 border-t border-gray-400/30 text-center">
         <h1 className="text-secondary text-sm">© 2025 All rights reserved</h1>
       </div>
     </footer>

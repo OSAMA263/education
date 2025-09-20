@@ -9,7 +9,7 @@ const login_inputs = [
     autoComplete: "email",
     values: {
       student: "osamaelseify11@gmail.com",
-      admin: "adminO@gmail.com",
+      admin: "admin@gmail.com",
     },
   },
 

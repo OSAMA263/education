@@ -2,7 +2,6 @@ import { Menu } from "@chakra-ui/react";
 import {
   FaUser,
   FaRegUserCircle,
-  FaShoppingCart,
   FaChartPie,
 } from "react-icons/fa";
 import { Link } from "react-router";
@@ -49,7 +48,6 @@ export default function UserNavbarMenu() {
 
 const student_options = [
   { label: "Profile", link: "/user", icon: FaRegUserCircle },
-  { label: "Cart", link: "/user/cart", icon: FaShoppingCart },
 ];
 
 const admin_options = [

@@ -25,7 +25,8 @@ export default function UserPage() {
 
   return (
     <CustomContainer>
-      <div className="min-w-3xl w-fit mx-auto p-20 bg-bg-gray rounded-xl flex flex-col items-center gap-20 relative border border-secondary/50">
+      <h1 className="text-2xl font-semibold text-center">My Profile</h1>
+      <div className="lg:min-w-3xl min-w-full mx-auto p-20 bg-bg-gray rounded-xl flex flex-col items-center gap-20 relative border border-secondary/50">
         {/* name & role */}
         <div className="flex flex-col items-center">
           <div className="mb-6 text-4xl">
@@ -36,7 +37,7 @@ export default function UserPage() {
         </div>
 
         {/* more details */}
-        <div className="w-full grid grid-cols-2 gap-y-4">
+        <div className="w-full grid sm:grid-cols-2 gap-4">
           {userDetails.map(
             ({ label, value }, i) =>
               // filter the classLevel for the admin

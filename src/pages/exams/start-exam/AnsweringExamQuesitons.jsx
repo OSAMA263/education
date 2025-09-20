@@ -8,7 +8,6 @@ import ErrorPage from "@/pages/ErrorPage";
 import LoaderPage from "@/pages/LoaderPage";
 import { useSubmitExam } from "@/hooks/useExams";
 import Modal from "@/components/Modal";
-import { useNavigate } from "react-router-dom";
 import Countdown from "react-countdown";
 
 export default function AnsweringExamQuesitons({
@@ -16,7 +15,6 @@ export default function AnsweringExamQuesitons({
   _id,
   initialTime,
 }) {
-  const navigate = useNavigate();
 
   const [currQuestion, setCurrQuestion] = useState(1);
   const [answers, setAnswers] = useState([]);
@@ -30,7 +28,6 @@ export default function AnsweringExamQuesitons({
   const mutationFn = () => {
     mutate(answers, {
       onSuccess: () => {
-        navigate("/exams");
         window.location.reload();
       },
     });

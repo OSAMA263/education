@@ -1,6 +1,6 @@
 import {
   useGetExamById,
-  useGetExamScore,
+  useGetRemainTime,
   useStartExam,
 } from "@/hooks/useExams";
 import { isAvailable, useExamStatus } from "@/utils/utils";
@@ -17,8 +17,9 @@ import ScoreModal from "./start-exam/ScoreModal";
 export default function SingleExamPage() {
   const [open, setOpen] = useState(false);
   const { examId } = useParams();
+  const { data, error: examErr } = useGetRemainTime(examId);
+
   const { mutate, isPending } = useStartExam();
-  const { data: score } = useGetExamScore(examId);
 
   const {
     isDisabled,
@@ -57,9 +58,10 @@ export default function SingleExamPage() {
       ) : (
         <>
           <ExamDetails examData={examData} />
-          {score ? (
+          {data?.message === "Time is up" ||
+          examErr?.response.status === 400 ? (
             // show score modal
-            <ScoreModal {...{ open, setOpen, score, examData }} />
+            <ScoreModal {...{ open, setOpen, examData }} />
           ) : (
             // {/* start exam btn */}
             <Button

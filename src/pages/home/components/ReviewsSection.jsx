@@ -18,12 +18,17 @@ export default function ReviewsSection() {
 
 const ReviewsSwipers = () => {
   const swiperVariants = {
-    slidesPerView: 3,
+    slidesPerView: 1,
     spaceBetween: 25,
     speed: 500,
     navigation: {
       nextEl: "#next-review",
       prevEl: "#prev-review",
+    },
+    breakpoints:{
+      1600:{
+        slidesPerView:3
+      }
     },
     modules: [Navigation],
   };
@@ -48,12 +53,12 @@ const ReviewsSwipers = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <AbsoluteCenter axis={"vertical"}>
+      <AbsoluteCenter zIndex={50} axis={"vertical"}>
         <IconButton rounded={"full"} aria-label="prev-slide" id="prev-review">
           <RiArrowLeftLine />
         </IconButton>
       </AbsoluteCenter>
-      <AbsoluteCenter axis={"vertical"} right="0">
+      <AbsoluteCenter zIndex={50} axis={"vertical"} right="0">
         <IconButton rounded={"full"} aria-label="next-slide" id="next-review">
           <RiArrowRightLine />
         </IconButton>

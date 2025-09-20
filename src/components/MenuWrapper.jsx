@@ -7,9 +7,12 @@ export default function MenuWrapper({
   openBtnIcon,
   btnStyles,
   btnVariant = "solid",
+  ref,
 }) {
+  const getAnchorRect = () => ref && ref.current.getBoundingClientRect();
+
   return (
-    <Menu.Root>
+    <Menu.Root positioning={{ getAnchorRect }}>
       <Menu.Trigger asChild>
         <Button
           p={0}
@@ -25,8 +28,8 @@ export default function MenuWrapper({
       </Menu.Trigger>
 
       <Portal>
-        <Menu.Positioner>
-          <Menu.Content className={className}>
+        <Menu.Positioner className={className}>
+          <Menu.Content>
             <Menu.ItemGroup>{children}</Menu.ItemGroup>
           </Menu.Content>
         </Menu.Positioner>

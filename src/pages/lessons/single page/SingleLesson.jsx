@@ -23,11 +23,11 @@ export default function SingleLesson() {
   return (
     <>
       <CustomContainer className="!space-y-10">
-        <h1 className={`text-3xl font-bold rounded-xl bg-bg-gray px-2`}>
+        <h1 className={`lg:text-3xl text-xl font-bold rounded-xl bg-bg-gray px-2`}>
           {data?.data ? data.data.title : <SkeletonText noOfLines={1} />}
         </h1>
         {/* video player & lessons list */}
-        <div className="grid grid-cols-4 gap-10 min-h-[70vh] relative">
+        <div className="grid grid-cols-4 gap-4 min-h-[70vh] relative">
           <AnimatePresence mode="popLayout">
             <motion.div
               layout
@@ -62,7 +62,7 @@ export default function SingleLesson() {
             display: playerOptions.focus ? "none" : "block",
             opacity: playerOptions.focus ? 0 : 1,
           }}
-          className="bg-bg-gray/50 backdrop-blur-md inset-0 absolute z-10"
+          className="bg-bg-gray backdrop-blur-md inset-0 absolute z-10"
         />
       </AnimatePresence>
     </>

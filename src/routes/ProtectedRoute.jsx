@@ -15,7 +15,6 @@ export default function ProtectedRoute() {
   if (isError)
     return (
       <ErrorPage fetchErr={error}>
-        <p className="text-secondary">No user was found with these data</p>
         <Button className="!font-semibold" rounded={"full"} onClick={logout}>
           TRY LOGIN AGAIN
         </Button>

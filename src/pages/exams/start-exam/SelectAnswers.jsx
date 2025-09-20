@@ -15,7 +15,7 @@ export default function SelectAnswers({ data, setAnswers, answers }) {
   return (
     <>
       <RadioCard.Root
-        onValueChange={handleStoreAnswer}
+        onValueChange={(e) => handleStoreAnswer(e)}
         value={answers.find((q) => q.questionId === _id)?.selectedAnswer}
         variant={"surface"}
         colorPalette="blue"

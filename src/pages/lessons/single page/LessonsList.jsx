@@ -9,7 +9,7 @@ export default function LessonsList() {
   const { lessonsOwned, isLoading } = useUserLessons();
 
   return (
-    <div className="rounded-xl border-secondary/40 border bg-bg-gray/50 overflow-hidden h-full">
+    <div className="rounded-xl border-secondary/40 border bg-bg-gray overflow-hidden h-full">
       <h1 className="p-4 text-center font-bold bg-bg-gray">Lessons Owned</h1>
       {/* lessons */}
       <div>

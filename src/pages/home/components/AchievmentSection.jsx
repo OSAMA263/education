@@ -4,7 +4,7 @@ export default function AchievmentSection() {
   return (
     <section
       id="achivment"
-      className="border border-bg-gray py-12 rounded-xl grid grid-cols-4 gap-10"
+      className="border border-bg-gray py-12 rounded-xl grid lg:grid-cols-4 gap-10"
     >
       {users_amount.map(({ icon: Icon, label, number }) => (
         <div className="flex flex-col items-center gap-y-4" key={label}>

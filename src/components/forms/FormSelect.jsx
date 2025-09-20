@@ -1,9 +1,9 @@
-import { Field, Portal, Select } from "@chakra-ui/react";
+import { Field, Select } from "@chakra-ui/react";
 
 export default function FormSelect({ inpProps, register, errors }) {
   return (
     <Field.Root invalid={errors[inpProps.name]}>
-      <Field.Label className="!text-lg">{inpProps.label}</Field.Label>
+      <Field.Label className="md:!text-lg">{inpProps.label}</Field.Label>
       <Select.Root collection={inpProps.options} {...register(inpProps.name)}>
         <Select.HiddenSelect />
         <Select.Control>

@@ -2,19 +2,24 @@
 @theme {
   --color-secondary: #939090;
   --color-bg-secondary: white;
-  --color-bg-gray: #d7d7d7;
+  --color-bg-gray: #d7d7d77d;
 }
 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x:hidden ;
+  overflow-x: hidden;
   a {
     transition: all 0.3s;
     &.active {
       color: var(--color-secondary);
     }
+  }
+  input,
+  textarea,
+  select {
+    background-color: var(--color-bg-gray);
   }
   /* overrideing chakra styles */
   .chakra-menu__item {
@@ -29,6 +34,6 @@ html {
   transition: 0.3s background-color !important;
   &.dark {
     --color-bg-secondary: #202023;
-    --color-bg-gray: #202020;
+    --color-bg-gray: #20202077;
   }
 }

@@ -13,7 +13,7 @@ export default function FormInput(props) {
 
   return (
     <Field.Root className="!relative" invalid={errors[inpProps.name]}>
-      <Field.Label className="!text-lg">{inpProps.label}</Field.Label>
+      <Field.Label className="md:!text-lg">{inpProps.label}</Field.Label>
       <Group attached className="w-full">
         <Input
           {...inpProps}

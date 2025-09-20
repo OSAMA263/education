@@ -12,9 +12,8 @@ export default function Card({
 }) {
   return (
     <Box
-      _dark={{ bg: "gray.800" }}
       className={
-        "space-y-3 border rounded-2xl border-bg-gray px-6 py-8 flex flex-col " +
+        "space-y-3 border rounded-2xl bg-bg-gray border-gray-400/35 px-6 py-8 flex flex-col " +
         className
       }
     >
