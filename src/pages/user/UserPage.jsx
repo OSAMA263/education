@@ -17,7 +17,9 @@ export default function UserPage() {
     { label: "Phone", value: phoneNumber },
     {
       label: "Member Since",
-      value: created_at ? new Date(created_at).toLocaleDateString("en-GB") : null,
+      value: created_at
+        ? new Date(created_at).toLocaleDateString("en-GB")
+        : null,
     },
     { label: "Class Level", value: classLevel },
   ];

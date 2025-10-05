@@ -13,7 +13,6 @@ const useGetAllLessons = () => {
   return useQuery({
     queryKey: ["all-lessons"],
     queryFn: getAllLessonsRequest,
-    staleTime: 15 * 60 * 1000,
   });
 };
 
@@ -33,15 +32,15 @@ const useGetLessonById = (id, options = {}) => {
   });
 };
 
-const usePayLesson = () => {
+const usePayLesson = (userId) => {
   const query = useQueryClient();
 
   return useMutation({
-    mutationFn: (id) => payLessonRequest(id),
+    mutationFn: (id) => payLessonRequest(id, userId),
     onSuccess: () => {
-      toast("success", "You fucking bought it, congrats");
+      toast("success", "oh wow you bought it, congrats");
       // refetch the lesson after buying it
-      query.invalidateQueries({ queryKey: ["lesson-id",] });
+      query.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (err) => {
       toast("error", err, "the Lesson you trying to purchase does not exist");

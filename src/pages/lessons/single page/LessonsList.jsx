@@ -1,35 +1,48 @@
+import { getUserLessons } from "@/api/UserAPI";
 import Loader from "@/components/Loader";
+import { useGetAllLessons } from "@/hooks/useLessons";
+import { useGetUserLessons } from "@/hooks/useUser";
+import { useAuthData } from "@/routes/AuthProvider";
 import { useUserLessons } from "@/routes/LessonsProvider";
+import { isAvailable } from "@/utils/utils";
 import { Button } from "@chakra-ui/react";
 import { FaPlay } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 export default function LessonsList() {
   const { lessonId } = useParams();
-  const { lessonsOwned, isLoading } = useUserLessons();
+  const { profile } = useAuthData();
+  const { data: allLessons, isLoading } = useGetAllLessons();
+  const { data, isLoading: lo } = useGetUserLessons(profile?.id);
 
   return (
     <div className="rounded-xl border-secondary/40 border bg-bg-gray overflow-hidden h-full">
       <h1 className="p-4 text-center font-bold bg-bg-gray">Lessons Owned</h1>
       {/* lessons */}
       <div>
-        {isLoading ? (
+        {isLoading || lo ? (
           <div className="mt-10">
             <Loader />
           </div>
         ) : (
-          lessonsOwned.map(({ title, _id }) => (
-            <Button
-              asChild
-              key={_id}
-              variant={lessonId === _id ? "solid" : "outline"}
-              className="w-full !justify-between !py-6"
-            >
-              <Link to={"/lessons/" + _id}>
-                <FaPlay className="p-[1px]" /> {title}
-              </Link>
-            </Button>
-          ))
+          allLessons
+            ?.filter(
+              (lesson) =>
+                (lesson.price === 0 || data.includes(lesson.id)) &&
+                isAvailable(lesson.startDate)
+            )
+            .map(({ title, id }) => (
+              <Button
+                asChild
+                key={id}
+                variant={lessonId == id ? "solid" : "outline"}
+                className="w-full !justify-between !py-6"
+              >
+                <Link to={`/lessons/${id}`}>
+                  <FaPlay className="p-[1px]" /> {title}
+                </Link>
+              </Button>
+            ))
         )}
       </div>
     </div>

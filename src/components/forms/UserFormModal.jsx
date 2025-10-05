@@ -16,14 +16,13 @@ export default function UserFormModal({
   const [open, setOpen] = useState(false);
 
   const onSubmit = (data) => {
-    mutation(
-      { email: profile?.email, newPass: data },
-      {
-        onSuccess: () => {
-          setOpen(false);
-        },
-      }
-    );
+    const updatePass = { email: profile?.email, newPass: data };
+
+    mutation(data.newPassword ? updatePass : data, {
+      onSuccess: () => {
+        setOpen(false);
+      },
+    });
   };
 
   return (

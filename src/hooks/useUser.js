@@ -1,8 +1,7 @@
 import {
   changePassword,
-  deleteUser,
+  getUserLessons,
   getUserProfile,
-  getUserRequest,
   resetPassowrd,
   setOTP,
   updatePassword,
@@ -71,10 +70,18 @@ const useUpdateUser = (id) => {
   });
 };
 
+const useGetUserLessons = (userId) => {
+  return useQuery({
+    queryKey: ["user-lessons"],
+    queryFn: () => getUserLessons(userId),
+  });
+};
+
 export {
   useUpdatePassword,
   useUpdateUser,
   useGetUser,
   useSendOTP,
   useResetPassword,
+  useGetUserLessons,
 };

@@ -8,9 +8,7 @@ export default function VideoPlayer(props) {
   const handlePlayerOptions = (opt) => {
     setPlayerOptions((prev) => ({ ...prev, [opt]: !prev[opt] }));
   };
-  const publishedData = new Date(data?.scheduledDate).toLocaleDateString(
-    "en-GB"
-  );
+  const publishedData = new Date(data?.startDate).toLocaleDateString("en-GB");
 
   return (
     <div className="flex flex-col bg-bg-gray border border-secondary/40 rounded-xl overflow-hidden h-full">
@@ -47,7 +45,7 @@ export default function VideoPlayer(props) {
         </ButtonGroup>
         <p className="pe-2 space-x-2">
           <span className="font-semibold"> Published Data:</span>
-          <span className=" text-secondary">{publishedData}</span>
+          <span className="text-secondary">{publishedData}</span>
         </p>
       </div>
       {/* video description */}

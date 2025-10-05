@@ -107,6 +107,16 @@ const reauthenticateUser = async (email, oldPassword) => {
   return data;
 };
 
+const getUserLessons = async (userId) => {
+  const { data } = await supabase
+    .from("profiles")
+    .select("lessons")
+    .eq("id", userId)
+    .single();
+
+  return Array.isArray(data?.lessons) ? data?.lessons : [];
+};
+
 const getUserRequest = async () => {
   const { data } = await api.get(USER);
   return data;
@@ -138,4 +148,5 @@ export {
   reauthenticateUser,
   setOTP,
   resetPassowrd,
+  getUserLessons,
 };
