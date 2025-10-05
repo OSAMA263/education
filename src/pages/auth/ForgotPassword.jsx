@@ -8,7 +8,12 @@ import {
 import { emailSchema } from "@/utils/validations";
 import { z } from "zod";
 import { resetPasswordSchema } from "@/validations/ResetPasswordSchema";
-import { useForgotPassword, useResetPassword } from "@/hooks/useAuth";
+import {
+  useResetPassword,
+  useSendOTP,
+  useUpdatePassword,
+} from "@/hooks/useUser";
+import { resetPassowrd } from "@/api/UserAPI";
 
 export default function ForgotPassword({ loggedIn }) {
   const [resetpassword, setResetPassword] = useState(false);
@@ -16,7 +21,7 @@ export default function ForgotPassword({ loggedIn }) {
   return (
     <>
       {resetpassword ? (
-        <ResetPassword />
+        <ResetPassword setResetPassword={setResetPassword} />
       ) : (
         <ForgotPasswordForm setResetPassword={setResetPassword} />
       )}
@@ -39,7 +44,7 @@ export default function ForgotPassword({ loggedIn }) {
 
 // forgot password email input
 const ForgotPasswordForm = ({ setResetPassword }) => {
-  const { isPending, mutate } = useForgotPassword();
+  const { isPending, mutate } = useSendOTP();
 
   const onSubmit = (data) => {
     mutate(data, {
@@ -66,11 +71,17 @@ const ForgotPasswordForm = ({ setResetPassword }) => {
 };
 
 // reseting the password form
-const ResetPassword = () => {
+const ResetPassword = ({ setResetPassword }) => {
   const { isPending, mutate } = useResetPassword();
+  const updateMutation = useUpdatePassword();
 
   const onSubmit = (data) => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: ({ newPassword, email }) => {
+        updateMutation.mutate({ email, newPass: newPassword });
+        setResetPassword((prev) => !prev);
+      },
+    });
   };
 
   return (

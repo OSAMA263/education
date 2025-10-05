@@ -24,7 +24,7 @@ export default function ErrorPage({
 }
 
 const FetchError = ({ err, children }) => {
-  const badRequest = err?.response?.data.message||err.message;
+  const badRequest = err?.message || err.message;
 
   return (
     <div className="flex items-center flex-col">

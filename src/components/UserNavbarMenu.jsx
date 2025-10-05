@@ -11,10 +11,9 @@ import { useAuthData } from "@/routes/AuthProvider";
 import MenuWrapper from "./MenuWrapper";
 
 export default function UserNavbarMenu() {
-  const { userData } = useAuthData();
-
+  const { profile } = useAuthData();
   const userOptions = () => {
-    const links = userData.role === "user" ? student_options : admin_options;
+    const links = profile.role === "student" ? student_options : admin_options;
     const arr = [...links];
     return arr;
   };
@@ -26,7 +25,7 @@ export default function UserNavbarMenu() {
       className="border border-bg-gray [&_svg]:text-xl"
     >
       <Menu.ItemGroupLabel>
-        Logged in as {userData.fullName}
+        Logged in as {profile.fullName}
       </Menu.ItemGroupLabel>
       <Menu.Separator opacity={0.2} />
       {/* user options */}

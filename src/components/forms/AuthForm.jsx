@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormSelect from "./FormSelect";
 import FormInput from "./FormInput";
+import { toast } from "@/utils/utils";
 
 export default function AuthForm({
   formFields,
@@ -11,7 +12,7 @@ export default function AuthForm({
   title,
   submitText = "submit",
   validationSchema,
-  loading = false,
+  loading,
 }) {
   // add default values if the input have the prop values
   const defaultValues = Object.fromEntries(
@@ -24,7 +25,7 @@ export default function AuthForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(validationSchema),
     defaultValues,
@@ -36,7 +37,13 @@ export default function AuthForm({
 
       {/* ----------the form inputs -------- */}
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(async (data) => {
+          try {
+            await onSubmit(data);
+          } catch (err) {
+            toast("error", err);
+          }
+        })}
         className="w-full space-y-6"
       >
         {formFields?.map((inpProps, i) =>
@@ -47,7 +54,7 @@ export default function AuthForm({
           )
         )}
         <Button
-          loading={loading}
+          loading={loading || isSubmitting}
           loadingText="Loading..."
           className="!w-full"
           rounded={"lg"}

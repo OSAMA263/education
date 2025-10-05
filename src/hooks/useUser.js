@@ -1,34 +1,43 @@
 import {
+  changePassword,
   deleteUser,
+  getUserProfile,
   getUserRequest,
+  resetPassowrd,
+  setOTP,
   updatePassword,
+  updateProfile,
   updateUser,
 } from "@/api/UserAPI";
+import { supabase } from "@/utils/supabaseClient";
 import { getToken, logout, toast } from "@/utils/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // get user profile
 const useGetUser = () => {
-  const token = getToken();
-
   return useQuery({
-    queryKey: ["profile", token],
-    queryFn: getUserRequest,
-    retry: 1,
-    enabled: !!token,
-    staleTime: 10 * 60 * 1000,
+    queryKey: ["profile"],
+    queryFn: getUserProfile,
   });
 };
 
-// deletet the user
-const useDeleteUser = () => {
+const useSendOTP = () => {
   return useMutation({
-    mutationFn: deleteUser,
+    mutationFn: (email) => setOTP(email),
     onSuccess: () => {
-      logout();
+      toast("success", "OTP code was sent to your mail");
     },
-    onError: (err) => {
-      toast("error", err);
+    onError: (error) => {
+      toast("error", error);
+    },
+  });
+};
+
+const useResetPassword = () => {
+  return useMutation({
+    mutationFn: (data) => resetPassowrd(data),
+    onError: (error) => {
+      toast("error", error);
     },
   });
 };
@@ -36,7 +45,7 @@ const useDeleteUser = () => {
 // update the user password
 const useUpdatePassword = () => {
   return useMutation({
-    mutationFn: updatePassword,
+    mutationFn: ({ email, newPass }) => changePassword(email, newPass),
     onSuccess: () => {
       toast("success", "Your password has been updated!");
     },
@@ -47,11 +56,11 @@ const useUpdatePassword = () => {
 };
 
 // update user data
-const useUpdateUser = (userId) => {
+const useUpdateUser = (id) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (newData) => updateUser(newData, userId),
+    mutationFn: (newData) => updateProfile(newData, id),
     onSuccess: () => {
       toast("success", "Your profile has been updated!");
       queryClient.invalidateQueries({ queryKey: ["profile"] });
@@ -62,4 +71,10 @@ const useUpdateUser = (userId) => {
   });
 };
 
-export { useUpdatePassword, useUpdateUser, useDeleteUser, useGetUser };
+export {
+  useUpdatePassword,
+  useUpdateUser,
+  useGetUser,
+  useSendOTP,
+  useResetPassword,
+};

@@ -9,21 +9,21 @@ import { useUpdateUser } from "@/hooks/useUser";
 import UserFormModal from "@/components/forms/UserFormModal";
 
 export default function UpdateDataModal() {
-  const { userData } = useAuthData();
-  const { mutate, isPending } = useUpdateUser(userData._id);
+  const { profile } = useAuthData();
+  const { mutate, isPending } = useUpdateUser(profile?.id);
 
   // filter out classLevel if user is admin
   const neededInputs = () => {
     const filteredInputs = updateUserInputs.filter(
-      (inp) => !(userData?.role === "admin" && inp.name === "classLevel")
+      (inp) => !(profile?.role === "admin" && inp.name === "classLevel")
     );
 
-    return dataDefaultVals(filteredInputs, userData);
+    return dataDefaultVals(filteredInputs, profile);
   };
 
   const authFormProps = {
     validationSchema:
-      userData.role === "admin" ? updateAdminSchema : updateUserSchema,
+      profile.role === "admin" ? updateAdminSchema : updateUserSchema,
     formFields: neededInputs(),
     submitText: "Update data",
     loading: isPending,
