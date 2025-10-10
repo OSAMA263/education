@@ -117,6 +117,16 @@ const getUserLessons = async (userId) => {
   return Array.isArray(data?.lessons) ? data?.lessons : [];
 };
 
+const getUserExams = async (userId) => {
+  const { data } = await supabase
+    .from("profiles")
+    .select("exams")
+    .eq("id", userId)
+    .single();
+
+  return Array.isArray(data?.exams) ? data?.exams : [];
+};
+
 const getUserRequest = async () => {
   const { data } = await api.get(USER);
   return data;
@@ -149,4 +159,5 @@ export {
   setOTP,
   resetPassowrd,
   getUserLessons,
+  getUserExams,
 };

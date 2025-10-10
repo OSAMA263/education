@@ -1,15 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { FaGraduationCap, FaRegCalendarAlt } from "react-icons/fa";
 
-export default function Card({
-  children,
-  className,
-  description,
-  classLevel,
-  title,
-  availableDate,
-  expriedDate,
-}) {
+export default function Card({ exam, className, children }) {
+  const { description, classLevel, title, startDate, endDate } = exam;
+
+  const availableDate = new Date(startDate).toLocaleDateString("en-GB");
+  const expriedDate = new Date(endDate).toLocaleDateString("en-GB");
+
   return (
     <Box
       className={
@@ -25,10 +22,12 @@ export default function Card({
               <FaRegCalendarAlt />
               <p>Starts: {availableDate}</p>
             </div>
-            <div className="flex items-center gap-1">
-              <FaRegCalendarAlt />
-              <p>Ends: {expriedDate}</p>
-            </div>
+            {endDate && (
+              <div className="flex items-center gap-1">
+                <FaRegCalendarAlt />
+                <p>Ends: {expriedDate}</p>
+              </div>
+            )}
           </div>
         ) : (
           <>

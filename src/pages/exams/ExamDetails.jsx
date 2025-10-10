@@ -3,7 +3,7 @@ import PlainCard from "@/components/PlainCard";
 import { List } from "@chakra-ui/react";
 import { CiClock1, CiUser, CiCircleQuestion, CiWarning } from "react-icons/ci";
 
-export default function ExamDetails({examData}) {
+export default function ExamDetails({ examData }) {
   const { duration, title, questions, classLevel, description } = examData;
 
   const examInfo = [
@@ -17,7 +17,6 @@ export default function ExamDetails({examData}) {
       {/* exam details */}
       <PlainCard className={"flex flex-col gap-6"}>
         <h1 className="text-xl font-semibold flex items-center gap-2">
-          icons
           {title}
         </h1>
         <p className="text-secondary">{description}</p>
@@ -51,9 +50,10 @@ export default function ExamDetails({examData}) {
       <CustomAlert
         status="warning"
         title={"Warning"}
-        des={
-          "Once you start the exam, the timer will begin and cannot be paused. Make sure you have a stable internet connection and enough time to complete the exam."
-        }
+        des={[
+          "Once you start the exam, the timer will begin and cannot be paused. ",
+          "Once the timer runs out, the exam will be submitted automatically.",
+        ]}
       />
     </>
   );

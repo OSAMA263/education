@@ -8,16 +8,13 @@ import { useAuthData } from "@/routes/AuthProvider";
 
 export default function ExamsPage() {
   const { data, isLoading, error } = useGetAllExams();
-  const { userData } = useAuthData();
+  const { profile } = useAuthData();
 
   const examsByClassLevel = () => {
-    if (userData?.classLevel) {
-      return data?.data.filter(
-        (exam) => exam.classLevel === userData.classLevel
-      );
-    } else {
-      return data?.data;
+    if (profile?.role === "student") {
+      return data?.filter((exam) => exam.classLevel === profile.classLevel);
     }
+    return data;
   };
 
   return (
@@ -33,7 +30,7 @@ export default function ExamsPage() {
       ) : (
         <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
           {examsByClassLevel().map((exam) => (
-            <ExamsCard exam={exam} key={exam._id} />
+            <ExamsCard exam={exam} key={exam.id} />
           ))}
         </div>
       )}

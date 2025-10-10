@@ -7,7 +7,7 @@ import {
   submitExamRequest,
 } from "@/api/ExamsAPI";
 import { toast } from "@/utils/utils";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useGetAllExams = () => {
   return useQuery({
@@ -44,12 +44,14 @@ const useGetExamScore = (id) => {
   });
 };
 
-const useStartExam = () => {
+const useStartExam = (userId) => {
+  const query = useQueryClient();
+
   return useMutation({
-    mutationFn: (id) => startExamRequest(id),
-    //   onSuccess: (data) => {
-    // console.log(data)
-    //   },
+    mutationFn: (id) => startExamRequest(id, userId),
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: ["profile"] });
+    },
     onError: (err) => {
       toast("error", err);
     },
@@ -57,10 +59,13 @@ const useStartExam = () => {
 };
 
 const useSubmitExam = (id) => {
+  const query = useQueryClient();
+
   return useMutation({
-    mutationFn: (answers) => submitExamRequest(id, answers),
+    mutationFn: ({ answers, userId }) => submitExamRequest(id, answers, userId),
     onSuccess: () => {
       toast("success", "Your answers have been submitted.");
+      query.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (err) => {
       toast("error", err);

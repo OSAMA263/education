@@ -12,6 +12,16 @@ export default function LessonsPage() {
 
   if (error) return <ErrorPage message={error} />;
 
+  const lessonsByClassLevel = () => {
+    if (profile?.role === "student") {
+      return data?.filter(
+        (lesson) => lesson.classLevel === profile?.classLevel
+      );
+    }
+
+    return data;
+  };
+
   return (
     <CustomContainer>
       <SectionHeader
@@ -22,11 +32,9 @@ export default function LessonsPage() {
         <LoaderPage />
       ) : (
         <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-          {data
-            ?.filter((lesson) => lesson.classLevel === profile?.classLevel)
-            .map((lessonData) => (
-              <LessonsCard data={lessonData} key={lessonData.id} />
-            ))}
+          {lessonsByClassLevel().map((lessonData) => (
+            <LessonsCard data={lessonData} key={lessonData.id} />
+          ))}
         </div>
       )}
     </CustomContainer>

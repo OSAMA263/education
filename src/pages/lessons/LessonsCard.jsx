@@ -11,10 +11,7 @@ export default function LessonsCard({ data }) {
   const availableDate = new Date(startDate).toLocaleString();
 
   return (
-    <Card
-      {...{ description, classLevel, title, availableDate }}
-      className="space-y-10 justify-between"
-    >
+    <Card exam={data} className="space-y-10 justify-between">
       {/* price  */}
       <div className="grid grid-cols-2 items-center gap-4">
         <h1 className="font-semibold text-lg">

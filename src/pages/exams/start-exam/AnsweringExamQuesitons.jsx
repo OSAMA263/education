@@ -1,39 +1,46 @@
 import PlainCard from "@/components/PlainCard";
 import { Badge, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 import SelectAnswers from "./SelectAnswers";
-import { useGetQuesitonById } from "@/hooks/useQuesiton";
-import ErrorPage from "@/pages/ErrorPage";
-import LoaderPage from "@/pages/LoaderPage";
 import { useSubmitExam } from "@/hooks/useExams";
 import Modal from "@/components/Modal";
-import Countdown from "react-countdown";
+import { useAuthData } from "@/routes/AuthProvider";
+import { toast, useExamStatus } from "@/utils/utils";
+import Timer from "@/components/Timer";
 
 export default function AnsweringExamQuesitons({
   questions,
-  _id,
-  initialTime,
+  id,
+  endTime,
+  setExamStart,
 }) {
+  const { profile } = useAuthData();
+  const { examInProgress } = useExamStatus(id);
 
   const [currQuestion, setCurrQuestion] = useState(1);
   const [answers, setAnswers] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const { mutate, isPending } = useSubmitExam(_id);
-  const { data, isLoading, error } = useGetQuesitonById(
-    questions[currQuestion - 1]._id
-  );
+  const { mutate, isPending } = useSubmitExam(id);
 
   const mutationFn = () => {
-    mutate(answers, {
-      onSuccess: () => {
-        window.location.reload();
-      },
-    });
+    if (!examInProgress?.isSubmitted) {
+      mutate(
+        { answers, userId: profile?.id },
+        {
+          onSuccess: () => {
+            setOpen(false);
+            setExamStart(false);
+          },
+        }
+      );
+    }
   };
 
   const handleSubmitExam = () => {
+    if (examInProgress?.isSubmitted)
+      return toast("error", "ee", "Exam already submitted");
     if (questions.length !== answers.length) {
       setOpen(true);
     } else {
@@ -41,13 +48,18 @@ export default function AnsweringExamQuesitons({
     }
   };
 
-  function handleTimeRunsOut() {
-    if (answers.length > 0) {
-      mutationFn();
-    } else {
-      window.location.reload();
+  // set the selected answers for the score
+  useEffect(() => {
+    if (examInProgress?.isSubmitted) {
+      setAnswers(examInProgress.answers);
     }
-  }
+  }, []);
+
+  const TotalCorrectAnswers = answers.filter(
+    (ans) =>
+      ans.id == questions[ans.id].id &&
+      ans.answer == questions[ans.id].correctAnswer
+  );
 
   return (
     <>
@@ -60,13 +72,11 @@ export default function AnsweringExamQuesitons({
         </div>
 
         {/* question and answers options */}
-        {isLoading ? (
-          <LoaderPage className="!min-h-fit" />
-        ) : error ? (
-          <ErrorPage className="!min-h-fit" fetchErr={error} />
-        ) : (
-          <SelectAnswers data={data?.data} {...{ answers, setAnswers }} />
-        )}
+        <SelectAnswers
+          data={questions}
+          submitted={examInProgress?.isSubmitted}
+          {...{ answers, setAnswers, currQuestion }}
+        />
       </PlainCard>
 
       {/* questions controls */}
@@ -80,7 +90,13 @@ export default function AnsweringExamQuesitons({
           Previous
         </Button>
         <Badge size={"lg"}>
-          {answers.length}/{questions.length} Answered
+          {examInProgress?.isSubmitted
+            ? TotalCorrectAnswers.length
+            : answers.length}
+          /{questions.length}{" "}
+          {examInProgress?.isSubmitted
+            ? "Correct answers"
+            : "Answered questions"}
         </Badge>
         <Button
           onClick={() => setCurrQuestion((prev) => prev + 1)}
@@ -97,9 +113,10 @@ export default function AnsweringExamQuesitons({
         variant={"outline"}
         colorPalette={"blue"}
         loading={isPending}
+        disabled={examInProgress?.isSubmitted}
         className="!flex !justify-self-center"
       >
-        Submit Exam
+        {examInProgress?.isSubmitted ? "Submitted" : "Submit Exam"}
       </Button>
       <Modal
         openBtnClasses="!hidden"
@@ -126,10 +143,10 @@ export default function AnsweringExamQuesitons({
       </Modal>
 
       {/* asuto submit when times run out */}
-      <Countdown
-        date={Date.now() + initialTime}
-        onComplete={() => handleTimeRunsOut()}
-        renderer={() => null}
+      <Timer
+        onComplete={() => mutationFn()}
+        endTime={endTime}
+        renderNull={true}
       />
     </>
   );
