@@ -1,5 +1,6 @@
 import {
   changePassword,
+  getAllUsers,
   getUserLessons,
   getUserProfile,
   resetPassowrd,
@@ -13,6 +14,13 @@ import { getToken, logout, toast } from "@/utils/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // get user profile
+const useAllUsers = () => {
+  return useQuery({
+    queryKey: ["all-users"],
+    queryFn: getAllUsers,
+  });
+};
+
 const useGetUser = () => {
   return useQuery({
     queryKey: ["profile"],
@@ -84,4 +92,5 @@ export {
   useSendOTP,
   useResetPassword,
   useGetUserLessons,
+  useAllUsers
 };

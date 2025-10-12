@@ -5,6 +5,13 @@ import emailjs from "@emailjs/browser";
 
 const { USER, UPDATE_PASSWORD } = ENDPOINT;
 
+const getAllUsers = async () => {
+  const { data, error } = await supabase.from("profiles").select("*");
+
+  if (error) throw new Error(error);
+  return data;
+};
+
 const getUserProfile = async () => {
   const { data } = await supabase.auth.getUser();
 
@@ -160,4 +167,5 @@ export {
   resetPassowrd,
   getUserLessons,
   getUserExams,
+  getAllUsers,
 };

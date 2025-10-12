@@ -1,9 +1,5 @@
 import { useGetUser } from "@/hooks/useUser";
-import ErrorPage from "@/pages/ErrorPage";
-import LoaderPage from "@/pages/LoaderPage";
-import { getToken } from "@/utils/utils";
 import { createContext, useContext } from "react";
-import { Navigate } from "react-router-dom";
 
 const UserContext = createContext();
 

@@ -9,11 +9,13 @@ import { Button } from "@chakra-ui/react";
 
 export default function ProtectedRoute() {
   const token = getToken();
+  const { profile } = useAuthData();
   const { error, isLoading } = useAuthData();
 
   // display content depending on the fetch response
   if (isLoading) return <LoaderPage />;
   if (!token) return <Navigate to="/auth/login/" replace />;
+
   if (error)
     return (
       <ErrorPage fetchErr={error}>
@@ -27,6 +29,7 @@ export default function ProtectedRoute() {
       </ErrorPage>
     );
 
+  if (profile?.role === "admin") return <Navigate to="/dashboard/" replace />;
   return (
     <>
       <Navbar />
