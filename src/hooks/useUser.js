@@ -18,6 +18,7 @@ const useAllUsers = () => {
   return useQuery({
     queryKey: ["all-users"],
     queryFn: getAllUsers,
+    staleTime: 15 * 60 * 1000,
   });
 };
 
@@ -92,5 +93,5 @@ export {
   useSendOTP,
   useResetPassword,
   useGetUserLessons,
-  useAllUsers
+  useAllUsers,
 };

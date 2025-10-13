@@ -32,7 +32,7 @@ export default function AppRoutes() {
           }
         >
           {/* student only */}
-          <Route path="/" element={<Home />} />
+          <Route index path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/lessons" element={<Lessons />} />
           <Route
@@ -52,7 +52,7 @@ export default function AppRoutes() {
         </Route>
 
         <Route
-          path="/dashboard"
+          path="/dashboard/*"
           element={
             <UserProvider>
               <Dashboard />

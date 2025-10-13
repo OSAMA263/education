@@ -13,6 +13,7 @@ const useGetAllLessons = () => {
   return useQuery({
     queryKey: ["all-lessons"],
     queryFn: getAllLessonsRequest,
+    staleTime: 15 * 60 * 1000,
   });
 };
 

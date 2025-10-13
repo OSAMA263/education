@@ -70,7 +70,6 @@ const useExamStatus = (examId, data) => {
       ? new Date(startedAt.getTime() + data.duration * 60 * 1000)
       : null;
 
-
   const stillRunning = dateNow < expiresAt;
   const timesUp = dateNow >= expiresAt;
 
@@ -106,6 +105,18 @@ const useExamStatus = (examId, data) => {
   };
 };
 
+const checkIfDate = ([key, val]) => {
+  const isDate = (val) => {
+    const date = new Date(val);
+    return !isNaN(date.getTime());
+  };
+
+  if (key == "id" || key == "price" || key == "duration") return val;
+  if (isDate(key !== "id" && val))
+    return new Date(val).toLocaleDateString("en-GB");
+  return val.length > 30 ? val.slice(0, 30) + "..." : val;
+};
+
 export {
   getToken,
   errorHandler,
@@ -114,4 +125,5 @@ export {
   dataDefaultVals,
   isAvailable,
   useExamStatus,
+  checkIfDate,
 };

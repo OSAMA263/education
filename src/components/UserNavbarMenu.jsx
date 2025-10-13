@@ -51,5 +51,5 @@ const student_options = [
 
 const admin_options = [
   { label: "Profile", link: "/user", icon: FaRegUserCircle },
-  { label: "dashboard", link: "/dashboard", icon: FaChartPie },
+  { label: "dashboard", link: "/dashboard/base", icon: FaChartPie },
 ];

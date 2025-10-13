@@ -29,7 +29,8 @@ export default function ProtectedRoute() {
       </ErrorPage>
     );
 
-  if (profile?.role === "admin") return <Navigate to="/dashboard/" replace />;
+  if (profile?.role === "admin")
+    return <Navigate to="/dashboard/base" replace />;
   return (
     <>
       <Navbar />
