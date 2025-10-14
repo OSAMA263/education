@@ -1,26 +1,25 @@
 /* eslint-disable no-useless-escape */
 import { toaster } from "@/components/ui/toaster";
-import { useGetRemainTime } from "@/hooks/useExams";
+import { useAuthData } from "@/routes/AuthProvider";
 
 const getToken = () => localStorage.getItem("token");
 
 // error message handler
 function errorHandler(err, message) {
-  const msg =
-    err?.response?.data?.message || err?.message || "something fucked";
+  const msg = err?.message || "something fucked";
 
   // return custom message in anyerror
   if (message) return message;
 
   // specific user error case
   // i have to do that cuz the api res message are not good
-  if (msg.includes("user already exist")) {
-    return "Email or phone number is already used";
-  } else if (msg.includes("invalid password")) {
-    return "Your old password is not correct";
-  } else if (msg.includes('\"newPassword\" contains an invalid value')) {
-    return "New password can not be the same as the old password";
-  }
+  // if (msg.includes("user already exist")) {
+  //   return "Email or phone number is already used";
+  // } else if (msg.includes("invalid password")) {
+  //   return "Your old password is not correct";
+  // } else if (msg.includes('\"newPassword\" contains an invalid value')) {
+  //   return "New password can not be the same as the old password";
+  // }
 
   return msg;
 }
@@ -56,27 +55,55 @@ const isAvailable = (itemDate) => {
   return isAvailable;
 };
 
-const useExamStatus = (examId) => {
-  const { data, isLoading, error } = useGetRemainTime(examId);
-  const remainTime = data?.data?.remainingTime;
+const useExamStatus = (examId, data) => {
+  const { profile } = useAuthData();
+  const dateNow = new Date();
+  let btnText = "Loading...";
 
-  
-  const isDisabled =
-    error?.response?.status === 400 ||
-    remainTime === 0 ||
-    remainTime?.seconds === 0;
+  const examInProgress =
+    Array.isArray(profile?.exams) &&
+    profile?.exams.find((exam) => exam.id == examId);
 
-  let buttonText = "";
+  const startedAt = new Date(examInProgress?.created_at);
+  const expiresAt =
+    startedAt && data?.duration
+      ? new Date(startedAt.getTime() + data.duration * 60 * 1000)
+      : null;
 
-  if (isDisabled) {
-    buttonText = "Exam already submitted";
-  } else if (remainTime?.seconds > 0) {
-    buttonText = "Continue exam";
+
+  const stillRunning = dateNow < expiresAt;
+  const timesUp = dateNow >= expiresAt;
+
+  const expired = isAvailable(data?.endDate);
+  const available = isAvailable(data?.startDate) && !expired;
+
+  // if the student started the exam already
+  if (examInProgress) {
+    if (timesUp || examInProgress?.isSubmitted) {
+      btnText = "Show score";
+    } else if (stillRunning) {
+      btnText = "Continue exam";
+    }
+    // if the student didnt start the exam
   } else {
-    buttonText = "Start exam";
+    if (expired) {
+      btnText = "Exam is expired";
+    } else if (!available) {
+      btnText = "Exam isnt available yet";
+    } else {
+      btnText = "Take exam";
+    }
   }
 
-  return { isLoading, isDisabled, buttonText, remainTime };
+  return {
+    examInProgress,
+    stillRunning,
+    timesUp,
+    expired,
+    available,
+    btnText,
+    expiresAt,
+  };
 };
 
 export {

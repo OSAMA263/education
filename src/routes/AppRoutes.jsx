@@ -49,9 +49,16 @@ export default function AppRoutes() {
           <Route path="/user" element={<User />} />
 
           {/* admin only */}
-          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
+        <Route
+          path="/dashboard"
+          element={
+            <UserProvider>
+              <Dashboard />
+            </UserProvider>
+          }
+        />
         {/* 404 page */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>

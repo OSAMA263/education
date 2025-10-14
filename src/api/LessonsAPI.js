@@ -1,19 +1,39 @@
 import { api, ENDPOINT } from "@/utils/api";
+import { supabase } from "@/utils/supabaseClient";
+import { getUserLessons } from "./UserAPI";
 
 const { LESSON } = ENDPOINT;
 
 const getAllLessonsRequest = async () => {
-  const { data } = await api.get(LESSON);
+  const { data, error } = await supabase.from("lessons").select("*");
+
+  if (error) throw new Error(error);
   return data;
+};
+
+const payLessonRequest = async (id, userId) => {
+  const lessons = await getUserLessons(userId);
+  const updatedLessons = [...(lessons || []), id];
+
+  const { data: upLessons, error } = await supabase
+    .from("profiles")
+    .update({ lessons: updatedLessons })
+    .eq("id", userId);
+
+  if (error) throw error;
+
+  return upLessons;
 };
 
 const getLessonByIdRequest = async (lessonId) => {
-  const { data } = await api.get(LESSON + lessonId);
-  return data;
-};
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*")
+    .eq("id", lessonId)
+    .single();
 
-const payLessonRequest = async (lessonId) => {
-  const { data } = await api.post(`${LESSON}pay/${lessonId}`);
+  if (error) throw error;
+
   return data;
 };
 

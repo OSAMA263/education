@@ -8,13 +8,6 @@ const updateUserInputs = [
     name: "fullName",
   },
   {
-    label: "Email",
-    type: "email",
-    placeholder: "example@gmail.com",
-    name: "email",
-    autoComplete: "email",
-  },
-  {
     label: "Phone Number",
     type: "tel",
     placeholder: "01234567891",

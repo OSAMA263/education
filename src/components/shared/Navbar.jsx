@@ -11,7 +11,7 @@ import { Menu } from "@chakra-ui/react";
 
 export default function Navbar() {
   const ref = useRef(null);
-  
+
   return (
     <header
       ref={ref}
@@ -20,18 +20,20 @@ export default function Navbar() {
       <CustomContainer className="!py-0 !space-y-0 min-h-fit">
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <MenuWrapper
-              ref={ref}
-              className={"!w-[97%]"}
-              btnVariant="surface"
-              openBtnIcon={<IoMenu />}
-            >
-              {nav_links.map(({ label, link }) => (
-                <Menu.Item asChild key={label}>
-                  <NavLink to={link}>{label}</NavLink>
-                </Menu.Item>
-              ))}
-            </MenuWrapper>
+            <div className="md:hidden">
+              <MenuWrapper
+                ref={ref}
+                className={"!w-[97%]"}
+                btnVariant="surface"
+                openBtnIcon={<IoMenu />}
+              >
+                {nav_links.map(({ label, link }) => (
+                  <Menu.Item asChild key={label}>
+                    <NavLink to={link}>{label}</NavLink>
+                  </Menu.Item>
+                ))}
+              </MenuWrapper>
+            </div>
             <Logo />
           </div>
           {/* navigation links */}

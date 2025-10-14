@@ -22,9 +22,11 @@ export default function SingleLesson() {
 
   return (
     <>
-      <CustomContainer className="!space-y-10">
-        <h1 className={`lg:text-3xl text-xl font-bold rounded-xl bg-bg-gray px-2`}>
-          {data?.data ? data.data.title : <SkeletonText noOfLines={1} />}
+      <CustomContainer lg="90%" xl="90%" className="!space-y-10">
+        <h1
+          className={`lg:text-3xl text-xl font-bold rounded-xl bg-bg-gray px-2`}
+        >
+          {data ? data?.title : <SkeletonText noOfLines={1} />}
         </h1>
         {/* video player & lessons list */}
         <div className="grid grid-cols-4 gap-4 min-h-[70vh] relative">
@@ -32,17 +34,17 @@ export default function SingleLesson() {
             <motion.div
               layout
               key="player"
-              className={`z-50 h-full ${playerOptions.expand ? "col-span-4" : "col-span-3"}`}
+              className={`z-50 h-full max-xl:!col-span-4 ${playerOptions.expand ? "col-span-4" : "col-span-3"}`}
               transition={{ duration: 0.3 }}
             >
-              <VideoPlayer {...{ playerOptions, setPlayerOptions, ...data }} />
+              <VideoPlayer {...{ playerOptions, setPlayerOptions, data }} />
             </motion.div>
             {!playerOptions.expand && (
               <motion.div
                 layout
                 key="lesson-list"
                 transition={{ duration: 0.3 }}
-                className={`col-span-1 overflow-hidden`}
+                className={`max-xl:hidden col-span-1 overflow-hidden`}
               >
                 <LessonsList />
               </motion.div>
@@ -62,7 +64,7 @@ export default function SingleLesson() {
             display: playerOptions.focus ? "none" : "block",
             opacity: playerOptions.focus ? 0 : 1,
           }}
-          className="bg-bg-gray backdrop-blur-md inset-0 absolute z-10"
+          className="bg-black/50 backdrop-blur-md inset-0 absolute z-10"
         />
       </AnimatePresence>
     </>

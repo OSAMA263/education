@@ -4,24 +4,32 @@ import LoaderPage from "@/pages/LoaderPage";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthData } from "./AuthProvider";
 import ErrorPage from "@/pages/ErrorPage";
-import { logout } from "@/utils/utils";
+import { getToken, logout } from "@/utils/utils";
 import { Button } from "@chakra-ui/react";
 
 export default function ProtectedRoute() {
-  const { userData, isLoading, isError, error } = useAuthData();
+  const token = getToken();
+  const { profile } = useAuthData();
+  const { error, isLoading } = useAuthData();
 
   // display content depending on the fetch response
   if (isLoading) return <LoaderPage />;
-  if (isError)
+  if (!token) return <Navigate to="/auth/login/" replace />;
+
+  if (error)
     return (
       <ErrorPage fetchErr={error}>
-        <Button className="!font-semibold" rounded={"full"} onClick={logout}>
+        <Button
+          className="!font-semibold mt-2"
+          rounded={"full"}
+          onClick={logout}
+        >
           TRY LOGIN AGAIN
         </Button>
       </ErrorPage>
     );
-  if (!userData?._id) return <Navigate to="/auth/login/" replace />;
 
+  if (profile?.role === "admin") return <Navigate to="/dashboard/" replace />;
   return (
     <>
       <Navbar />

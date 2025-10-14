@@ -1,10 +1,9 @@
 import {
   useGetExamById,
-  useGetRemainTime,
   useStartExam,
 } from "@/hooks/useExams";
-import { isAvailable, useExamStatus } from "@/utils/utils";
-import { Link, useParams } from "react-router-dom";
+import {  useExamStatus } from "@/utils/utils";
+import { useParams } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
 import { Button } from "@chakra-ui/react";
 import LoaderPage from "../LoaderPage";
@@ -12,85 +11,59 @@ import CustomContainer from "@/components/layout/CustomContainer";
 import { useState } from "react";
 import ExamDetails from "./ExamDetails";
 import StartExam from "./StartExam";
-import ScoreModal from "./start-exam/ScoreModal";
+import { useAuthData } from "@/routes/AuthProvider";
 
 export default function SingleExamPage() {
-  const [open, setOpen] = useState(false);
+  const { profile } = useAuthData();
   const { examId } = useParams();
-  const { data, error: examErr } = useGetRemainTime(examId);
 
-  const { mutate, isPending } = useStartExam();
+  const { mutate, isPending } = useStartExam(profile?.id);
+  const { data: examData, isLoading, error } = useGetExamById(examId);
 
-  const {
-    isDisabled,
-    buttonText,
-    isLoading: btnLoading,
-  } = useExamStatus(examId);
-
-  const { data: examDetails, isLoading, error } = useGetExamById(examId);
-  const examData = examDetails?.data;
+  const { examInProgress, expired, available, btnText, expiresAt } =
+    useExamStatus(examId, examData);
 
   const [examStart, setExamStart] = useState(false);
 
-  // handle ui if a dumbass took a not available examid and paste it in the url
-  const expired = isAvailable(examData?.endDate);
-  const available = isAvailable(examData?.startDate) && !expired;
-
   if (isLoading) return <LoaderPage />;
-  if (error || expired || !available) return <ExamStatus />;
+  if (error) return <ErrorPage />;
 
   // start exam funcinality
   const handleStartExam = () => {
-    mutate(examId, {
-      onSuccess: () => {
-        setExamStart(true);
-      },
-    });
+    if (!examInProgress) {
+      mutate(examId);
+    }
+    setExamStart(true);
   };
 
   return (
     <CustomContainer xl="55%" className="!space-y-14">
       <h1 className="font-semibold text-3xl text-center">
-        Exam {examStart ? "Questions" : "Details"}
+        {examStart ? examData?.title : "Exam Details"}
       </h1>
       {examStart ? (
-        <StartExam examData={examData} />
+        <StartExam
+          setExamStart={setExamStart}
+          examData={examData}
+          endTime={expiresAt}
+          submitted={examInProgress?.isSubmitted}
+        />
       ) : (
         <>
           <ExamDetails examData={examData} />
-          {data?.message === "Time is up" ||
-          examErr?.response.status === 400 ? (
-            // show score modal
-            <ScoreModal {...{ open, setOpen, examData }} />
-          ) : (
-            // {/* start exam btn */}
-            <Button
-              variant={"surface"}
-              colorPalette={"blue"}
-              className="!w-fit place-self-center"
-              onClick={handleStartExam}
-              loading={btnLoading || isPending}
-              disabled={isDisabled}
-            >
-              {buttonText}
-            </Button>
-          )}
+          {/* start exam btn */}
+          <Button
+            variant={"surface"}
+            colorPalette={expired || !available ? "gray" : "blue"}
+            className="!w-fit place-self-center"
+            onClick={handleStartExam}
+            loading={isPending}
+            disabled={expired || !available}
+          >
+            {btnText}
+          </Button>
         </>
       )}
     </CustomContainer>
   );
 }
-
-// if the exam is expired or not yet available
-const ExamStatus = () => {
-  return (
-    <ErrorPage fetchErr>
-      <p className="text-secondary">
-        THIS EXAM HAS EXPIRED OR IS NOT AVAILABLE FOR YOU
-      </p>
-      <Button rounded={"full"} asChild>
-        <Link to={"/exams"}>Go Back</Link>
-      </Button>
-    </ErrorPage>
-  );
-};

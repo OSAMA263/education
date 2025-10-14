@@ -1,25 +1,67 @@
 import { ENDPOINT, api } from "@/utils/api";
+import { supabase } from "@/utils/supabaseClient";
+import { getUserExams } from "./UserAPI";
 
 const { EXAM, EXAM_START, EXAM_SUBMIT, STUDENT_EXAM_SCORE, REMAINING_TIME } =
   ENDPOINT;
 
 const getAllExamsRequest = async () => {
-  const { data } = await api.get(EXAM);
+  const { data, error } = await supabase.from("exams").select("*");
+
+  if (error) throw new Error(error);
   return data;
 };
 
 const getExamByIdRequest = async (id) => {
-  const { data } = await api.get(`${EXAM}get/${id}`);
+  const { data, error } = await supabase
+    .from("exams")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw error;
+
   return data;
 };
 
-const startExamRequest = async (id) => {
-  const { data } = await api.post(EXAM_START + id);
+const startExamRequest = async (id, userId) => {
+  const exams = await getUserExams(userId);
+
+  const updatedExams = [
+    {
+      id,
+      answers: [],
+      isSubmitted: false,
+      created_at: new Date().toISOString(),
+    },
+    ...(exams || []),
+  ];
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({ exams: updatedExams })
+    .eq("id", userId);
+
+  if (error) throw new Error(error);
+
   return data;
 };
 
-const submitExamRequest = async (id, examAnswers) => {
-  const { data } = await api.post(EXAM_SUBMIT + id, { answers: examAnswers });
+const submitExamRequest = async (id, examAnswers, userId) => {
+  const exams = await getUserExams(userId);
+
+  const updatedExams = exams.map((exam) =>
+    exam.id == id ? { ...exam, answers: examAnswers||[], isSubmitted: true } : exam
+  );
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({ exams: updatedExams })
+    .eq("id", userId)
+    .select();
+
+  if (error) throw new Error(error);
+
   return data;
 };
 

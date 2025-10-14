@@ -9,16 +9,17 @@ import DeleteAccountModal from "./modals/DeleteAccountModal";
 import { useAuthData } from "@/routes/AuthProvider";
 
 export default function UserPage() {
-  const { userData } = useAuthData();
-  const { fullName, email, role, phoneNumber, createdAt, classLevel } =
-    userData;
-
+  const { profile } = useAuthData();
+  const { fullName, email, role, phoneNumber, created_at, classLevel } =
+    profile;
   const userDetails = [
     { label: "Email", value: email },
     { label: "Phone", value: phoneNumber },
     {
       label: "Member Since",
-      value: createdAt ? new Date(createdAt).toLocaleDateString("en-GB") : null,
+      value: created_at
+        ? new Date(created_at).toLocaleDateString("en-GB")
+        : null,
     },
     { label: "Class Level", value: classLevel },
   ];
@@ -61,9 +62,9 @@ export default function UserPage() {
             <Menu.Item asChild>
               <UpdatePasswordModal />
             </Menu.Item>
-            <Menu.Item asChild>
+            {/* <Menu.Item asChild>
               <DeleteAccountModal email={email} />
-            </Menu.Item>
+            </Menu.Item> */}
           </MenuWrapper>
         </div>
       </div>

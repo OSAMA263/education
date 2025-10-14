@@ -9,11 +9,11 @@ import CustomAlert from "@/components/CustomAlert";
 import { login_inputs } from "./inputs_data_type";
 
 export default function Login() {
-  const { isPending, mutate } = useLogin();
   const [role, setRole] = useState("student");
+  const { logIn } = useLogin();
 
-  const onSubmit = (formData) => {
-    mutate(formData);
+  const onSubmit = async (formData) => {
+    await logIn(formData);
   };
 
   const formFields = login_inputs.map((input) => ({
@@ -50,7 +50,6 @@ export default function Login() {
         formFields={formFields}
         validationSchema={LoginSchema}
         submitText="Login"
-        loading={isPending}
         onSubmit={onSubmit}
       />
 

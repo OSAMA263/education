@@ -1,9 +1,5 @@
-import {
-  forgotPasswordRequest,
-  loginRequest,
-  registerRequest,
-  resetPasswordRequest,
-} from "@/api/AuthAPI";
+import { forgotPasswordRequest, resetPasswordRequest } from "@/api/AuthAPI";
+import { supabase } from "@/utils/supabaseClient";
 import { toast } from "@/utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -12,35 +8,55 @@ import { useNavigate } from "react-router-dom";
 const useLogin = () => {
   const navigate = useNavigate();
 
-  return useMutation({
-    mutationFn: loginRequest,
-    onSuccess: (data) => {
-      localStorage.setItem("token", data?.token);
+  const logIn = async (formData) => {
+    const { data, error } = await supabase.auth.signInWithPassword(formData);
+    if (error) return toast("error", error);
+
+    if (data) {
+      localStorage.setItem("token", data?.session.access_token);
       navigate("/", { replace: true });
-    },
-    onError: (err) => {
-      toast("error", err);
-    },
-  });
+    }
+  };
+  return { logIn };
 };
 
 // register
 const useSignUp = () => {
   const navigate = useNavigate();
 
-  return useMutation({
-    mutationFn: (formData) => registerRequest(formData),
-    onSuccess: () => {
-      toast(
-        "success",
-        "We’ve sent a verification email to your address — please check your inbox in a minute to verify it."
-      );
+  const signUp = async ({
+    email,
+    password,
+    classLevel,
+    fullName,
+    phoneNumber,
+  }) => {
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) return toast("error", error);
+
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert([
+        {
+          id: data.user.id,
+          phoneNumber,
+          email,
+          classLevel,
+          fullName,
+          role: "student",
+        },
+      ]);
+    if (profileError) return toast("error", error);
+
+    if (data) {
       navigate("/auth/login", { replace: true });
-    },
-    onError: (error) => {
-      toast("error", error);
-    },
-  });
+      toast("success", "Account has been created successfully!");
+    }
+
+    return data.user;
+  };
+
+  return { signUp };
 };
 
 // send opt code to email

@@ -4,9 +4,23 @@ import SectionHeader from "../../components/shared/SectionHeader";
 import LessonsCard from "./LessonsCard";
 import LoaderPage from "../LoaderPage";
 import ErrorPage from "../ErrorPage";
+import { useAuthData } from "@/routes/AuthProvider";
 
 export default function LessonsPage() {
   const { data, isLoading, error } = useGetAllLessons();
+  const { profile } = useAuthData();
+
+  if (error) return <ErrorPage message={error} />;
+
+  const lessonsByClassLevel = () => {
+    if (profile?.role === "student") {
+      return data?.filter(
+        (lesson) => lesson.classLevel === profile?.classLevel
+      );
+    }
+
+    return data;
+  };
 
   return (
     <CustomContainer>
@@ -16,12 +30,10 @@ export default function LessonsPage() {
       />
       {isLoading ? (
         <LoaderPage />
-      ) : error ? (
-        <ErrorPage message={error} />
       ) : (
         <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-          {data?.data.map((lessonData) => (
-            <LessonsCard data={lessonData} key={lessonData._id} />
+          {lessonsByClassLevel().map((lessonData) => (
+            <LessonsCard data={lessonData} key={lessonData.id} />
           ))}
         </div>
       )}

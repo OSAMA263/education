@@ -5,10 +5,10 @@ import { useSignUp } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 
 export default function Register() {
-  const { isPending, mutate } = useSignUp();
+  const { signUp } = useSignUp();
 
-  const onSubmit = (formData) => {
-    mutate(formData);
+  const onSubmit = async (fromData) => {
+    await signUp(fromData);
   };
 
   return (
@@ -19,7 +19,6 @@ export default function Register() {
         submitText="Sign up"
         validationSchema={registerSchema}
         onSubmit={onSubmit}
-        loading={isPending}
       />
       <h1>
         Already have an account? <Link to="/auth/login">login</Link>

@@ -1,11 +1,11 @@
 import Modal from "@/components/Modal";
-import { useDeleteUser } from "@/hooks/useUser";
+// import { useDeleteUser } from "@/hooks/useUser";
 import { toast } from "@/utils/utils";
 import { Button } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function DeleteAccountModal({ createdAt }) {
-  const { mutate } = useDeleteUser();
+  // const { mutate } = useDeleteUser();
   const [open, setOpen] = useState(false);
 
   const handleDelete = () => {
@@ -17,7 +17,7 @@ export default function DeleteAccountModal({ createdAt }) {
       return toast("error", "", "Not allowed to delete the main acc");
     }
 
-    mutate();
+    // mutate();
     setOpen(false);
   };
 
