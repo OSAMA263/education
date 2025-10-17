@@ -3,7 +3,6 @@ import { Suspense, lazy, useEffect } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import LoaderPage from "@/pages/LoaderPage";
 import UserProvider from "./AuthProvider";
-import LessonsProvider from "./LessonsProvider";
 
 export default function AppRoutes() {
   const { pathname } = useLocation();
@@ -38,9 +37,7 @@ export default function AppRoutes() {
           <Route
             path="/lessons/:lessonId"
             element={
-              <LessonsProvider>
                 <SingleLesson />
-              </LessonsProvider>
             }
           />
           <Route path="/exams" element={<Exams />} />

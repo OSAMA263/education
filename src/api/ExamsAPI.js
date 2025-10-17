@@ -6,7 +6,10 @@ const { EXAM, EXAM_START, EXAM_SUBMIT, STUDENT_EXAM_SCORE, REMAINING_TIME } =
   ENDPOINT;
 
 const getAllExamsRequest = async () => {
-  const { data, error } = await supabase.from("exams").select("*");
+  const { data, error } = await supabase
+    .from("exams")
+    .select("*")
+    .order("created_at");
 
   if (error) throw new Error(error);
   return data;
@@ -51,7 +54,9 @@ const submitExamRequest = async (id, examAnswers, userId) => {
   const exams = await getUserExams(userId);
 
   const updatedExams = exams.map((exam) =>
-    exam.id == id ? { ...exam, answers: examAnswers||[], isSubmitted: true } : exam
+    exam.id == id
+      ? { ...exam, answers: examAnswers || [], isSubmitted: true }
+      : exam
   );
 
   const { data, error } = await supabase

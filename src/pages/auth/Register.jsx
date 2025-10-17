@@ -8,7 +8,7 @@ export default function Register() {
   const { signUp } = useSignUp();
 
   const onSubmit = async (fromData) => {
-    await signUp(fromData);
+    await signUp({ ...fromData, role: "student" });
   };
 
   return (

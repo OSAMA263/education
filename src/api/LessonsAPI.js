@@ -5,7 +5,10 @@ import { getUserLessons } from "./UserAPI";
 const { LESSON } = ENDPOINT;
 
 const getAllLessonsRequest = async () => {
-  const { data, error } = await supabase.from("lessons").select("*");
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*")
+    .order("created_at");
 
   if (error) throw new Error(error);
   return data;

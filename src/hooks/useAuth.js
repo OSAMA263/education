@@ -1,7 +1,7 @@
 import { forgotPasswordRequest, resetPasswordRequest } from "@/api/AuthAPI";
 import { supabase } from "@/utils/supabaseClient";
-import { toast } from "@/utils/utils";
-import { useMutation } from "@tanstack/react-query";
+import { getToken, toast } from "@/utils/utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 // login
@@ -23,6 +23,7 @@ const useLogin = () => {
 // register
 const useSignUp = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const signUp = async ({
     email,
@@ -30,28 +31,35 @@ const useSignUp = () => {
     classLevel,
     fullName,
     phoneNumber,
+    role,
   }) => {
+    const token = getToken();
+
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) return toast("error", error);
 
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert([
-        {
-          id: data.user.id,
-          phoneNumber,
-          email,
-          classLevel,
-          fullName,
-          role: "student",
-        },
-      ]);
+    const { error: profileError } = await supabase.from("profiles").insert([
+      {
+        id: data.user.id,
+        phoneNumber,
+        email,
+        classLevel,
+        fullName,
+        role,
+      },
+    ]);
     if (profileError) return toast("error", error);
 
-    if (data) {
+    // if a user created an aaccount
+    if (data && !token) {
       navigate("/auth/login", { replace: true });
-      toast("success", "Account has been created successfully!");
     }
+    // if admin created an accont
+    if (token) {
+      navigate("/dashboard/base", { replace: true });
+    }
+    queryClient.invalidateQueries(["all-users"]);
+    toast("success", "Account has been created successfully!");
 
     return data.user;
   };

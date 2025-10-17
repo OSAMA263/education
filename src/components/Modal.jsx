@@ -11,6 +11,7 @@ export default function Modal(props) {
     open,
     setOpen,
     btnVariant = "outline",
+    noOpenBtn,
     ...rest
   } = props;
 
@@ -25,22 +26,24 @@ export default function Modal(props) {
         placement={"center"}
         {...rest}
       >
-        <Dialog.Trigger asChild>
-          <Button
-            p={0}
-            outline={0}
-            variant={btnVariant}
-            className={`w-full ${openBtnClasses}`}
-          >
-            {openBtnIcon}
-            {openModalContent}
-          </Button>
-        </Dialog.Trigger>
+        {!noOpenBtn && (
+          <Dialog.Trigger asChild>
+            <Button
+              p={0}
+              outline={0}
+              variant={btnVariant}
+              className={`w-full ${openBtnClasses}`}
+            >
+              {openBtnIcon}
+              {openModalContent}
+            </Button>
+          </Dialog.Trigger>
+        )}
+
         <Portal>
           <Dialog.Backdrop />
           <Dialog.Positioner>
             <Dialog.Content p={10} gap={10}>
-              
               <Dialog.Header justifyContent={"center"}>
                 <Dialog.Title className="!text-bold lg:!text-3xl ">
                   {title}

@@ -6,7 +6,10 @@ import emailjs from "@emailjs/browser";
 const { USER, UPDATE_PASSWORD } = ENDPOINT;
 
 const getAllUsers = async () => {
-  const { data, error } = await supabase.from("profiles").select("*");
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .order("created_at");
 
   if (error) throw new Error(error);
   return data;

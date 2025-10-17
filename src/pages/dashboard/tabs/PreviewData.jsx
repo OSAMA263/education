@@ -22,7 +22,7 @@ export default function PreviewData() {
           return (
             <PlainCard className="p-14" key={key}>
               <h1 className="text-xl font-bold capitalize">
-                {key}:{" "}
+                {key} :{" "}
                 <span className="text-secondary">{item[key]?.length}</span>
               </h1>
             </PlainCard>

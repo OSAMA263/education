@@ -1,13 +1,13 @@
 import { useAuthData } from "@/routes/AuthProvider";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PreviewData from "./tabs/PreviewData";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { lazy } from "react";
+import { ProfileContent } from "../user/UserPage";
 
 export default function Dashboardpage() {
   const { profile } = useAuthData();
-  // if (profile?.role !== "admin") return <Navigate to="/" replace />;
-  const { pathname } = useLocation();
+  if (profile?.role !== "admin") return <Navigate to="/" replace />;
 
   return (
     <DashboardLayout>
@@ -18,7 +18,14 @@ export default function Dashboardpage() {
         <Route path="exams" element={<ExamsTable />} />
         <Route path="admins" element={<AdminsTable />} />
         <Route path="students" element={<StudentsTable />} />
-        <Route path="profile" element={<PreviewData />} />
+        <Route
+          path="profile"
+          element={
+            <div className="flex flex-col gap-y-10">
+              <ProfileContent />
+            </div>
+          }
+        />
       </Routes>
     </DashboardLayout>
   );

@@ -110,10 +110,15 @@ const checkIfDate = ([key, val]) => {
     const date = new Date(val);
     return !isNaN(date.getTime());
   };
+  const numbers = ["id", "price", "duration"];
 
-  if (key == "id" || key == "price" || key == "duration") return val;
-  if (isDate(key !== "id" && val))
-    return new Date(val).toLocaleDateString("en-GB");
+  if (key == "created_at") return null;
+
+  if (numbers.includes(key)) {
+    return typeof val == "string" ? val.slice(0, 10) + "..." : val;
+  }
+  if (isDate(val)) return new Date(val).toLocaleDateString("en-GB");
+
   return val.length > 30 ? val.slice(0, 30) + "..." : val;
 };
 
