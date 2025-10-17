@@ -19,7 +19,10 @@ export default function UserFormModal({
   const onSubmit = (data) => {
     const updatePass = { email: profile?.email, newPass: data };
 
-    if (profile?.email === "osamaelseify11@gmail.com" && data.newPassword)
+    if (
+      profile?.email === "osamaelseify11@gmail.com" ||
+      (profile?.email === "admin@gmail.com" && data.newPassword)
+    )
       return toast("error", "e", "Cant change main acc password");
 
     mutation(data.newPassword ? updatePass : data, {

@@ -12,7 +12,7 @@ export default function TableModal({ open, setOpen, userDataTable }) {
 
   return (
     <Modal noOpenBtn {...{ open, setOpen }}>
-      {userDataTable ? <CreateAdmin /> : selectedItem?.id}
+      {userDataTable ? <CreateAdmin /> : selectedItem?.title}
     </Modal>
   );
 }
