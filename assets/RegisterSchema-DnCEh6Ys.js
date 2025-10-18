@@ -1,1 +1,0 @@
-import{b as a,o as r,s as e,a as m,p as s,e as o}from"./inputs_data_type-DgOCiZrz.js";const i=a(r({fullName:e().min(1,"Name is required"),email:o,password:s,cpassword:s,phoneNumber:m,classLevel:e().min(1,"Class level is required")})),c=a(i.omit({classLevel:!0}));export{c as a,i as r};
