@@ -14,8 +14,10 @@ export default function UpdateDataModal() {
 
   // filter out classLevel if user is admin
   const neededInputs = () => {
-    const filteredInputs = updateUserInputs.filter(
-      (inp) => !(profile?.role === "admin" && inp.name === "classLevel")
+    const filteredInputs = updateUserInputs.filter((inp) =>
+      profile.role === "admin"
+        ? !(inp.name == "classLevel" || inp.name == "fullName")
+        : inp
     );
 
     return dataDefaultVals(filteredInputs, profile);

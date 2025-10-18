@@ -9,4 +9,5 @@ export const updateUserSchema = z.object({
 
 export const updateAdminSchema = updateUserSchema.omit({
   classLevel: true,
+  fullName: true,
 });

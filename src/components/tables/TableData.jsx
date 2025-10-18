@@ -85,7 +85,7 @@ export default function TableData({ data, dataType }) {
       <Paginationtables totalItems={filterData?.length} />
 
       {/* add, edit modal */}
-      <TableModal {...{ open, setOpen, userDataTable }} />
+      <TableModal {...{ open, setOpen, dataType }} />
     </>
   );
 }

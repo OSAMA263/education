@@ -38,7 +38,7 @@ export default function TableBody(props) {
   };
 
   return (
-    <Table.Body className="!text-gray-300/80 !font-semibold">
+    <Table.Body className="text-secondary !font-semibold">
       {data?.slice(firstInd, lastInd).map((item) => (
         <Table.Row key={item.id}>
           {Object.entries(item).map(([key, val]) => (

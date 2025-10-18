@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="relative">
       {/* header */}
-      <header className="absolute top-0 left-0 right-0 bg-bg-secondary lg:py-10 py-4 flex items-center justify-center z-8 gap-4 font-semibold">
+      <header className="absolute top-0 left-0 right-0 bg-bg-gray lg:py-10 py-4 flex items-center justify-center z-8 gap-4 font-semibold">
         {smolScreen &&
           navigationLinks.map(({ label, link }) => (
             <NavLink key={label} to={link}>
@@ -26,7 +26,9 @@ export default function DashboardLayout({ children }) {
         {/* main content */}
         <CustomContainer xl="80%" className="justify-start !block pt-24 pb-2">
           <DashboardProvider>
-            <div className="space-y-10 flex flex-col h-full py-3">{children}</div>
+            <div className="space-y-10 flex flex-col h-full py-3">
+              {children}
+            </div>
           </DashboardProvider>
         </CustomContainer>
       </div>

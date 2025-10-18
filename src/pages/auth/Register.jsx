@@ -1,14 +1,17 @@
 import AuthForm from "@/components/forms/AuthForm";
 import { registration_inputs } from "./inputs_data_type";
-import { registerSchema } from "@/validations/RegisterSchema";
+import {
+  registerSchema,
+  registerSchemaNoClassLevel,
+} from "@/validations/RegisterSchema";
 import { useSignUp } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 
 export default function Register() {
   const { signUp } = useSignUp();
 
-  const onSubmit = async (fromData) => {
-    await signUp({ ...fromData, role: "student" });
+  const onSubmit = async (formData) => {
+    await signUp({ ...formData, role: "student" });
   };
 
   return (
@@ -26,3 +29,22 @@ export default function Register() {
     </>
   );
 }
+
+export const CreateAdmin = () => {
+  const { signUp } = useSignUp();
+  const inputs = registration_inputs.filter((inp) => inp.name !== "classLevel");
+
+  const onSubmit = async (formData) => {
+    await signUp({ ...formData, role: "admin" });
+  };
+
+  return (
+    <AuthForm
+      formFields={inputs}
+      title="Create Admin Account"
+      submitText="Create"
+      validationSchema={registerSchemaNoClassLevel}
+      onSubmit={onSubmit}
+    />
+  );
+};

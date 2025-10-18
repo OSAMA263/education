@@ -41,11 +41,21 @@ const toast = (type, des, mes, rest = {}) => {
 };
 
 // add a default value o an input form prop
-const dataDefaultVals = (data, defaultVal) =>
-  data.map((obj) =>
-    defaultVal[obj.name] ? { ...obj, values: defaultVal[obj.name] } : obj
-  );
+const dataDefaultVals = (inputs, defaultData) =>
+  inputs.map((prop) => {
+    const val = defaultData[prop.name];
 
+    if (!val) return prop;
+
+    // if the value is a valid date string, convert to Date object
+    const isDate = typeof val === "string" && !isNaN(Date.parse(val));
+
+    return {
+      ...prop,
+      values: isDate ? new Date(val) : val,
+    };
+  });
+  
 // is lessons or exams date is accsseable NOW
 const isAvailable = (itemDate) => {
   const nowData = new Date();
@@ -119,7 +129,7 @@ const checkIfDate = ([key, val]) => {
   }
   if (isDate(val)) return new Date(val).toLocaleDateString("en-GB");
 
-  return val.length > 30 ? val.slice(0, 30) + "..." : val;
+  return val.length > 20 ? val.slice(0, 20) + "..." : val;
 };
 
 export {

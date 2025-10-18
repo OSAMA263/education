@@ -13,7 +13,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
   return (
-    <div className="sticky left-0 top-0 h-screen overflow-x-hidden bg-bg-secondary w-fit flex flex-col justify-between z-10">
+    <div className="sticky left-0 top-0 h-screen overflow-x-hidden bg-bg-gray w-fit flex flex-col justify-between z-10">
       <div className="flex flex-col">
         <h1 className="py-7 px-4 font-semibold">Admin Dahsboard</h1>
 

@@ -3,17 +3,20 @@ import { createListCollection } from "@chakra-ui/react";
 const lessonsInputs = [
   {
     name: "title",
+    label: "Title",
     placeholder: "javaScript for beginners.",
     type: "text",
   },
   {
     name: "description",
+    label: "Description",
     placeholder:
       "Understand programming basics like variables, functions, and events to create interactive web pages.",
     type: "text",
   },
   {
     name: "classLevel",
+    label: "Grade",
     type: "select",
     options: createListCollection({
       items: [
@@ -26,40 +29,46 @@ const lessonsInputs = [
   },
   {
     name: "price",
-    placeholder: "20.99",
-    type: "number",
+    label: "Price",
+    placeholder: "0.00",
+    type: "text",
   },
   {
     name: "video",
+    label: "Video url",
     placeholder: "https://www.youtube.com/(video_link)",
     type: "text",
   },
   {
-    name: "title",
-    placeholder: "",
-    type: "text",
+    name: "startDate",
+    label: "Available date",
+    type: "date",
   },
-  // start data
 ];
+
 const examsInputs = [
   {
     name: "title",
+    label: "Title",
     placeholder: "JavaScript Basics Exam",
     type: "text",
   },
   {
     name: "description",
+    label: "Description",
     placeholder:
       "Test your knowledge of JavaScript fundamentals like variables, functions, and data types.",
     type: "text",
   },
   {
     name: "duration",
-    placeholder: "10 (minutes)",
+    label: "Duration (in minutes)",
+    placeholder: "5 (minutes)",
     type: "number",
   },
   {
     name: "classLevel",
+    label: "Grade",
     type: "select",
     options: createListCollection({
       items: [
@@ -70,8 +79,17 @@ const examsInputs = [
       itemToString: (item) => item.label,
     }),
   },
-
-  // startdata,end data, questions
+  {
+    name: "startDate",
+    label: "Available date",
+    type: "date",
+  },
+  {
+    name: "endDate",
+    label: "Expire date",
+    type: "date",
+  },
+  // questions lule
 ];
 
 export { lessonsInputs, examsInputs };

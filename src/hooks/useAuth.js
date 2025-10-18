@@ -24,44 +24,43 @@ const useLogin = () => {
 const useSignUp = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const token = getToken();
 
-  const signUp = async ({
-    email,
-    password,
-    classLevel,
-    fullName,
-    phoneNumber,
-    role,
-  }) => {
-    const token = getToken();
+  const signUp = async (formData) => {
+    const { cpassword, password, ...filteredData } = formData;
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    let adminSession = null;
+    // save current admin
+    if (token) {
+      adminSession = (await supabase.auth.getSession()).data.session;
+    }
+
+    // create new acc
+    const { data, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    });
     if (error) return toast("error", error);
 
+    // create profile
     const { error: profileError } = await supabase.from("profiles").insert([
       {
         id: data.user.id,
-        phoneNumber,
-        email,
-        classLevel,
-        fullName,
-        role,
+        ...filteredData,
       },
     ]);
     if (profileError) return toast("error", error);
 
-    // if a user created an aaccount
-    if (data && !token) {
+    // restore the admin session if there was one
+    if (adminSession) {
+      await supabase.auth.setSession(adminSession);
+      navigate("/dashboard/base", { replace: true });
+    } else {
       navigate("/auth/login", { replace: true });
     }
-    // if admin created an accont
-    if (token) {
-      navigate("/dashboard/base", { replace: true });
-    }
+
     queryClient.invalidateQueries(["all-users"]);
     toast("success", "Account has been created successfully!");
-
-    return data.user;
   };
 
   return { signUp };

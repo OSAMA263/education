@@ -1,30 +1,32 @@
 import { Button } from "@chakra-ui/react";
 import SectionHeader from "../shared/SectionHeader";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormSelect from "./FormSelect";
 import FormInput from "./FormInput";
 import { toast } from "@/utils/utils";
+import DatePick from "../DatePick";
 
-export default function AuthForm({
-  formFields,
-  onSubmit,
-  title,
-  submitText = "submit",
-  validationSchema,
-  loading,
-}) {
-  // add default values if the input have the prop values
+export default function AuthForm(props) {
+  const {
+    formFields,
+    onSubmit,
+    title,
+    submitText = "submit",
+    validationSchema,
+    loading,
+  } = props;
+
   const defaultValues = Object.fromEntries(
     formFields.map((field) =>
       field.values ? [field.name, field.values] : [field.name, ""]
     )
   );
 
-  // form hook props
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(validationSchema),
@@ -35,29 +37,40 @@ export default function AuthForm({
     <>
       {title && <SectionHeader title={title} />}
 
-      {/* ----------the form inputs -------- */}
       <form
         onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSubmit(data);
-          } catch (err) {
-            toast("error", err);
-          }
+          console.log(await onSubmit(data))
+          //startDate: new Date(data.startDate).toISOString()
+          // try {
+          //   await onSubmit(data);
+          // } catch (err) {
+          //   toast("error", err);
+          // }
         })}
         className="w-full space-y-6"
       >
         {formFields?.map((inpProps, i) =>
           inpProps.type === "select" ? (
             <FormSelect key={i} {...{ errors, inpProps, register }} />
+          ) : inpProps.type === "date" ? (
+            <Controller
+              key={i}
+              name={inpProps.name}
+              control={control}
+              render={({ field }) => (
+                <DatePick {...{ field, inpProps, errors }} />
+              )}
+            />
           ) : (
             <FormInput key={i} {...{ errors, inpProps, register }} />
           )
         )}
+
         <Button
           loading={loading || isSubmitting}
           loadingText="Loading..."
           className="!w-full"
-          rounded={"lg"}
+          rounded="lg"
           type="submit"
         >
           {submitText}

@@ -44,12 +44,14 @@ export default function Modal(props) {
           <Dialog.Backdrop />
           <Dialog.Positioner>
             <Dialog.Content p={10} gap={10}>
-              <Dialog.Header justifyContent={"center"}>
-                <Dialog.Title className="!text-bold lg:!text-3xl ">
-                  {title}
-                </Dialog.Title>
-              </Dialog.Header>
-
+              {title && (
+                <Dialog.Header justifyContent={"center"}>
+                  <Dialog.Title className="!text-bold lg:!text-3xl ">
+                    {title}
+                  </Dialog.Title>
+                </Dialog.Header>
+              )}
+              
               <Dialog.Body className="!space-y-2">{children}</Dialog.Body>
 
               <Dialog.CloseTrigger asChild>

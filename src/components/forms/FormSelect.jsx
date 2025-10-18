@@ -4,7 +4,11 @@ export default function FormSelect({ inpProps, register, errors }) {
   return (
     <Field.Root invalid={errors[inpProps.name]}>
       <Field.Label className="md:!text-lg">{inpProps.label}</Field.Label>
-      <Select.Root collection={inpProps.options} {...register(inpProps.name)}>
+      <Select.Root
+        defaultValue={[inpProps.values]}
+        collection={inpProps.options}
+        {...register(inpProps.name)}
+      >
         <Select.HiddenSelect />
         <Select.Control>
           <Select.Trigger>
@@ -14,16 +18,16 @@ export default function FormSelect({ inpProps, register, errors }) {
             <Select.Indicator />
           </Select.IndicatorGroup>
         </Select.Control>
-          <Select.Positioner>
-            <Select.Content>
-              {inpProps.options.items.map((item) => (
-                <Select.Item key={item.value} item={item}>
-                  {item.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
+        <Select.Positioner>
+          <Select.Content>
+            {inpProps.options.items.map((item) => (
+              <Select.Item key={item.value} item={item}>
+                {item.label}
+                <Select.ItemIndicator />
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Positioner>
       </Select.Root>
       <Field.ErrorText>{errors[inpProps.name]?.message}</Field.ErrorText>
     </Field.Root>
