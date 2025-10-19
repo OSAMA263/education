@@ -1,12 +1,13 @@
 import { DashboardContext } from "@/routes/DashboardProvider";
 import { checkIfDate } from "@/utils/utils";
 import { Button, Group, IconButton, Table } from "@chakra-ui/react";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
 import PopUp from "../PopUp";
+import { useDeleteLesson } from "@/hooks/useLessons";
 
 export default function TableBody(props) {
-  const { userDataTable, data, setOpen } = props;
+  const { dataType, data, setOpen } = props;
   const { firstInd, lastInd, setSelectedItem } = useContext(DashboardContext);
 
   const [openPopUpId, setOpenPopUpId] = useState(null);
@@ -51,7 +52,7 @@ export default function TableBody(props) {
           ))}
 
           {/* option buttons */}
-          {!userDataTable && (
+          {(dataType == "lessons" || dataType == "exams") && (
             <Table.Cell className="!flex !items-center !gap-2">
               {optionBtns.map(({ icon: Icon, label, ...rest }) => (
                 <IconButton
@@ -67,7 +68,7 @@ export default function TableBody(props) {
                     <Icon />
                   ) : (
                     <ConfirmDelete
-                      {...{ openPopUpId, setOpenPopUpId, item, Icon }}
+                      {...{ dataType, openPopUpId, setOpenPopUpId, item, Icon }}
                     />
                   )}
                 </IconButton>
@@ -80,12 +81,22 @@ export default function TableBody(props) {
   );
 }
 
-const ConfirmDelete = ({ openPopUpId, setOpenPopUpId, item, Icon }) => {
+const ConfirmDelete = (props) => {
+  const { openPopUpId, setOpenPopUpId, item, Icon, dataType } = props;
+  
   const { selectedItem } = useContext(DashboardContext);
+  const { mutate: deleteLesson, isPending: loadingA } = useDeleteLesson();
+  const { mutate: deleteExam, isPending: loadingB } = useDeleteLesson();
 
-  const handleDelete = () => {
+  const submitDelete = async () => {
     // delete function
+    if (dataType == "lessons") {
+      deleteLesson(selectedItem?.id);
+    } else {
+      deleteExam(selectedItem?.id);
+    }
   };
+
   return (
     <PopUp
       btnContent={<Icon />}
@@ -95,14 +106,15 @@ const ConfirmDelete = ({ openPopUpId, setOpenPopUpId, item, Icon }) => {
       <Group attached>
         <Button
           size="sm"
-          onClick={handleDelete}
+          onClick={submitDelete}
           colorPalette={"red"}
           variant={"outline"}
+          loading={loadingA || loadingB}
         >
           confirm
         </Button>
         <Button size="sm" variant={"outline"}>
-          cancle
+          cancel
         </Button>
       </Group>
     </PopUp>

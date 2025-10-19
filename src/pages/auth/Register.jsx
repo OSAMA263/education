@@ -30,8 +30,8 @@ export default function Register() {
   );
 }
 
-export const CreateAdmin = () => {
-  const { signUp } = useSignUp();
+export const CreateAdmin = ({ setOpen }) => {
+  const { signUp } = useSignUp(setOpen);
   const inputs = registration_inputs.filter((inp) => inp.name !== "classLevel");
 
   const onSubmit = async (formData) => {

@@ -6,9 +6,9 @@ export default function TableModal({ open, setOpen, dataType }) {
   return (
     <Modal noOpenBtn {...{ open, setOpen }}>
       {dataType == "lessons" || dataType == "exams" ? (
-        <DashboardForm dataType={dataType} />
+        <DashboardForm {...{ dataType, setOpen }} />
       ) : (
-        <CreateAdmin />
+        <CreateAdmin setOpen={setOpen} />
       )}
     </Modal>
   );

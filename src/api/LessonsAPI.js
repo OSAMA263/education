@@ -42,17 +42,41 @@ const getLessonByIdRequest = async (lessonId) => {
 
 // admin access----------------
 const createLessonRequest = async (newLesson) => {
-  const { data } = await api.post(LESSON, newLesson);
+  const { startDate, ...rest } = newLesson;
+
+  const { data, error } = await supabase
+    .from("lessons")
+    .insert([{ startDate: new Date(startDate).toISOString(), ...rest }])
+    .select();
+
+  if (error) throw new Error(error);
+
   return data;
 };
 
-const updateLessonRequest = async (updatedData, lessonId) => {
-  const { data } = await api.put(LESSON + lessonId, updatedData);
+const updateLessonRequest = async (updatedLesson, id) => {
+  const { data, error } = await supabase
+    .from("lessons")
+    .update(updatedLesson)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !data) throw new Error("Update lesson created by you only");
+
   return data;
 };
 
-const deleteLessonRequest = async (lessonId) => {
-  const { data } = await api.delete(LESSON + lessonId);
+const deleteLessonRequest = async (id) => {
+  const { data, error } = await supabase
+    .from("lessons")
+    .delete()
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !data) throw new Error("Delete lessons created by you only");
+
   return data;
 };
 

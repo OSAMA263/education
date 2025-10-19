@@ -21,7 +21,7 @@ const useLogin = () => {
 };
 
 // register
-const useSignUp = () => {
+const useSignUp = (setOpen) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const token = getToken();
@@ -54,13 +54,13 @@ const useSignUp = () => {
     // restore the admin session if there was one
     if (adminSession) {
       await supabase.auth.setSession(adminSession);
-      navigate("/dashboard/base", { replace: true });
     } else {
       navigate("/auth/login", { replace: true });
     }
 
     queryClient.invalidateQueries(["all-users"]);
     toast("success", "Account has been created successfully!");
+    setOpen && setOpen(false);
   };
 
   return { signUp };

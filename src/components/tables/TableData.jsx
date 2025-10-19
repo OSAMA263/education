@@ -25,7 +25,7 @@ export default function TableData({ data, dataType }) {
 
   useEffect(() => {
     setFilterData(isLoading ? [] : data);
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   if (isLoading) return <LoaderPage />;
   if (error) return <ErrorPage fetchErr={error} />;
@@ -66,7 +66,7 @@ export default function TableData({ data, dataType }) {
           <TableHeader {...{ data, setFilterData }} />
           {/* table body */}
           {filterData?.length > 0 && (
-            <TableBody {...{ data: filterData, userDataTable, setOpen }} />
+            <TableBody {...{ data: filterData, dataType, setOpen }} />
           )}
         </Table.Root>
       </Table.ScrollArea>

@@ -10,7 +10,7 @@ export default function Card({ exam, className, children }) {
   return (
     <Box
       className={
-        "space-y-3 border rounded-2xl bg-bg-gray border-gray-400/35 px-6 py-8 flex flex-col " +
+        "space-y-3 border rounded-2xl bg-bg-gray border-gray-400/35 px-6 py-8 flex flex-col overflow-hidden " +
         className
       }
     >

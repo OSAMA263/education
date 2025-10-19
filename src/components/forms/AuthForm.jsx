@@ -39,13 +39,11 @@ export default function AuthForm(props) {
 
       <form
         onSubmit={handleSubmit(async (data) => {
-          console.log(await onSubmit(data))
-          //startDate: new Date(data.startDate).toISOString()
-          // try {
-          //   await onSubmit(data);
-          // } catch (err) {
-          //   toast("error", err);
-          // }
+          try {
+            await onSubmit(data);
+          } catch (err) {
+            toast("error", err);
+          }
         })}
         className="w-full space-y-6"
       >

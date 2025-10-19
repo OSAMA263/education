@@ -50,13 +50,15 @@ const usePayLesson = (userId) => {
 };
 
 // for admins adn dashboard
-const useAddLesson = () => {
+// lessons
+const useAddLesson = (setOpen) => {
   const query = useQueryClient();
 
   return useMutation({
     mutationFn: createLessonRequest,
     onSuccess: () => {
       toast("success", "Lesson has been created!");
+      setOpen(false);
       query.invalidateQueries({ queryKey: ["all-lessons"] });
     },
     onError: (err) => {
@@ -65,12 +67,15 @@ const useAddLesson = () => {
   });
 };
 
-const useUpdateLesson = () => {
+const useUpdateLesson = (setOpen) => {
+  const query = useQueryClient();
+
   return useMutation({
-    mutationFn: updateLessonRequest,
+    mutationFn: ({ data, id }) => updateLessonRequest(data, id),
     onSuccess: () => {
       toast("success", "Lesson has been updated!");
-      // run query.invalidquery lesson by id , can we pass the id?
+      query.invalidateQueries({ queryKey: ["all-lessons"] });
+      setOpen(false);
     },
     onError: (err) => {
       toast("error", err);
@@ -79,11 +84,13 @@ const useUpdateLesson = () => {
 };
 
 const useDeleteLesson = () => {
+  const query = useQueryClient();
+
   return useMutation({
     mutationFn: deleteLessonRequest,
     onSuccess: () => {
-      toast("success", "deleted");
-      // reload? see if the lesson on the btn changes value or maybe re treger the get lessons query
+      toast("success", "Lesson has been deleted");
+      query.invalidateQueries({ queryKey: ["all-lessons"] });
     },
     onError: (err) => {
       toast("error", err);
@@ -91,6 +98,7 @@ const useDeleteLesson = () => {
   });
 };
 
+// dashboard exams
 export {
   useGetAllLessons,
   useGetLessonById,
