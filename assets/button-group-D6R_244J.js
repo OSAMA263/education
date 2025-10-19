@@ -1,1 +1,0 @@
-import{r as t,aj as p,j as s,bm as u}from"./index-Dnm0rnPu.js";import{G as i}from"./group-D6jEWpee.js";const f=t.forwardRef(function(r,e){const o=p({key:"button"}),[a,n]=t.useMemo(()=>o.splitVariantProps(r),[r,o]);return s.jsx(u,{value:a,children:s.jsx(i,{ref:e,...n})})});export{f as B};
