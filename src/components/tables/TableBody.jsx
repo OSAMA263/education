@@ -83,7 +83,7 @@ export default function TableBody(props) {
 
 const ConfirmDelete = (props) => {
   const { openPopUpId, setOpenPopUpId, item, Icon, dataType } = props;
-  
+
   const { selectedItem } = useContext(DashboardContext);
   const { mutate: deleteLesson, isPending: loadingA } = useDeleteLesson();
   const { mutate: deleteExam, isPending: loadingB } = useDeleteLesson();
@@ -93,7 +93,7 @@ const ConfirmDelete = (props) => {
     if (dataType == "lessons") {
       deleteLesson(selectedItem?.id);
     } else {
-      deleteExam(selectedItem?.id);
+      // deleteExam(selectedItem?.id);
     }
   };
 
