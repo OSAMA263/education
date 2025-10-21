@@ -15,6 +15,7 @@ export default function AuthForm(props) {
     submitText = "submit",
     validationSchema,
     loading,
+    children,
   } = props;
 
   const defaultValues = Object.fromEntries(
@@ -63,7 +64,8 @@ export default function AuthForm(props) {
             <FormInput key={i} {...{ errors, inpProps, register }} />
           )
         )}
-
+        {/* special data like(questions? lol) */}
+        {children}
         <Button
           loading={loading || isSubmitting}
           loadingText="Loading..."

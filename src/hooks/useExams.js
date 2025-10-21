@@ -1,10 +1,13 @@
 import {
+  createExamRequest,
+  deleteExamRequest,
   getAllExamsRequest,
   getExamByIdRequest,
   getExamScoreRequest,
   getRemainingTimeRequest,
   startExamRequest,
   submitExamRequest,
+  updateExamRequest,
 } from "@/api/ExamsAPI";
 import { toast } from "@/utils/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -73,9 +76,53 @@ const useSubmitExam = (id) => {
   });
 };
 
-// mutationFn: ({ id, answers }) => startExamRequest(id, answers),
+// for admin access dashboard
+const useAddExam = (setOpen) => {
+  const query = useQueryClient();
 
-// for admin access
+  return useMutation({
+    mutationFn: createExamRequest,
+    onSuccess: () => {
+      toast("success", "Exam has been created!");
+      setOpen(false);
+      query.invalidateQueries({ queryKey: ["all-exams"] });
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
+
+const useUpdateExam = (setOpen) => {
+  const query = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ data, id }) => updateExamRequest(data, id),
+    onSuccess: () => {
+      toast("success", "Exam has been updated!");
+      query.invalidateQueries({ queryKey: ["all-exams"] });
+      setOpen(false);
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
+
+const useDeleteExam = () => {
+  const query = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteExamRequest,
+    onSuccess: () => {
+      toast("warning", "Exam has been deleted");
+      query.invalidateQueries({ queryKey: ["all-exams"] });
+    },
+    onError: (err) => {
+      toast("error", err);
+    },
+  });
+};
 
 export {
   useGetAllExams,
@@ -84,4 +131,7 @@ export {
   useGetExamScore,
   useStartExam,
   useSubmitExam,
+  useAddExam,
+  useUpdateExam,
+  useDeleteExam,
 };

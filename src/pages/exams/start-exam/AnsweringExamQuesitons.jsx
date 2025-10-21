@@ -55,11 +55,12 @@ export default function AnsweringExamQuesitons({
     }
   }, []);
 
-  const TotalCorrectAnswers = answers.filter(
-    (ans) =>
-      ans.id == questions[ans.id].id &&
-      ans.answer == questions[ans.id].correctAnswer
-  );
+  const TotalCorrectAnswers =
+    answers.length > 0 &&
+    answers.filter((ans) => {
+      const question = questions.find((q) => q.id === ans.id);
+      return question && ans.answer === question.correctAnswer;
+    });
 
   return (
     <>

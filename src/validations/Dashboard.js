@@ -26,3 +26,12 @@ export const lessonSchema = z.object({
   video: z.string().regex(youtubeRegex, "please enter a valid youtube link"),
   startDate: z.date("date required"),
 });
+
+export const questionSchema = z.object({
+  question: z.string().min(1, "question must not be empty"),
+  correctAnswer: z.string().min(1, "correct answer must be selected"),
+  answers: z
+    .array(z.string().min(1, "option cannot be empty"))
+    .min(2, "minimum 2 options are needed")
+    .max(7, "7 options is enough dude"),
+});

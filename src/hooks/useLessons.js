@@ -89,7 +89,7 @@ const useDeleteLesson = () => {
   return useMutation({
     mutationFn: deleteLessonRequest,
     onSuccess: () => {
-      toast("success", "Lesson has been deleted");
+      toast("warning", "Lesson has been deleted");
       query.invalidateQueries({ queryKey: ["all-lessons"] });
     },
     onError: (err) => {

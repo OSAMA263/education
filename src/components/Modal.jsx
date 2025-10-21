@@ -12,6 +12,8 @@ export default function Modal(props) {
     setOpen,
     btnVariant = "outline",
     noOpenBtn,
+    size = "lg",
+    
     ...rest
   } = props;
 
@@ -22,7 +24,7 @@ export default function Modal(props) {
         open={open}
         onOpenChange={(e) => setOpen(e.open)}
         role="alertdialog"
-        size={"lg"}
+        size={size}
         placement={"center"}
         {...rest}
       >
@@ -51,7 +53,7 @@ export default function Modal(props) {
                   </Dialog.Title>
                 </Dialog.Header>
               )}
-              
+
               <Dialog.Body className="!space-y-2">{children}</Dialog.Body>
 
               <Dialog.CloseTrigger asChild>

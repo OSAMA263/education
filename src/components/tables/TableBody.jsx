@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
 import PopUp from "../PopUp";
 import { useDeleteLesson } from "@/hooks/useLessons";
+import { useDeleteExam } from "@/hooks/useExams";
 
 export default function TableBody(props) {
   const { dataType, data, setOpen } = props;
@@ -86,14 +87,14 @@ const ConfirmDelete = (props) => {
 
   const { selectedItem } = useContext(DashboardContext);
   const { mutate: deleteLesson, isPending: loadingA } = useDeleteLesson();
-  const { mutate: deleteExam, isPending: loadingB } = useDeleteLesson();
+  const { mutate: deleteExam, isPending: loadingB } = useDeleteExam();
 
   const submitDelete = async () => {
     // delete function
     if (dataType == "lessons") {
       deleteLesson(selectedItem?.id);
     } else {
-      // deleteExam(selectedItem?.id);
+      deleteExam(selectedItem?.id);
     }
   };
 

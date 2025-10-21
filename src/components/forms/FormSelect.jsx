@@ -3,7 +3,9 @@ import { Field, Select } from "@chakra-ui/react";
 export default function FormSelect({ inpProps, register, errors }) {
   return (
     <Field.Root invalid={errors[inpProps.name]}>
-      <Field.Label className="md:!text-lg">{inpProps.label}</Field.Label>
+      <Field.Label id={inpProps.name} className="md:!text-lg">
+        {inpProps.label}
+      </Field.Label>
       <Select.Root
         defaultValue={[inpProps.values]}
         collection={inpProps.options}

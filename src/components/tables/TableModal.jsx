@@ -4,7 +4,11 @@ import { CreateAdmin } from "@/pages/auth/Register";
 
 export default function TableModal({ open, setOpen, dataType }) {
   return (
-    <Modal noOpenBtn {...{ open, setOpen }}>
+    <Modal
+      size={dataType == "exams" ? "xl" : "lg"}
+      noOpenBtn
+      {...{ open, setOpen }}
+    >
       {dataType == "lessons" || dataType == "exams" ? (
         <DashboardForm {...{ dataType, setOpen }} />
       ) : (

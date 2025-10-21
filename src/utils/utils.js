@@ -36,6 +36,7 @@ const toast = (type, des, mes, rest = {}) => {
     description: type === "error" ? errorHandler(des, mes) : des,
     duration: 5000,
     max: 5,
+    closable: true,
     ...rest,
   });
 };
@@ -55,7 +56,7 @@ const dataDefaultVals = (inputs, defaultData) =>
       values: isDate ? new Date(val) : val,
     };
   });
-  
+
 // is lessons or exams date is accsseable NOW
 const isAvailable = (itemDate) => {
   const nowData = new Date();

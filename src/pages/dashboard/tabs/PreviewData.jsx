@@ -15,12 +15,12 @@ export default function PreviewData() {
   return (
     <div>
       <SectionHeader title="All Data" className="mb-10" />
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-2 md:gap-10 gap-2">
         {data.map((item) => {
           const key = Object.keys(item)[0];
 
           return (
-            <PlainCard className="p-14" key={key}>
+            <PlainCard className="md:p-14" key={key}>
               <h1 className="text-xl font-bold capitalize">
                 {key} :{" "}
                 <span className="text-secondary">{item[key]?.length}</span>

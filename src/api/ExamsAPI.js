@@ -81,18 +81,49 @@ const getRemainingTimeRequest = async (id) => {
 };
 
 // admin access only dashboard and shit
-// const addExamRequest=async(newExam)=>{
-//   const{data}=await api.post(EXAM,newExam)
-//   date and more details fk no
-// }
 
-const updateExamRequest = async (updatedExam, examId) => {
-  const { data } = await api.put(EXAM + examId, updatedExam);
+const createExamRequest = async (newExam) => {
+  const { startDate, endDate, ...rest } = newExam;
+
+  const { data, error } = await supabase
+    .from("exams")
+    .insert([
+      {
+        startDate: new Date(startDate).toISOString(),
+        endDate: new Date(endDate).toISOString(),
+        ...rest,
+      },
+    ])
+    .select();
+
+  if (error) throw new Error(error);
+
   return data;
 };
 
-const deleteExamRequest = async (examId) => {
-  const { data } = await api.delete(EXAM + examId);
+const updateExamRequest = async (updatedExam, id) => {
+  const { data, error } = await supabase
+    .from("exams")
+    .update(updatedExam)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !data) throw new Error("Update Exam created by you only");
+
+  return data;
+};
+
+const deleteExamRequest = async (id) => {
+  const { data, error } = await supabase
+    .from("exams")
+    .delete()
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !data) throw new Error("Delete Exams created by you only");
+
   return data;
 };
 
@@ -105,6 +136,7 @@ export {
   getExamScoreRequest,
   getRemainingTimeRequest,
   // dashboard
+  createExamRequest,
   updateExamRequest,
   deleteExamRequest,
 };
