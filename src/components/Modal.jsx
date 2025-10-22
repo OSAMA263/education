@@ -34,7 +34,7 @@ export default function Modal(props) {
               p={0}
               outline={0}
               variant={btnVariant}
-              className={`w-full ${openBtnClasses}`}
+              className={`w-full overflow-hidden ${openBtnClasses}`}
             >
               {openBtnIcon}
               {openModalContent}

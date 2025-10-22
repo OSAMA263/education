@@ -1,9 +1,10 @@
 import { toast } from "@/utils/utils";
-import { Button, Editable, RadioCard } from "@chakra-ui/react";
+import { Button, Editable, RadioCard, useMediaQuery } from "@chakra-ui/react";
 import { FaDeleteLeft, FaPlus } from "react-icons/fa6";
 
 export default function OptionsSelect(props) {
   const { setAnswers, answers, correctAnswer, setCorrectAnswer } = props;
+  const [smolScreen] = useMediaQuery("(max-width: 1024px)");
 
   const handleChangeOption = (e, i) => {
     setAnswers((opts) => opts.map((opt, ind) => (ind == i ? e.value : opt)));
@@ -54,7 +55,7 @@ export default function OptionsSelect(props) {
                 value={ans}
               >
                 <Editable.Root
-                  // activationMode="dblclick"
+                  activationMode={smolScreen ? "click" : "dblclick"}
                   textAlign="start"
                   className="!w-full !h-full"
                   value={ans}
