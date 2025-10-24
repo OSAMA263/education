@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import loginImg from "@/assets/login.jpg";
 import { getToken } from "@/utils/utils";
-import { HelmetProvider } from "react-helmet-async";
 
 export default function AuthLayout() {
   const token = getToken();
@@ -9,7 +8,6 @@ export default function AuthLayout() {
   if (token) return <Navigate to="/" replace />;
 
   return (
-    <HelmetProvider>
       <main className="relative grid lg:grid-cols-2 items-center min-h-dvh gap-10">
         <img
           src={loginImg}
@@ -21,6 +19,5 @@ export default function AuthLayout() {
           <Outlet />
         </div>
       </main>
-    </HelmetProvider>
   );
 }

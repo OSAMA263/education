@@ -40,7 +40,10 @@ export default function SingleExamPage() {
   };
 
   return (
-    <SEOWrapper des="Take this exam to test your knowledge and see how well you’ve mastered the lessons. Review your results and track your progress.">
+    <SEOWrapper
+      des="Take this exam to test your knowledge and see how well you’ve mastered the lessons. Review your results and track your progress."
+      link={`exams/${examId}`}
+    >
       <CustomContainer xl="55%" className="!space-y-14">
         <h1 className="font-semibold text-3xl text-center">
           {examStart ? examData?.title : "Exam Details"}

@@ -12,7 +12,9 @@ createRoot(document.getElementById("root")).render(
     <Provider>
       <ColorModeProvider>
         <HashRouter>
+          <HelmetProvider>
             <App />
+          </HelmetProvider>
         </HashRouter>
       </ColorModeProvider>
     </Provider>

@@ -11,6 +11,7 @@ import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function SingleLesson() {
   const { lessonId } = useParams();
+  const [id, setId] = useState(lessonId);
   const { error, data } = useGetLessonById(lessonId);
   // video player states
   const [playerOptions, setPlayerOptions] = useState({
@@ -26,7 +27,10 @@ export default function SingleLesson() {
   if (error) return <ErrorPage />;
 
   return (
-    <SEOWrapper des="Learn this lesson step by step with clear explanations, examples, and exercises to strengthen your understanding of the topic.">
+    <SEOWrapper
+      des="Learn this lesson step by step with clear explanations, examples, and exercises to strengthen your understanding of the topic."
+      link={`lessons/${lessonId}`}
+    >
       <CustomContainer lg="90%" xl="90%" className="!space-y-10">
         <h1
           className={`lg:text-3xl text-xl font-bold rounded-xl bg-bg-gray px-2`}

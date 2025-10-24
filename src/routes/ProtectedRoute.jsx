@@ -6,7 +6,6 @@ import { useAuthData } from "./AuthProvider";
 import ErrorPage from "@/pages/ErrorPage";
 import { getToken, logout } from "@/utils/utils";
 import { Button } from "@chakra-ui/react";
-import { HelmetProvider } from "react-helmet-async";
 
 export default function ProtectedRoute() {
   const token = getToken();
@@ -33,12 +32,12 @@ export default function ProtectedRoute() {
   if (profile?.role === "admin")
     return <Navigate to="/dashboard/base" replace />;
   return (
-    <HelmetProvider>
+    <>
       <Navbar />
       <main className="min-h-dvh">
         <Outlet />
       </main>
       <Footer />
-    </HelmetProvider>
+    </>
   );
 }

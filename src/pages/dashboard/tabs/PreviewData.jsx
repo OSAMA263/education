@@ -1,3 +1,4 @@
+import SEOWrapper from "@/components/layout/SEOWrapper";
 import PlainCard from "@/components/PlainCard";
 import SectionHeader from "@/components/shared/SectionHeader";
 import AllDashboardData from "@/hooks/useDashboard";
@@ -13,7 +14,11 @@ export default function PreviewData() {
   if (error) return <ErrorPage fetchErr={error} />;
 
   return (
-    <div>
+    <SEOWrapper
+      des="Get a quick, organized overview of platform data — including students, admins, exams, and lessons. Preview essential information at a glance for faster decision-making and management."
+      link="dashboard/base"
+      title="Preview"
+    >
       <SectionHeader title="All Data" className="mb-10" />
       <div className="grid grid-cols-2 md:gap-10 gap-2">
         {data.map((item) => {
@@ -29,6 +34,6 @@ export default function PreviewData() {
           );
         })}
       </div>
-    </div>
+    </SEOWrapper>
   );
 }

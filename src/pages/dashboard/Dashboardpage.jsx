@@ -4,7 +4,6 @@ import PreviewData from "./tabs/PreviewData";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { lazy } from "react";
 import { ProfileContent } from "../user/UserPage";
-import { HelmetProvider } from "react-helmet-async";
 
 export default function Dashboardpage() {
   const { profile } = useAuthData();
@@ -22,11 +21,9 @@ export default function Dashboardpage() {
         <Route
           path="profile"
           element={
-            <HelmetProvider>
-              <div className="flex flex-col gap-y-10">
-                <ProfileContent />
-              </div>
-            </HelmetProvider>
+            <div className="flex flex-col gap-y-10">
+              <ProfileContent />
+            </div>
           }
         />
       </Routes>
