@@ -1,14 +1,21 @@
+import SEOWrapper from "@/components/layout/SEOWrapper";
 import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
 import ContactInfo from "./ContactInfo";
 
 export default function AboutPage() {
   return (
-    <CustomContainer>
-      <SectionHeader {...headerProps} />
-      {/* contact information */}
-      <ContactInfo />
-    </CustomContainer>
+    <SEOWrapper
+      des="Learn more about our mission to make education accessible through engaging lessons, smart exams, and personalized learning tools."
+      link="about"
+      title="About us"
+    >
+      <CustomContainer>
+        <SectionHeader {...headerProps} />
+        {/* contact information */}
+        <ContactInfo />
+      </CustomContainer>
+    </SEOWrapper>
   );
 }
 

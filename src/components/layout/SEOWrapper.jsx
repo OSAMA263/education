@@ -1,10 +1,10 @@
 import { Helmet } from "react-helmet-async";
 
-export default function SEOWrapper({ children, title, des, link = "" }) {
+export default function SEOWrapper({ children, title, des, link }) {
   return (
     <>
       <Helmet>
-        <title>{`${title ?? ""} | Edu`}</title>
+        <title>{`${title ?? ""}`}</title>
         <meta
           name="description"
           content={
@@ -14,7 +14,7 @@ export default function SEOWrapper({ children, title, des, link = "" }) {
         />
         <link
           rel="canonical"
-          href={`${link}`}
+          href={`https://osama263.github.io/education/#/${link ?? ""}`}
         />
       </Helmet>
       {children}

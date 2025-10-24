@@ -2,11 +2,12 @@ import CustomContainer from "@/components/layout/CustomContainer";
 import { useParams } from "react-router-dom";
 import VideoPlayer from "./VideoPlayer";
 import LessonsList from "./LessonsList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGetLessonById } from "@/hooks/useLessons";
 import ErrorPage from "@/pages/ErrorPage";
 import { SkeletonText } from "@chakra-ui/react";
+import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function SingleLesson() {
   const { lessonId } = useParams();
@@ -17,11 +18,15 @@ export default function SingleLesson() {
     focus: false,
   });
 
+  useEffect(() => {
+    document.title = `Lesson-${lessonId}`;
+  }, [lessonId]);
+
   // handle fetch status UI
   if (error) return <ErrorPage />;
 
   return (
-    <>
+    <SEOWrapper des="Learn this lesson step by step with clear explanations, examples, and exercises to strengthen your understanding of the topic.">
       <CustomContainer lg="90%" xl="90%" className="!space-y-10">
         <h1
           className={`lg:text-3xl text-xl font-bold rounded-xl bg-bg-gray px-2`}
@@ -67,6 +72,6 @@ export default function SingleLesson() {
           className="bg-black/50 backdrop-blur-md inset-0 absolute z-10"
         />
       </AnimatePresence>
-    </>
+    </SEOWrapper>
   );
 }

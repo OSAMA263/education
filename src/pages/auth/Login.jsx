@@ -7,6 +7,7 @@ import SectionHeader from "@/components/shared/SectionHeader";
 import { Tabs } from "@chakra-ui/react";
 import CustomAlert from "@/components/CustomAlert";
 import { login_inputs } from "./inputs_data_type";
+import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function Login() {
   const [role, setRole] = useState("student");
@@ -22,7 +23,11 @@ export default function Login() {
   }));
 
   return (
-    <>
+    <SEOWrapper
+      title="Login | Edu"
+      des="Log in to your account to access lessons, take exams, and track your learning progress."
+      link="auth/login"
+    >
       {/* note for the pr-registered accounts */}
       <CustomAlert
         status="warning"
@@ -63,6 +68,6 @@ export default function Login() {
           <Link to="/auth/signup">Register a new account</Link>
         </h1>
       </div>
-    </>
+    </SEOWrapper>
   );
 }

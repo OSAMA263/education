@@ -5,9 +5,9 @@ import { TbDotsVertical } from "react-icons/tb";
 import { Menu } from "@chakra-ui/react";
 import UpdateDataModal from "./modals/UpdateDataModal";
 import UpdatePasswordModal from "./modals/UpdatePasswordModal";
-import DeleteAccountModal from "./modals/DeleteAccountModal";
 import { useAuthData } from "@/routes/AuthProvider";
 import Loader from "@/components/Loader";
+import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function UserPage() {
   return (
@@ -17,7 +17,7 @@ export default function UserPage() {
   );
 }
 
-export const ProfileContent = ({damin}) => {
+export const ProfileContent = () => {
   const { profile } = useAuthData();
   const { fullName, email, role, phoneNumber, created_at, classLevel } =
     profile || {};
@@ -35,7 +35,11 @@ export const ProfileContent = ({damin}) => {
   ];
 
   return (
-    <>
+    <SEOWrapper
+      des="View and manage your personal information, progress, and saved lessons. Customize your learning experience, track completed topics, and update your account details all in one place."
+      link="user"
+      title="My Profile"
+    >
       <h1 className="text-2xl font-semibold text-center">My Profile</h1>
       <div className="lg:min-w-3xl min-w-full mx-auto p-20 bg-bg-gray rounded-xl flex flex-col items-center gap-20 relative border border-secondary/50">
         {/* name & role */}
@@ -85,6 +89,6 @@ export const ProfileContent = ({damin}) => {
           </>
         )}
       </div>
-    </>
+    </SEOWrapper>
   );
 };

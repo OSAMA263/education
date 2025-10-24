@@ -6,6 +6,7 @@ import {
 } from "@/validations/RegisterSchema";
 import { useSignUp } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
+import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function Register() {
   const { signUp } = useSignUp();
@@ -15,7 +16,11 @@ export default function Register() {
   };
 
   return (
-    <>
+    <SEOWrapper
+      des="Create your account and start learning today with access to interactive lessons and practice exams."
+      link="auth/signup"
+      title="Singun | Edu"
+    >
       <AuthForm
         formFields={registration_inputs}
         title="Create your account"
@@ -26,7 +31,7 @@ export default function Register() {
       <h1>
         Already have an account? <Link to="/auth/login">login</Link>
       </h1>
-    </>
+    </SEOWrapper>
   );
 }
 

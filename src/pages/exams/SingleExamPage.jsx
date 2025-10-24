@@ -1,17 +1,15 @@
-import {
-  useGetExamById,
-  useStartExam,
-} from "@/hooks/useExams";
-import {  useExamStatus } from "@/utils/utils";
+import { useGetExamById, useStartExam } from "@/hooks/useExams";
+import { useExamStatus } from "@/utils/utils";
 import { useParams } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
 import { Button } from "@chakra-ui/react";
 import LoaderPage from "../LoaderPage";
 import CustomContainer from "@/components/layout/CustomContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExamDetails from "./ExamDetails";
 import StartExam from "./StartExam";
 import { useAuthData } from "@/routes/AuthProvider";
+import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function SingleExamPage() {
   const { profile } = useAuthData();
@@ -25,6 +23,11 @@ export default function SingleExamPage() {
 
   const [examStart, setExamStart] = useState(false);
 
+  // update tab title
+  useEffect(() => {
+    document.title = `Exmas-${examId}`;
+  }, [examId]);
+
   if (isLoading) return <LoaderPage />;
   if (error) return <ErrorPage />;
 
@@ -37,33 +40,35 @@ export default function SingleExamPage() {
   };
 
   return (
-    <CustomContainer xl="55%" className="!space-y-14">
-      <h1 className="font-semibold text-3xl text-center">
-        {examStart ? examData?.title : "Exam Details"}
-      </h1>
-      {examStart ? (
-        <StartExam
-          setExamStart={setExamStart}
-          examData={examData}
-          endTime={expiresAt}
-          submitted={examInProgress?.isSubmitted}
-        />
-      ) : (
-        <>
-          <ExamDetails examData={examData} />
-          {/* start exam btn */}
-          <Button
-            variant={"surface"}
-            colorPalette={expired || !available ? "gray" : "blue"}
-            className="!w-fit place-self-center"
-            onClick={handleStartExam}
-            loading={isPending}
-            disabled={expired || !available}
-          >
-            {btnText}
-          </Button>
-        </>
-      )}
-    </CustomContainer>
+    <SEOWrapper des="Take this exam to test your knowledge and see how well you’ve mastered the lessons. Review your results and track your progress.">
+      <CustomContainer xl="55%" className="!space-y-14">
+        <h1 className="font-semibold text-3xl text-center">
+          {examStart ? examData?.title : "Exam Details"}
+        </h1>
+        {examStart ? (
+          <StartExam
+            setExamStart={setExamStart}
+            examData={examData}
+            endTime={expiresAt}
+            submitted={examInProgress?.isSubmitted}
+          />
+        ) : (
+          <>
+            <ExamDetails examData={examData} />
+            {/* start exam btn */}
+            <Button
+              variant={"surface"}
+              colorPalette={expired || !available ? "gray" : "blue"}
+              className="!w-fit place-self-center"
+              onClick={handleStartExam}
+              loading={isPending}
+              disabled={expired || !available}
+            >
+              {btnText}
+            </Button>
+          </>
+        )}
+      </CustomContainer>
+    </SEOWrapper>
   );
 }

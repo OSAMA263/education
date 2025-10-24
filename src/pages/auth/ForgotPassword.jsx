@@ -13,13 +13,17 @@ import {
   useSendOTP,
   useUpdatePassword,
 } from "@/hooks/useUser";
-import { resetPassowrd } from "@/api/UserAPI";
+import SEOWrapper from "@/components/layout/SEOWrapper";
 
 export default function ForgotPassword({ loggedIn }) {
   const [resetpassword, setResetPassword] = useState(false);
 
   return (
-    <>
+    <SEOWrapper
+      des="Reset your password quickly and securely to regain access to your lessons and exams."
+      link="auth/forgot-password"
+      title="Forgot-password | Edu"
+    >
       {resetpassword ? (
         <ResetPassword setResetPassword={setResetPassword} />
       ) : (
@@ -38,7 +42,7 @@ export default function ForgotPassword({ loggedIn }) {
           </h1>
         )}
       </div>
-    </>
+    </SEOWrapper>
   );
 }
 

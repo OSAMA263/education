@@ -5,13 +5,14 @@ import App from "./App.jsx";
 import { ColorModeProvider } from "./components/ui/color-mode";
 import { HashRouter } from "react-router-dom";
 import { Provider } from "./components/ui/provider";
+import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider>
       <ColorModeProvider>
         <HashRouter>
-          <App />
+            <App />
         </HashRouter>
       </ColorModeProvider>
     </Provider>
