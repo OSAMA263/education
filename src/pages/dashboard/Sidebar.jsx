@@ -1,5 +1,6 @@
 import { logout } from "@/utils/utils";
-import { Button } from "@chakra-ui/react";
+import { Button, Drawer, Portal } from "@chakra-ui/react";
+import { useState } from "react";
 import {
   FaHome,
   FaBookOpen,
@@ -10,21 +11,47 @@ import {
 } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
 import { NavLink, useLocation } from "react-router-dom";
+import { IoMenu } from "react-icons/io5";
 
-export default function Sidebar() {
+export default function Sidebar({ smolScreen }) {
+  const [open, setOpen] = useState(true);
+
   return (
-    <div className="sticky left-0 top-0 h-screen overflow-x-hidden bg-bg-gray w-fit flex flex-col justify-between z-10">
-      <div className="flex flex-col">
-        <h1 className="py-7 px-4 font-semibold">Admin Dahsboard</h1>
+    <>
+      {smolScreen && (
+        <Button
+          className="!absolute !right-0 z-10 mt-1 mr-1"
+          variant={"surface"}
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          <IoMenu />
+        </Button>
+      )}
 
-        {/* navigate tabs */}
-        <NavigateTabs />
-      </div>
+      <Drawer.Root
+        closeOnInteractOutside={smolScreen}
+        modal={false}
+        open={smolScreen?open:true}
+        onOpenChange={(e) => setOpen(e.open)}
+        placement="start"
+      >
+        <Portal>
+          <Drawer.Positioner className="!w-fit" pointerEvents="none">
+            <Drawer.Content className="pe-1 justify-between">
+              <div className="flex flex-col">
+                <h1 className="py-7 px-4 font-semibold">Admin Dahsboard</h1>
+                {/* navigate tabs */}
+                <NavigateTabs />
+              </div>
 
-      <Button color={"red.500"} variant={"surface"} onClick={logout}>
-        <IoExitOutline /> Logout
-      </Button>
-    </div>
+              <Button color={"red.500"} variant={"surface"} onClick={logout}>
+                <IoExitOutline /> Logout
+              </Button>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
+    </>
   );
 }
 
@@ -46,7 +73,7 @@ const NavigateTabs = () => {
   ));
 };
 
-export const navigationLinks = [
+const navigationLinks = [
   { label: "Base", link: "/dashboard/base", icon: FaHome },
   { label: "Admins", link: "/dashboard/admins", icon: FaUserTie },
   { label: "Students", link: "/dashboard/students", icon: FaUserGraduate },

@@ -64,7 +64,7 @@ export default function AnsweringExamQuesitons({
 
   return (
     <>
-      <PlainCard className="w-[80%] mx-auto flex flex-col gap-12">
+      <PlainCard className="sm:w-[80%] mx-auto flex flex-col gap-12">
         <div className="flex items-center justify-between">
           <h1 className="font-semibold text-lg">Question: {currQuestion}</h1>
           <Badge size={"lg"}>
