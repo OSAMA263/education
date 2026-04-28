@@ -26,7 +26,8 @@ function errorHandler(err, message) {
 
 // logout handler
 function logout() {
-  localStorage.removeItem("token");
+  localStorage.clear();
+  window.location.href = "/education/#/auth/login/";
   window.location.reload();
 }
 
@@ -101,7 +102,7 @@ const useExamStatus = (examId, data) => {
     } else if (!available) {
       btnText = "Exam isnt available yet";
     } else {
-      btnText = "Take exam";
+      btnText = "Start exam";
     }
   }
 

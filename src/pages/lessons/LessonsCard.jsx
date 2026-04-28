@@ -7,7 +7,8 @@ import { useState } from "react";
 import { useAuthData } from "@/routes/AuthProvider";
 
 export default function LessonsCard({ data }) {
-  const { id, title, classLevel, startDate, description, price } = data;
+  const { id, title, classLevel, startDate, description, price } =
+    data;
   const availableDate = new Date(startDate).toLocaleString();
 
   return (
@@ -34,7 +35,9 @@ const LessonBtnAction = ({ id, startDate, price }) => {
 
   // chekcif the lesson isnt payed and the lesson isnst free
   if (price !== 0 && !(profile?.lessons || []).includes(id)) {
-    return <PayLesson {...{ open, setOpen, id, userId: profile?.id }} />;
+    return (
+      <PayLesson {...{ open, setOpen, id, userId: profile?.id }} />
+    );
   }
 
   return (
@@ -50,7 +53,7 @@ const LessonBtnAction = ({ id, startDate, price }) => {
           className="flex justify-center items-center w-full h-full"
           to={`/lessons/${id}`}
         >
-          Watch lesson
+          {price > 0 ? "Watch lesson" : "Free to watch"}
         </Link>
       ) : (
         "Not available yet"

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useGetAllLessons } from "@/hooks/useLessons";
 import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
@@ -6,10 +7,12 @@ import LoaderPage from "../LoaderPage";
 import ErrorPage from "../ErrorPage";
 import { useAuthData } from "@/routes/AuthProvider";
 import SEOWrapper from "@/components/layout/SEOWrapper";
+import { Button } from "@chakra-ui/react";
 
 export default function LessonsPage() {
   const { data, isLoading, error } = useGetAllLessons();
   const { profile } = useAuthData();
+  const [visibleCount, setVisibleCount] = useState(9);
 
   if (error) return <ErrorPage message={error} />;
 
@@ -19,9 +22,12 @@ export default function LessonsPage() {
         (lesson) => lesson.classLevel === profile?.classLevel
       );
     }
-
     return data;
   };
+
+  const lessons = lessonsByClassLevel() || [];
+  const visibleLessons = lessons.slice(0, visibleCount);
+  const hasMore = visibleCount < lessons.length;
 
   return (
     <SEOWrapper
@@ -37,11 +43,24 @@ export default function LessonsPage() {
         {isLoading ? (
           <LoaderPage />
         ) : (
-          <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-            {lessonsByClassLevel().map((lessonData) => (
-              <LessonsCard data={lessonData} key={lessonData.id} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
+              {visibleLessons.map((lessonData) => (
+                <LessonsCard data={lessonData} key={lessonData.id} />
+              ))}
+            </div>
+            {hasMore && (
+              <div className="flex justify-center">
+                <Button
+                  rounded="xl"
+                  variant="surface"
+                  onClick={() => setVisibleCount((prev) => prev + 6)}
+                >
+                  Load more
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </CustomContainer>
     </SEOWrapper>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useGetAllExams } from "@/hooks/useExams";
 import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
@@ -6,10 +7,12 @@ import LoaderPage from "../LoaderPage";
 import ErrorPage from "../ErrorPage";
 import { useAuthData } from "@/routes/AuthProvider";
 import SEOWrapper from "@/components/layout/SEOWrapper";
+import { Button } from "@chakra-ui/react";
 
 export default function ExamsPage() {
   const { data, isLoading, error } = useGetAllExams();
   const { profile } = useAuthData();
+  const [visibleCount, setVisibleCount] = useState(9);
 
   const examsByClassLevel = () => {
     if (profile?.role === "student") {
@@ -17,6 +20,10 @@ export default function ExamsPage() {
     }
     return data;
   };
+
+  const exams = examsByClassLevel() || [];
+  const visibleExams = exams.slice(0, visibleCount);
+  const hasMore = visibleCount < exams.length;
 
   return (
     <SEOWrapper
@@ -34,11 +41,24 @@ export default function ExamsPage() {
         ) : error ? (
           <ErrorPage fetchErr={error} />
         ) : (
-          <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-            {examsByClassLevel().map((exam) => (
-              <ExamsCard exam={exam} key={exam.id} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
+              {visibleExams.map((exam) => (
+                <ExamsCard exam={exam} key={exam.id} />
+              ))}
+            </div>
+            {hasMore && (
+              <div className="flex justify-center">
+                <Button
+                  rounded="xl"
+                  variant="surface"
+                  onClick={() => setVisibleCount((prev) => prev + 6)}
+                >
+                  Load more
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </CustomContainer>
     </SEOWrapper>

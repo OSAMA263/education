@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="relative min-h-dvh">
+      <div className="relative min-h-dvh font-[500]">
         <AppRoutes />
         <Toaster />
       </div>

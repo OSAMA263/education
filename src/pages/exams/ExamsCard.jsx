@@ -1,26 +1,25 @@
 import { Button } from "@chakra-ui/react";
 import Card from "../../components/Card";
 import { isAvailable, useExamStatus } from "@/utils/utils";
-import { FaRegQuestionCircle, FaRegClock } from "react-icons/fa";
+import { FaQuestionCircle, FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuthData } from "@/routes/AuthProvider";
-import { useEffect } from "react";
 import { useSubmitExam } from "@/hooks/useExams";
 
 export default function ExamsCard({ exam }) {
   return (
     <Card exam={exam}>
       {/* exam details */}
-      <div className="space-x-4 flex gap-2 [&>h1]:flex [&>h1]:items-center [&>h1]:gap-2">
+      <div className="space-x-4 [&_svg]:text-lg flex gap-2 [&>h1]:flex [&>h1]:items-center [&>h1]:gap-2">
         <h1>
           <span>
-            <FaRegClock />
+            <FaClock />
           </span>
           <span>{exam?.duration} minutes</span>
         </h1>
         <h1>
           <span>
-            <FaRegQuestionCircle />
+            <FaQuestionCircle />
           </span>
           <span>{exam?.questions.length} question</span>
         </h1>
@@ -34,10 +33,8 @@ export default function ExamsCard({ exam }) {
 
 const ExamsActionBtn = ({ exam }) => {
   const { profile } = useAuthData();
-  const { available, expired, examInProgress, timesUp } = useExamStatus(
-    exam?.id,
-    exam
-  );
+  const { available, expired, examInProgress, timesUp } =
+    useExamStatus(exam?.id, exam);
   const { mutate, isPending } = useSubmitExam(exam?.id);
 
   const examBtnText = () => {
@@ -48,12 +45,11 @@ const ExamsActionBtn = ({ exam }) => {
         ? "Submitted"
         : "Continue exam";
     }
-    return "View exam";
+    return "Take exam";
   };
 
-  // check if time runs out or its already submited
   const checkExamValidation = () => {
-    if (timesUp&&!examInProgress?.isSubmitted) {
+    if (timesUp && !examInProgress?.isSubmitted) {
       mutate({ answers: [], userId: profile?.id });
     }
   };
@@ -63,6 +59,13 @@ const ExamsActionBtn = ({ exam }) => {
       asChild={available}
       rounded={"xl"}
       variant={"surface"}
+      colorPalette={
+        expired || !available
+          ? "blackAlpha"
+          : examBtnText() === "Take exam"
+            ? "blue"
+            : "bg"
+      }
       loading={isPending}
       disabled={expired || !available}
       onClick={checkExamValidation}

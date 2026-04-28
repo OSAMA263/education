@@ -13,7 +13,7 @@ export default function HeroSection() {
         <h1 className="2xl:text-5xl xl:text-4xl text-2xl font-bold">
           Learn at Your Own Pace, from Anywhere in the World
         </h1>
-        <p className="text-secondary lg:text-xl">
+        <p className="text-secondary lg:text-lg">
           Welcome to EduSphere, your digital learning companion designed for
           students and lifelong learners alike. Our platform offers expertly
           crafted video lessons, live classes, and personalized progress
@@ -24,7 +24,7 @@ export default function HeroSection() {
           <Button asChild>
             <NavLink to="/lessons">Get Started</NavLink>
           </Button>
-          <Button asChild className="!bg-secondary !text-gray-200">
+          <Button asChild className="!bg-gray-600 !text-gray-200">
             <NavLink to="/about">Learn More</NavLink>
           </Button>
         </div>

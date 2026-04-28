@@ -21,7 +21,7 @@ export default function CustomContainer(props) {
         ...(xl && { xl }),
       }}
       className={
-        "py-32 space-y-28 min-h-dvh flex flex-col justify-center " + className
+        "py-40 space-y-28 min-h-dvh flex flex-col justify-center " + className
       }
       {...rest}
     >
