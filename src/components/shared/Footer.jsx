@@ -6,7 +6,7 @@ import Logo from "../Logo";
 export default function Footer() {
   return (
     <footer className="border-t border-gray-400/30 py-10 bg-bg-gray">
-      <CustomContainer className="!py-0 !space-y-0 min-h-fit [&>div]:space-y-4 grid sm:grid-cols-3 gap-10">
+      <CustomContainer noContactForm className="!py-0 !space-y-0 min-h-fit [&>div]:space-y-4 grid sm:grid-cols-3 gap-10">
         {/* intro */}
         <div>
           <Logo />

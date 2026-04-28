@@ -11,7 +11,7 @@ export default function ErrorPage({
 }) {
   return (
     <div>
-      <CustomContainer className={"items-center !space-y-3 " + className}>
+      <CustomContainer noContactForm className={"items-center !space-y-3 " + className}>
         <TbMoodSadDizzy className="text-5xl" />
         {fetchErr ? (
           <FetchError err={badReq || fetchErr} children={children} />

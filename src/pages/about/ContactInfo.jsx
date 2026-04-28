@@ -5,7 +5,10 @@ import { NavLink } from "react-router-dom";
 
 export default function ContactInfo() {
   return (
-    <section id="contact-informations" className="grid lg:grid-cols-2 gap-10">
+    <section
+      id="contact-informations"
+      className="grid lg:grid-cols-2 gap-10"
+    >
       {/* contact links */}
       <div className="space-y-10 max-lg:order-1">
         <h1 className="text-2xl font-semibold">Additional Info</h1>
@@ -24,6 +27,7 @@ export default function ContactInfo() {
         <div className="flex space-x-4">
           {media_links.map(({ icon: Icon, url, platform }) => (
             <IconButton
+              title={platform}
               className="rounded-2xl border border-bg-gray"
               key={url}
               asChild

@@ -13,7 +13,7 @@ export default function DashboardLayout({ children }) {
        <Sidebar smolScreen={smolScreen}/>
 
         {/* main content */}
-        <CustomContainer xl="80%" className="justify-start !block pt-24 pb-2">
+        <CustomContainer noContactForm xl="80%" className="justify-start !block pt-24 pb-2">
           <DashboardProvider>
             <div className="space-y-10 flex flex-col h-full py-3 px-6">
               {children}

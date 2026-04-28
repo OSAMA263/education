@@ -1,8 +1,8 @@
 import {
   FaFacebookF,
-  FaYoutube,
+  FaDesktop ,
   FaLinkedinIn,
-  FaTwitter,
+  FaGithub ,
 } from "react-icons/fa";
 import {
   MdOutlineMail,
@@ -15,12 +15,12 @@ const contact_info = [
   {
     label: "Email",
     icon: MdOutlineMail,
-    value: "support@edu.com",
+    value: "osamaelseify2@gmail.com",
   },
   {
     label: "WhatsApp",
     icon: MdOutlineLocationOn,
-    value: "+123456789",
+    value: "01121451306",
   },
   {
     label: "Location",
@@ -41,19 +41,19 @@ const media_links = [
     url: "https://www.facebook.com/",
   },
   {
-    icon: FaTwitter,
-    platform: "twitter",
-    url: "https://www.twitter.com/",
+    icon: FaGithub ,
+    platform: "github",
+    url: "https://github.com/OSAMA263",
   },
   {
-    icon: FaYoutube,
-    platform: "youtube",
-    url: "https://www.youtube.com/",
+    icon: FaDesktop ,
+    platform: "portfolio",
+    url: "https://alright-ten.vercel.app/",
   },
   {
     icon: FaLinkedinIn,
     platform: "linkedin",
-    url: "https://www.linkedin.com/",
+    url: "https://www.linkedin.com/in/osama00/",
   },
 ];
 
