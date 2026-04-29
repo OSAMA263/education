@@ -26,6 +26,7 @@ export default function SingleExamPage() {
   // update tab title
   useEffect(() => {
     document.title = `Exmas-${examId}`;
+    setExamStart(examInProgress?true:false)
   }, [examId]);
 
   if (isLoading) return <LoaderPage />;

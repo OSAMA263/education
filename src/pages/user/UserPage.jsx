@@ -28,6 +28,7 @@ export const ProfileContent = () => {
     phoneNumber,
     created_at,
     classLevel,
+    exams,
   } = profile || {};
 
   const userDetails = [
@@ -91,9 +92,11 @@ export const ProfileContent = () => {
                 <Menu.Item asChild>
                   <UpdatePasswordModal />
                 </Menu.Item>
-                <Menu.Item asChild>
-                  <ExamsSubmited/>
-                </Menu.Item>
+                {exams?.length > 0 && (
+                  <Menu.Item asChild>
+                    <ExamsSubmited />
+                  </Menu.Item>
+                )}
               </MenuWrapper>
             </div>
           </>
