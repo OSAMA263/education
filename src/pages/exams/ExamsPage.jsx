@@ -63,7 +63,7 @@ export default function ExamsPage() {
                   ))
               )}
             </div>
-            {visibleCount <= examsByClassLevel().length && (
+            {visibleCount < examsByClassLevel().length && (
               <div className="flex justify-center">
                 <Button
                   rounded="xl"

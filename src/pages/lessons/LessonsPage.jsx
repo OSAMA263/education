@@ -61,7 +61,7 @@ export default function LessonsPage() {
                 ))
               )}
             </div>
-            {visibleCount <= lessonsByClassLevel()?.length && (
+            {visibleCount < lessonsByClassLevel()?.length && (
               <div className="flex justify-center">
                 <Button
                   rounded="xl"
