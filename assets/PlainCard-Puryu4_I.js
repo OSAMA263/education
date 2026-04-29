@@ -1,0 +1,1 @@
+import{j as e}from"./index-zc83rmZk.js";function a({className:r="",children:o}){return e.jsx("div",{className:`rounded-xl border overflow-hidden border-secondary/40 bg-bg-gray p-8 ${r}`,children:o})}export{a as P};
