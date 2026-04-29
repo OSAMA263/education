@@ -28,8 +28,8 @@ export default function ReportForm() {
     );
 
   return (
-    <div className="mt-8 rounded-xl border text-center border-white/10 bg-white/5 p-6 space-y-4">
-      <h3 className="mb-1 text-lg font-semibold text-white">
+    <div className="mt-8 text-center space-y-6 w-[80%] mx-auto mb-1!">
+      <h3 className="mb-1 text-xl font-semibold text-white">
         Report an Issue or Contact Us
       </h3>
       <p className="mb-5 text-sm text-gray-400">

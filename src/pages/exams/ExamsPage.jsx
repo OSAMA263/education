@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllExams } from "@/hooks/useExams";
 import CustomContainer from "../../components/layout/CustomContainer";
 import SectionHeader from "../../components/shared/SectionHeader";
@@ -8,22 +8,27 @@ import ErrorPage from "../ErrorPage";
 import { useAuthData } from "@/routes/AuthProvider";
 import SEOWrapper from "@/components/layout/SEOWrapper";
 import { Button } from "@chakra-ui/react";
+import SearchFilterItems from "@/components/SearchFilterItems";
 
 export default function ExamsPage() {
   const { data, isLoading, error } = useGetAllExams();
   const { profile } = useAuthData();
   const [visibleCount, setVisibleCount] = useState(9);
+  const [visibleExams, setVisibleExams] = useState([]);
 
   const examsByClassLevel = () => {
     if (profile?.role === "student") {
-      return data?.filter((exam) => exam.classLevel === profile.classLevel);
+      return data?.filter(
+        (exam) => exam.classLevel === profile.classLevel,
+      );
     }
     return data;
   };
 
-  const exams = examsByClassLevel() || [];
-  const visibleExams = exams.slice(0, visibleCount);
-  const hasMore = visibleCount < exams.length;
+  useEffect(() => {
+    if (!data) return;
+    setVisibleExams(examsByClassLevel());
+  }, [data, profile]);
 
   return (
     <SEOWrapper
@@ -34,6 +39,7 @@ export default function ExamsPage() {
       <CustomContainer>
         <SectionHeader
           title="Exams"
+          className="mb-4!"
           par="Take your available exams and test your knowledge."
         />
         {isLoading ? (
@@ -42,12 +48,22 @@ export default function ExamsPage() {
           <ErrorPage fetchErr={error} />
         ) : (
           <>
+            <SearchFilterItems
+              allData={examsByClassLevel()}
+              visibleData={setVisibleExams}
+            />
             <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
-              {visibleExams.map((exam) => (
-                <ExamsCard exam={exam} key={exam.id} />
-              ))}
+              {visibleExams.length == 0 ? (
+                <span className="text-center text-white/40">No title was found</span>
+              ) : (
+                visibleExams
+                  .slice(0, visibleCount)
+                  .map((exam) => (
+                    <ExamsCard exam={exam} key={exam.id} />
+                  ))
+              )}
             </div>
-            {hasMore && (
+            {visibleCount <= examsByClassLevel().length && (
               <div className="flex justify-center">
                 <Button
                   rounded="xl"

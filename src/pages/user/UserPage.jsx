@@ -8,6 +8,8 @@ import UpdatePasswordModal from "./modals/UpdatePasswordModal";
 import { useAuthData } from "@/routes/AuthProvider";
 import Loader from "@/components/Loader";
 import SEOWrapper from "@/components/layout/SEOWrapper";
+import Modal from "@/components/Modal";
+import ExamsSubmited from "./modals/ExamsSubmited";
 
 export default function UserPage() {
   return (
@@ -19,8 +21,14 @@ export default function UserPage() {
 
 export const ProfileContent = () => {
   const { profile } = useAuthData();
-  const { fullName, email, role, phoneNumber, created_at, classLevel } =
-    profile || {};
+  const {
+    fullName,
+    email,
+    role,
+    phoneNumber,
+    created_at,
+    classLevel,
+  } = profile || {};
 
   const userDetails = [
     { label: "Email", value: email },
@@ -40,7 +48,9 @@ export const ProfileContent = () => {
       link="user"
       title="My Profile"
     >
-      <h1 className="text-2xl font-semibold text-center">My Profile</h1>
+      <h1 className="text-2xl font-semibold text-center">
+        My Profile
+      </h1>
       <div className="lg:min-w-3xl min-w-full mx-auto p-20 bg-bg-gray rounded-xl flex flex-col items-center gap-20 relative border border-secondary/50">
         {/* name & role */}
         {!profile ? (
@@ -66,7 +76,7 @@ export const ProfileContent = () => {
                       </h1>
                       <p>{value}</p>
                     </div>
-                  )
+                  ),
               )}
             </div>
             {/* user options*/}
@@ -81,9 +91,9 @@ export const ProfileContent = () => {
                 <Menu.Item asChild>
                   <UpdatePasswordModal />
                 </Menu.Item>
-                {/* <Menu.Item asChild>
-              <DeleteAccountModal email={email} />
-            </Menu.Item> */}
+                <Menu.Item asChild>
+                  <ExamsSubmited/>
+                </Menu.Item>
               </MenuWrapper>
             </div>
           </>
