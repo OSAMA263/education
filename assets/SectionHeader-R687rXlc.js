@@ -1,1 +1,0 @@
-import{j as e}from"./index-zc83rmZk.js";function x(s){const{title:a="title",par:t="",className:c=""}=s;return e.jsxs("div",{className:`space-y-4 text-center ${c}`,children:[e.jsx("h1",{className:"font-semibold text-3xl max-sm:text-2xl",children:a}),t&&e.jsx("p",{className:"text-secondary",children:t})]})}export{x as S};
