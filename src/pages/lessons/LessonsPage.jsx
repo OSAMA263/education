@@ -52,7 +52,7 @@ export default function LessonsPage() {
               allData={lessonsByClassLevel()}
               visibleData={setVisibleLessons}
             />
-            <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(380px,1fr))]">
+            <div className="grid gap-4 md:[grid-template-columns:repeat(auto-fit,minmax(380px,1fr))] grid-cols-1">
               {visibleLessons.length === 0 ? (
                 <span className="text-center text-white/40">No title was found</span>
               ) : (

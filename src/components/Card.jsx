@@ -12,7 +12,7 @@ export default function Card({ exam, className, children }) {
   return (
     <Box
       className={
-        "space-y-4! border rounded-2xl bg-bg-gray border-gray-400/35 px-6 py-8 flex flex-col overflow-hidden " +
+        "space-y-4! border rounded-2xl bg-bg-gray border-gray-400/35 sm:px-6 sm:py-8 p-2 flex flex-col overflow-hidden " +
         className
       }
     >
@@ -40,8 +40,8 @@ export default function Card({ exam, className, children }) {
       </div>
 
       {/* title & des */}
-      <div className="[&>p]:text-secondary [&>p]:text-sm">
-        <h1 className="text-xl font-semibold">{title}</h1>
+      <div className="[&>p]:text-secondary [&>p]:text-xs">
+        <h1 className="sm:text-xl font-semibold">{title}</h1>
         <p className="flex items-center gap-1">
           <span className="text-white/80">Created by:</span>
           {created_by}
