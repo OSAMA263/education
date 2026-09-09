@@ -1,6 +1,6 @@
 import { Menu } from "@chakra-ui/react";
 import { FaUser, FaRegUserCircle, FaChartPie } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { IoExitOutline } from "react-icons/io5";
 import { logout } from "@/utils/utils";
 import { useAuthData } from "@/routes/AuthProvider";

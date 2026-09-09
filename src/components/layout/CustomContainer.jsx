@@ -1,5 +1,5 @@
 import { Container } from "@chakra-ui/react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import ReportForm from "../forms/ReportProblem";
 
 export default function CustomContainer(props) {
