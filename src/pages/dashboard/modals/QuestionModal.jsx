@@ -7,8 +7,12 @@ import OptionsSelect from "./OptionsSelect";
 export default function QuestionModal({ data, setExamData }) {
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState(data.answers ?? []);
-  const [question, setQuestion] = useState(data.question || "");
-  const [correctAnswer, setCorrectAnswer] = useState(data.correctAnswer || "");
+  const [question, setQuestion] = useState(
+    data.question || "(Empty)",
+  );
+  const [correctAnswer, setCorrectAnswer] = useState(
+    data.correctAnswer || "(Empty)",
+  );
 
   useEffect(() => {
     // on cancel, set the updateed back to the original data optins
@@ -22,7 +26,12 @@ export default function QuestionModal({ data, setExamData }) {
   // handle storing the data
   const handleSave = () => {
     // a shitty way to check validation
-    if (answers.length < 2 || question == "" || correctAnswer == "") {
+    if (
+      answers.length < 2 ||
+      answers.some((answer) => answer.trim() == "") ||
+      question == "" ||
+      correctAnswer == ""
+    ) {
       return;
     } else {
       const updatedData = {
@@ -37,7 +46,7 @@ export default function QuestionModal({ data, setExamData }) {
         return {
           ...prev,
           questions: prev.questions.map((q) =>
-            q.id == updatedData.id ? updatedData : q
+            q.id == updatedData.id ? updatedData : q,
           ),
         };
       });
@@ -47,8 +56,10 @@ export default function QuestionModal({ data, setExamData }) {
 
   return (
     <Modal
-      openBtnClasses="!justify-start !ps-2"
-      openModalContent={question}
+      openBtnClasses={`!justify-start !ps-2 ${question == "" ? "!text-red-400/50" : ""}`}
+      openModalContent={
+        question == "" ? "(title is required)" : question
+      }
       {...{ open, setOpen }}
     >
       <div className="w-full space-y-10">
@@ -65,15 +76,25 @@ export default function QuestionModal({ data, setExamData }) {
             placeholder="what 9 + 10?"
           />
           {question == "" && (
-            <span className="text-red-400">Question cant be empty</span>
+            <span className="text-red-400">
+              Question cant be empty
+            </span>
           )}
         </Field.Root>
 
         {/* options */}
         <OptionsSelect
-          {...{ setAnswers, answers, correctAnswer, setCorrectAnswer }}
+          {...{
+            setAnswers,
+            answers,
+            correctAnswer,
+            setCorrectAnswer,
+          }}
         />
-        <Button onClick={handleSave} className="!py-0 !flex place-self-center">
+        <Button
+          onClick={handleSave}
+          className="!py-0 !flex place-self-center"
+        >
           save
         </Button>
       </div>

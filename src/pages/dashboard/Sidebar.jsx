@@ -12,10 +12,11 @@ import {
 import { IoExitOutline } from "react-icons/io5";
 import { NavLink, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
+import { useAuthData } from "@/routes/AuthProvider";
 
 export default function Sidebar({ smolScreen }) {
   const [open, setOpen] = useState(true);
-
+  const { profile } = useAuthData();
   return (
     <>
       {smolScreen && (
@@ -31,7 +32,7 @@ export default function Sidebar({ smolScreen }) {
       <Drawer.Root
         closeOnInteractOutside={smolScreen}
         modal={false}
-        open={smolScreen?open:true}
+        open={smolScreen ? open : true}
         onOpenChange={(e) => setOpen(e.open)}
         placement="start"
       >
@@ -39,12 +40,18 @@ export default function Sidebar({ smolScreen }) {
           <Drawer.Positioner className="!w-fit" pointerEvents="none">
             <Drawer.Content className="pe-1 justify-between">
               <div className="flex flex-col">
-                <h1 className="py-7 px-4 font-semibold">Admin Dahsboard</h1>
+                <h1 className="py-7 px-4 font-semibold">
+                  {profile?.fullName ?? "Admin Dahsboard"}
+                </h1>
                 {/* navigate tabs */}
                 <NavigateTabs />
               </div>
 
-              <Button color={"red.500"} variant={"surface"} onClick={logout}>
+              <Button
+                color={"red.500"}
+                variant={"surface"}
+                onClick={logout}
+              >
                 <IoExitOutline /> Logout
               </Button>
             </Drawer.Content>
@@ -76,8 +83,16 @@ const NavigateTabs = () => {
 const navigationLinks = [
   { label: "Base", link: "/dashboard/base", icon: FaHome },
   { label: "Admins", link: "/dashboard/admins", icon: FaUserTie },
-  { label: "Students", link: "/dashboard/students", icon: FaUserGraduate },
+  {
+    label: "Students",
+    link: "/dashboard/students",
+    icon: FaUserGraduate,
+  },
   { label: "Lessons", link: "/dashboard/lessons", icon: FaBookOpen },
   { label: "Exams", link: "/dashboard/exams", icon: FaPen },
-  { label: "My Profile", link: "/dashboard/profile", icon: FaRegUserCircle },
+  {
+    label: "My Profile",
+    link: "/dashboard/profile",
+    icon: FaRegUserCircle,
+  },
 ];

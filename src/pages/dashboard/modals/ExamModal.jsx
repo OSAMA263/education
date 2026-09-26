@@ -6,9 +6,9 @@ import { FaDeleteLeft } from "react-icons/fa6";
 
 export default function ExamModal({ examData, setExamData }) {
   const hasNoQuesitons = examData?.questions?.some((q) => q.question == null);
-
+  
   const addQuestion = () => {
-    if (examData?.questions?.length < 7 || !examData?.questions) {
+    if (examData?.questions?.length < 20 || !examData?.questions) {
       setExamData((prev) => {
         const questions = prev?.questions || [];
         return {
@@ -17,7 +17,7 @@ export default function ExamModal({ examData, setExamData }) {
         };
       });
     } else {
-      toast("error", "E", "7 questions are enough dude");
+      toast("error", "E", "20 questions are enough dude");
     }
   };
 

@@ -3,8 +3,8 @@ const youtubeRegex =
   /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]{11}$/;
 
 export const examSchema = z.object({
-  title: z.string().min(5, "must be 5 letters min"),
-  description: z.string().min(20, "must be 20 letters min"),
+  title: z.string().min(5, "title must be required and not short"),
+  description: z.string().min(20, "description must be required and not short"),
   classLevel: z.string().min(1, "choose a grade"),
 
   duration: z.coerce
@@ -18,8 +18,8 @@ export const examSchema = z.object({
 });
 
 export const lessonSchema = z.object({
-  title: z.string().min(5, "must be 5 letters min"),
-  description: z.string().min(20, "must be 20 letters min"),
+  title: z.string().min(5, "title must be required and not short"),
+  description: z.string().min(20, "description must be required and not short"),
   classLevel: z.string().min(1, "choose a grade"),
 
   price: z.coerce.number("price number only").default(0),
@@ -29,9 +29,9 @@ export const lessonSchema = z.object({
 
 export const questionSchema = z.object({
   question: z.string().min(1, "question must not be empty"),
-  correctAnswer: z.string().min(1, "correct answer must be selected"),
+  correctAnswer: z.string().min(1, "select one option as the correct answer"),
   answers: z
     .array(z.string().min(1, "option cannot be empty"))
     .min(2, "minimum 2 options are needed")
-    .max(7, "7 options is enough dude"),
+    .max(20, "20 options is enough dude"),
 });

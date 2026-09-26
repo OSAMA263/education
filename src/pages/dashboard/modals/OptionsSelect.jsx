@@ -1,21 +1,29 @@
 import { toast } from "@/utils/utils";
-import { Button, Editable, RadioCard, useMediaQuery } from "@chakra-ui/react";
+import {
+  Button,
+  Editable,
+  RadioCard,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { FaDeleteLeft, FaPlus } from "react-icons/fa6";
 
 export default function OptionsSelect(props) {
-  const { setAnswers, answers, correctAnswer, setCorrectAnswer } = props;
+  const { setAnswers, answers, correctAnswer, setCorrectAnswer } =
+    props;
   const [smolScreen] = useMediaQuery("(max-width: 1024px)");
 
   const handleChangeOption = (e, i) => {
-    setAnswers((opts) => opts.map((opt, ind) => (ind == i ? e.value : opt)));
+    setAnswers((opts) =>
+      opts.map((opt, ind) => (ind == i ? e.value : opt)),
+    );
   };
 
   // add new option
   const handleAddOption = () => {
-    if (answers.length < 7) {
+    if (answers.length < 20) {
       setAnswers((prev) => [...prev, ""]);
     } else {
-      toast("error", "E", "7 options is enough dude");
+      toast("error", "E", "20 options is enough dude");
     }
   };
 
@@ -37,7 +45,11 @@ export default function OptionsSelect(props) {
     <div>
       <div className="md:!text-lg w-full flex justify-between font-semibold mb-2">
         Options (select the correct answer){" "}
-        <Button onClick={handleAddOption} size={"sm"} variant="outline">
+        <Button
+          onClick={handleAddOption}
+          size={"sm"}
+          variant="outline"
+        >
           Add <FaPlus />
         </Button>
       </div>
@@ -48,7 +60,9 @@ export default function OptionsSelect(props) {
               className="!w-full"
               variant={"surface"}
               value={correctAnswer}
-              onValueChange={(e) => e.vale !== "" && setCorrectAnswer(e.value)}
+              onValueChange={(e) =>
+                e.value.trim() && setCorrectAnswer(e.value ?? "")
+              }
             >
               <RadioCard.Item
                 className="!w-full !border-secondary/35"
@@ -85,13 +99,17 @@ export default function OptionsSelect(props) {
         ))}
         {/* cheap way for validation */}
         <span className="text-red-400">
-          {correctAnswer == ""
-            ? "correct answer needs to be selected, and it must not be empty"
-            : answers.length < 2
-              ? "Minimum 2 options are needed"
-              : ""}
+          {validateSaveOptions(correctAnswer, answers)}{" "}
         </span>
       </div>
     </div>
   );
+}
+
+function validateSaveOptions(correctAnswer, answers) {
+  if (!correctAnswer)
+    return "correct answer needs to be selected, and it must not be empty";
+  if (answers.length < 2) return "Minimum 2 options are needed";
+  if (answers.some((opt) => opt.trim() == ""))
+    return "cant have empty options";
 }

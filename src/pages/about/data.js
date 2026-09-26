@@ -15,7 +15,7 @@ const contact_info = [
   {
     label: "Email",
     icon: MdOutlineMail,
-    value: "osamaelseify2@gmail.com",
+    value: "osama.khaled0707@gmail.com",
   },
   {
     label: "WhatsApp",
@@ -25,7 +25,7 @@ const contact_info = [
   {
     label: "Location",
     icon: MdOutlineWhatsapp,
-    value: "Cairo, Egypt",
+    value: "Egypt",
   },
   {
     label: "Support hours",

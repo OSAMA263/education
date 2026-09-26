@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Card({ exam, className, children }) {
-  const { description, title, startDate, endDate, created_by } = exam;
+  const { description, title, startDate, endDate, created_by,classLevel } = exam;
 
   const availableDate = new Date(startDate).toLocaleDateString(
     "en-GB",
@@ -45,6 +45,9 @@ export default function Card({ exam, className, children }) {
         <p className="flex items-center gap-1">
           <span className="text-white/80">Created by:</span>
           {created_by}
+        </p>
+        <p className="flex items-center gap-1 !text-white/70">
+          {classLevel}
         </p>
         <p className="mt-4">{description}</p>
       </div>

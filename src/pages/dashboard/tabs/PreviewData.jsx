@@ -20,7 +20,7 @@ export default function PreviewData() {
       title="Preview"
     >
       <SectionHeader title="All Data" className="mb-10" />
-      <div className="grid grid-cols-2 md:gap-10 gap-2">
+      <div className="grid sm:grid-cols-2 md:gap-10 gap-2">
         {data.map((item) => {
           const key = Object.keys(item)[0];
 

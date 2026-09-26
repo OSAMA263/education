@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }) {
         {/* main content */}
         <CustomContainer noContactForm xl="80%" className="justify-start !block pt-24 pb-2">
           <DashboardProvider>
-            <div className="space-y-10 flex flex-col h-full py-3 px-6">
+            <div className="space-y-10 flex flex-col h-full py-3 sm:px-6">
               {children}
             </div>
           </DashboardProvider>

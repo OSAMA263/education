@@ -38,7 +38,7 @@ export default function SingleLesson() {
           {data ? data?.title : <SkeletonText noOfLines={1} />}
         </h1>
         {/* video player & lessons list */}
-        <div className="grid grid-cols-4 gap-4 min-h-[70vh] relative">
+        <div className="xl:grid grid-cols-4 space-y-4 gap-4 min-h-[70vh] relative">
           <AnimatePresence mode="popLayout">
             <motion.div
               layout
@@ -53,7 +53,7 @@ export default function SingleLesson() {
                 layout
                 key="lesson-list"
                 transition={{ duration: 0.3 }}
-                className={`max-xl:hidden col-span-1 overflow-hidden`}
+                className={`xl:col-span-1 overflow-hidden max-xl:max-h-[320px] max-xl:overflow-y-scroll`}
               >
                 <LessonsList />
               </motion.div>
