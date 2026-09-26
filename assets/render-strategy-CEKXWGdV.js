@@ -1,1 +1,0 @@
-import{A as r,y as t}from"./index-BIuRi_s-.js";var[a,n]=t({name:"RenderStrategyContext",hookName:"useRenderStrategyContext",providerName:"<RenderStrategyPropsProvider />"}),s=e=>r()(e,["lazyMount","unmountOnExit","hideMode"]);export{a as R,s,n as u};
